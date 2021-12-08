@@ -9,23 +9,21 @@ import PropTypes from 'prop-types';
 import {
   Text,
   View,
-  Animated,
+  Image,
   Dimensions,
   TouchableOpacity
 } from 'react-native';
-import ContainerView from './components/ContainerView';
-import Utils from '../../utils/utils';
-import StatusBar from '../../components/StatusBar';
-const { width, height } = Dimensions.get('window');
-import NavigationBar from '../../components/NavigationBar';
 
-import images from '../../assets/images';
-export let navigatorObject = null;
+import IconWithText from './components/iconWithText';
+import { images } from '../../assets/images/index'
+
+
+// export let navigatorObject = null;
 
 class Splash extends Component {
   constructor(props) {
     super(props);
-    navigatorObject = props.navigation;
+    // navigatorObject = props.navigation;
   }
 
   componentDidMount() {
@@ -36,22 +34,26 @@ class Splash extends Component {
   }
   render() {
     return (
-      <View style={{ flex: 1 }}>
-      {/* <NavigationBar
-        title='testing world'
-        showBackButton={Boolean(true)}
-        // backButtonImage={images.backbutton}
-        // backButtonAction={() => this.popBack()}
-        // backButtonAction={() => this.sideMenuAction()}
-        hideRightView={true}
-      /> */}
-        <TouchableOpacity
-              activeOpacity={0.9}
-              onPress={() => this.sideMenuAction()}
-              style={{ color: 'black', height: 50, width: 60 , backgroundColor: 'red'}}
-            >
-         <Text>Click Me</Text>
-         </TouchableOpacity>
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <View style={{ flex: 8, justifyContent: 'center', alignItems: 'center', marginTop: '10%' }}>
+          <Image
+            style={{ height: 300, width: '100%' }}
+            source={images.splashIcon}
+            resizeMethod={'resize'}
+          />
+        </View>
+        <View style={{ flex: 2,  }}>
+          <View style={{ flex: 1,  }}>
+            <IconWithText 
+              title= 'Made In India'
+              image={images.indianFlag}
+            />
+            <IconWithText 
+              title= '100% Safe & Secure'
+              image={images.verifiedIcon}
+            />
+          </View>
+        </View>
       </View>
     );
   }
