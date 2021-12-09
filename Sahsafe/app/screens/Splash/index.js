@@ -16,41 +16,47 @@ import {
 
 import IconWithText from './components/iconWithText';
 import { images } from '../../assets/images/index'
-
-
-// export let navigatorObject = null;
+import * as Animatable from "react-native-animatable";
 
 class Splash extends Component {
   constructor(props) {
     super(props);
-    // navigatorObject = props.navigation;
   }
 
   componentDidMount() {
+    setTimeout(() => {
+      this.props.navigation.navigate('GetMobileNumber');
+    }, 3000)
+  }
 
-  }
-  sideMenuAction() {
-    this.props.navigation.navigate('Home');
-  }
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <View style={{ flex: 8, justifyContent: 'center', alignItems: 'center', marginTop: '10%' }}>
-          <Image
+          <Animatable.View
+            animation="flipInY"
+            duration={1000}
+            delay={200}
             style={{ height: 300, width: '100%' }}
-            source={images.splashIcon}
-            resizeMethod={'resize'}
-          />
-        </View>
-        <View style={{ flex: 2,  }}>
-          <View style={{ flex: 1,  }}>
-            <IconWithText 
-              title= 'Made In India'
-              image={images.indianFlag}
+          >
+            <Image
+              style={{ height: 300, width: '100%' }}
+              source={images.splashIcon}
+              resizeMethod={'resize'}
             />
-            <IconWithText 
-              title= '100% Safe & Secure'
+          </Animatable.View>
+        </View>
+        <View style={{ flex: 2, }}>
+          <View style={{ flex: 1, }}>
+            <IconWithText
+              title='Made In India'
+              image={images.indianFlag}
+              margin_top={10}
+            />
+            <IconWithText
+              title='100% Safe & Secure'
               image={images.verifiedIcon}
+              margin_top={10}
             />
           </View>
         </View>

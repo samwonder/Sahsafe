@@ -18,18 +18,19 @@ const styles = StyleSheet.create({
 const IconWithText = ({
   title,
   image,
+  margin_top
 }) => (
     <Animatable.View 
     animation="bounceInUp"
     duration={1000}
     delay={200}
-    style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
+    style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: margin_top }}>
     <Image
       style={{ height: 25, width: 30 }}
       source={image}
       resizeMode='contain'
     />
-    <Text>{" " + title}</Text>
+    <Text style={{fontWeight: '600'}}>{" " + title}</Text>
   </Animatable.View>
 );
 

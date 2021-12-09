@@ -4,17 +4,8 @@ import { Button, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Splash from '../screens/Splash';
-
-function HomeScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button
-        onPress={() => navigation.navigate('Notifications')}
-        title="Go to notifications"
-      />
-    </View>
-  );
-}
+import GetMobileNumber from '../screens/GetMobileNumber';
+import OTPScreen from '../screens/OTPScreen';
 
 function NotificationsScreen({ navigation }) {
   return (
@@ -31,7 +22,8 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Splash">
         <Stack.Screen name="Splash" component={Splash} options={{headerShown: false}}/>
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="GetMobileNumber" component={GetMobileNumber} options={{headerShown: false}}/>
+        <Stack.Screen name="OTPScreen" component={OTPScreen} options={{headerShown: false}}/>
         <Stack.Screen name="Notifications" component={NotificationsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
