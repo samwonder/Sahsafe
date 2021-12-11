@@ -18,7 +18,8 @@ const styles = StyleSheet.create({
 const IconWithText = ({
   buttonTitle,
   onPressButton,
-  buttonStyle
+  buttonStyle,
+  titleFontColor
 }) => (
   <Animatable.View
     animation="bounceInUp"
@@ -30,7 +31,7 @@ const IconWithText = ({
       onPress={() => onPressButton()}
       style={buttonStyle}
     >
-      <Text style={{ alignSelf: 'center', fontSize: 18 }}>{buttonTitle}</Text>
+      <Text style={{ alignSelf: 'center', fontSize: 18, color: titleFontColor }}>{buttonTitle}</Text>
     </TouchableOpacity>
   </Animatable.View>
 );
