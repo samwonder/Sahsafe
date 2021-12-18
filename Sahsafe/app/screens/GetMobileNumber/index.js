@@ -12,39 +12,50 @@ import {
   Image,
   StyleSheet,
   TextInput,
-  TouchableOpacity
+  Alert
 } from 'react-native';
 import * as Animatable from "react-native-animatable";
 import { images } from '../../assets/images';
 import IconWithText from '../../components/iconWithText';
 import CustomButton from '../../components/CustomButton';
+import { connect } from "react-redux";
+import * as Actions from "@redux/actions";
+import * as Services from "@services";
 
 class GetMobileNumber extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      myNumber: null,
+      mobileNumber: null,
     };
 
   }
 
-  componentDidMount() {
+  async navigateToOTPScreen(phone) {
+    if(phone === null) {
+      Alert.alert('your mobile number must contain 10 digit :)')
+    } else if(phone.toString().length === 10) {
+      this.props.toggleLoader(true)
+      try {
+        this.props.saveMobileNumber(phone)
+        let result = await Services.UserServices.RegisterPhoneNumber(phone);
+        console.log("🚀 ~ ========================", result)
+        this.props.navigation.navigate('OTPScreen',{mobileNumber: phone});
+        this.props.toggleLoader(false)
+      } catch (error) {
+        this.props.toggleLoader(false)
+      }
+    } else {
+      this.props.toggleLoader(false)
+      Alert.alert('your mobile number must contain 10 digit :)')
+    }
+  }
 
-  }
-  sideMenuAction() {
-    console.log('===============');
-    this.props.navigation.navigate('DrawerOpen');
-  }
-  popBack() {
-    this.props.navigation.navigate('OTPScreen');
-    // const { goBack } = this.props.navigation;
-    // goBack(null);
-  }
   onTextChanged(text) {
-    // code to remove non-numeric characters from text
-    this.setState({ myNumber: text })
+    this.setState({ mobileNumber: text })
   }
   render() {
+    // console.log("🚀 ~ file: index.js ", this.props)
     return (
       <View style={{ flex: 1 }}>
 
@@ -75,7 +86,7 @@ class GetMobileNumber extends Component {
               keyboardType='numeric'
               onChangeText={(text) => this.onTextChanged(text)}
               placeholder='Mobile number'
-              value={this.state.myNumber}
+              value={this.state.mobileNumber}
               maxLength={10}
               fontWeight={'600'}
               fontSize={16}
@@ -86,7 +97,7 @@ class GetMobileNumber extends Component {
         <View style={{ flex: 1.5, alignItems: 'center', }}>
           <CustomButton
             buttonTitle={'Login'}
-            onPressButton={() => this.popBack()}
+            onPressButton={() => this.navigateToOTPScreen(this.state.mobileNumber)}
             buttonStyle={{ color: 'black', height: 50, width: '80%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 5 }}
           />
         </View>
@@ -97,6 +108,16 @@ class GetMobileNumber extends Component {
 }
 
 
+const mapDispatchToProps = dispatch => ({
+  toggleLoader: state => dispatch(Actions.toggleLoader(state)),
+  saveMobileNumber: state => dispatch(Actions.saveMobileNumber(state)),
+  
+});
 
-export default GetMobileNumber;
+export default connect(
+  null,
+  mapDispatchToProps
+)(GetMobileNumber);
+
+
 

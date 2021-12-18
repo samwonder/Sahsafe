@@ -6,6 +6,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import Splash from '../screens/Splash';
 import GetMobileNumber from '../screens/GetMobileNumber';
 import OTPScreen from '../screens/OTPScreen';
+import UserDetail from '../screens/UserDetail';
+import WelcomeScreen from '../screens/WelcomeScreen';
+import HomeScreen from '../screens/home';
 
 function NotificationsScreen({ navigation }) {
   return (
@@ -20,10 +23,13 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Splash">
+      <Stack.Navigator initialRouteName="HomeScreen">
         <Stack.Screen name="Splash" component={Splash} options={{headerShown: false}}/>
         <Stack.Screen name="GetMobileNumber" component={GetMobileNumber} options={{headerShown: false}}/>
         <Stack.Screen name="OTPScreen" component={OTPScreen} options={{headerShown: false}}/>
+        <Stack.Screen name="UserDetail" component={UserDetail} options={{headerShown: false}}/>
+        <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} options={{headerShown: false}}/>
+        <Stack.Screen name="HomeScreen" component={HomeScreen} options={{headerShown: false}}/>
         <Stack.Screen name="Notifications" component={NotificationsScreen} />
       </Stack.Navigator>
     </NavigationContainer>

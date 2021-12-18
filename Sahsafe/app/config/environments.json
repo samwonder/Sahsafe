@@ -1,8 +1,0 @@
-{
-  "staging": {
-    "BASE_URL": "http://52.21.86.211"
-  },
-  "production": {
-    "BASE_URL": "http://52.21.86.211"
-  }
-}

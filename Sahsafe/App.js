@@ -6,24 +6,27 @@
 
  import React, { Component } from 'react';
  import { Provider } from 'react-redux';
- import { store } from './app/store';
- import runRootSaga from './app/sagas';
  import Navigator from './app/navigator';
+ import * as Config from "@configs";
+ import AppLoader from "@components/appLoader";
  
+ const Store = Config.reduxInit();
  export default class App extends Component {
    constructor() {
      super();
      this.state = {};
-     runRootSaga();
+     //  runRootSaga();
      // for hide warning messages
      console.disableYellowBox = true;
-   }
- 
-   render() {
+    }
+    
+    render() {
+    //  console.log("🚀 ~ file: App.js ~ line 13 ~ Store", Store)
      return (
-       <Provider store={store}>
+       <Provider store={Store}>
+         <AppLoader />
          <Navigator />
-       </Provider>
+      </Provider>
      );
    }
  }

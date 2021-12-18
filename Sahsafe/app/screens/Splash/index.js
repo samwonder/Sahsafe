@@ -17,6 +17,7 @@ import {
 import IconWithText from './components/iconWithText';
 import { images } from '../../assets/images/index'
 import * as Animatable from "react-native-animatable";
+import * as AppConstant from "@constants";
 
 class Splash extends Component {
   constructor(props) {
@@ -25,7 +26,11 @@ class Splash extends Component {
 
   componentDidMount() {
     setTimeout(() => {
-      this.props.navigation.navigate('GetMobileNumber');
+      if (AppConstant.Api.ApiToken) {
+        this.props.navigation.navigate('HomeScreen');
+      } else {
+        this.props.navigation.navigate('GetMobileNumber');
+      }
     }, 3000)
   }
 
