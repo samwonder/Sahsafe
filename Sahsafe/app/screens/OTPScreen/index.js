@@ -10,7 +10,7 @@ class OTPScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mobileNumber: this.props.navigation.getState().params,
+      mobileNumber: null,
       otp: '',
       timer: null,
       counter: 30

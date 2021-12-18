@@ -9,6 +9,8 @@ const featureFolder = require('./feather_folder.png');
 const featureSearch = require('./feather_search.png');
 const pdfIcon = require('./pdf_icon.png');
 const shareIcon = require('./share_icon.png');
+const closeIcon = require('./close.png');
+const deleteIcon = require('./delete_icon.png');
 
 export const images = {
   indianFlag,
@@ -21,4 +23,6 @@ export const images = {
   featureSearch,
   pdfIcon,
   shareIcon,
+  closeIcon,
+  deleteIcon
 };

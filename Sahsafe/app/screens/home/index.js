@@ -18,14 +18,14 @@ import {
 import { images } from '../../assets/images/index'
 import CustomButton from '../../components/CustomButton';
 import ButtonWithIconAndText from './components/buttonWithIconandText';
-
+import PDFScreen from '../PdfUpload';
 export let navigatorObject = null;
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      topView: false,
+      topView: true,
       selectedButton: false,
     }
   }
@@ -43,9 +43,9 @@ class Home extends Component {
   }
 
   increaseHeight() {
-    // this.setState({
-    //   topView: !this.state.topView
-    // })
+    this.setState({
+      topView: !this.state.topView
+    })
   }
 
   headerButtonAction() {
@@ -61,7 +61,7 @@ class Home extends Component {
   }
 
   render() {
-    console.log("🚀 ~ file: index.js ~ line 41 ~ Home ~ render ~ render", images)
+    // console.log("🚀 ~ file: index.js ~ line 41 ~ Home ~ render ~ render", images)
     return (
       <View style={{ flex: 1, backgroundColor: 'pink' }}>
         <View style={{ flex: 2.5 }}>
@@ -157,13 +157,14 @@ class Home extends Component {
             </View>}
           />
         </View>
-        <View style={{ height: this.state.topView ? '70%' : 70, width: '100%', backgroundColor: 'green', position: 'absolute', left: 0, right: 0, bottom: 0, }}>
-          <CustomButton
+        <View style={{ height: this.state.topView ? '100%' : 70, width: '100%', backgroundColor: 'green', position: 'absolute', left: 0, right: 0, bottom: 0, }}>
+          {this.state.topView ? <PDFScreen /> : <CustomButton
             buttonTitle={'+ Share File'}
             onPressButton={() => this.increaseHeight(this.state.mobileNumber)}
             buttonStyle={{ color: 'white', height: 45, width: '40%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}
             titleFontColor={'white'}
-          />
+          />}
+
         </View>
 
       </View>
