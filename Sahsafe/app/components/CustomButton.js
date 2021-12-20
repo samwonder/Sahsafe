@@ -22,7 +22,7 @@ const IconWithText = ({
   titleFontColor
 }) => (
   <Animatable.View
-    animation="bounceInUp"
+    animation="fadeInUp"
     duration={1000}
     delay={200}
     style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }}>

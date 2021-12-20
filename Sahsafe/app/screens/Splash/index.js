@@ -26,11 +26,11 @@ class Splash extends Component {
 
   componentDidMount() {
     setTimeout(() => {
-      if (AppConstant.Api.ApiToken) {
-        this.props.navigation.navigate('HomeScreen');
-      } else {
+      // if (AppConstant.Api.ApiToken) {
+      //   this.props.navigation.navigate('HomeScreen');
+      // } else {
         this.props.navigation.navigate('GetMobileNumber');
-      }
+      // }
     }, 3000)
   }
 

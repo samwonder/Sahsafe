@@ -11,6 +11,8 @@ const pdfIcon = require('./pdf_icon.png');
 const shareIcon = require('./share_icon.png');
 const closeIcon = require('./close.png');
 const deleteIcon = require('./delete_icon.png');
+const successIcon = require('./Success.png');
+const backIcon = require('./back.png');
 
 export const images = {
   indianFlag,
@@ -24,5 +26,7 @@ export const images = {
   pdfIcon,
   shareIcon,
   closeIcon,
-  deleteIcon
+  deleteIcon,
+  successIcon,
+  backIcon
 };

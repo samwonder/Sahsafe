@@ -13,19 +13,21 @@ import {
   Dimensions,
   TouchableOpacity,
   FlatList,
-  Image
+  Image,
+  Alert
 } from 'react-native';
 import { images } from '../../assets/images/index'
 import CustomButton from '../../components/CustomButton';
 import ButtonWithIconAndText from './components/buttonWithIconandText';
 import PDFScreen from '../PdfUpload';
 export let navigatorObject = null;
+import * as Animatable from "react-native-animatable";
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      topView: true,
+      topView: false,
       selectedButton: false,
     }
   }
@@ -42,10 +44,30 @@ class Home extends Component {
     goBack(null);
   }
 
-  increaseHeight() {
-    this.setState({
-      topView: !this.state.topView
-    })
+  increaseHeight(param) {
+
+    if (this.state.topView) {
+      Alert.alert(
+        "Message",
+        "Are you sure you want to Discard Upload",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          {
+            text: "OK", onPress: () => this.setState({
+              topView: !this.state.topView
+            })
+          }
+        ]
+      );
+    } else {
+      this.setState({
+        topView: !this.state.topView
+      })
+    }
   }
 
   headerButtonAction() {
@@ -60,17 +82,25 @@ class Home extends Component {
     })
   }
 
+  uploadFileAction() {
+    this.setState({
+      topView: false,
+    },() => {
+      this.props.navigation.navigate('SuccessScreen')
+    })
+  }
+
   render() {
-    // console.log("🚀 ~ file: index.js ~ line 41 ~ Home ~ render ~ render", images)
     return (
-      <View style={{ flex: 1, backgroundColor: 'pink' }}>
-        <View style={{ flex: 2.5 }}>
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <View style={{  height: 220 }}>
           <View style={{ flex: 1 }} >
             <View style={{ flex: 1 }} />
-            <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row' }}>
-              <Text style={{ fontSize: 19, justifyContent: 'center', marginTop: 5 }}>{'Hello, Rohit Ghorawat'}</Text>
-              <TouchableOpacity 
-              style={{ height: 30, width: 70, alignItems: 'flex-end', marginRight: 5 }}
+            <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row',  margin: 5 }}>
+              <Text style={{ fontSize: 19, alignSelf: 'center', marginHorizontal: 5, }}>{'Hello, Rohit Ghorawat'}</Text>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('SearchScreen')}
+                style={{ height: 30, width: 70, alignItems: 'flex-end', marginRight: 5 }}
               >
                 <Image
                   style={{ height: 25, width: 25 }}
@@ -157,13 +187,27 @@ class Home extends Component {
             </View>}
           />
         </View>
-        <View style={{ height: this.state.topView ? '100%' : 70, width: '100%', backgroundColor: 'green', position: 'absolute', left: 0, right: 0, bottom: 0, }}>
-          {this.state.topView ? <PDFScreen /> : <CustomButton
-            buttonTitle={'+ Share File'}
-            onPressButton={() => this.increaseHeight(this.state.mobileNumber)}
-            buttonStyle={{ color: 'white', height: 45, width: '40%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}
-            titleFontColor={'white'}
-          />}
+
+        <View style={{ height: this.state.topView ? '100%' : 70, width: '100%', backgroundColor: this.state.topView ? '#000000C2' : 'transparent', position: 'absolute', left: 0, right: 0, bottom: 0, }}>
+          {this.state.topView
+            ? <View style={{ height: '80%', width: '100%', marginTop: '25%', borderRadius: 50 }}>
+              <Animatable.View
+                animation="fadeInUp"
+                duration={1000}
+                delay={200}
+                style={{ height: '100%', width: '100%', borderRadius: 50 }}>
+                <PDFScreen 
+                onPressButton={() => this.increaseHeight(this.state.mobileNumber)}
+                uploadFileAction={() => this.uploadFileAction()}
+                />
+              </Animatable.View>
+            </View>
+            : <CustomButton
+              buttonTitle={'+ Share File'}
+              onPressButton={() => this.increaseHeight(1)}
+              buttonStyle={{ color: 'white', height: 45, width: '40%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}
+              titleFontColor={'white'}
+            />}
 
         </View>
 

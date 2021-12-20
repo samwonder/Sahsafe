@@ -9,6 +9,8 @@ import OTPScreen from '../screens/OTPScreen';
 import UserDetail from '../screens/UserDetail';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import HomeScreen from '../screens/home';
+import SuccessScreen from '../screens/SuccessScreen'
+import SearchScreen from '../screens/SearchScreen'
 
 function NotificationsScreen({ navigation }) {
   return (
@@ -30,6 +32,8 @@ export default function App() {
         <Stack.Screen name="UserDetail" component={UserDetail} options={{headerShown: false}}/>
         <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} options={{headerShown: false}}/>
         <Stack.Screen name="HomeScreen" component={HomeScreen} options={{headerShown: false}}/>
+        <Stack.Screen name="SuccessScreen" component={SuccessScreen} options={{headerShown: false}}/>
+        <Stack.Screen name="SearchScreen" component={SearchScreen} options={{headerShown: false}}/>
         <Stack.Screen name="Notifications" component={NotificationsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
