@@ -30,7 +30,7 @@ const IconWithText = ({
       source={image}
       resizeMode='contain'
     />
-    <Text style={{fontWeight: '600'}}>{" " + title}</Text>
+    <Text style={{fontWeight: '600', color: 'black'}}>{" " + title}</Text>
   </Animatable.View>
 );
 

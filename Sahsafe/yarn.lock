@@ -5760,6 +5760,13 @@ react-native-codegen@^0.0.7:
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
 
+react-native-document-picker@^7.1.2:
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-document-picker/-/react-native-document-picker-7.1.2.tgz#99c11a166c65f0fc4184f14067b7ea7a088252ed"
+  integrity sha512-9lVkvv37H2axi69t7IWhDBEEqF/sLXoIS0v3ROCgpcVRY0dyo+XZO5nBGUZtoBnqxiYBEoXDfWtCBmCU8h0/1Q==
+  dependencies:
+    invariant "^2.2.4"
+
 react-native-gesture-handler@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.1.0.tgz#be7a83a7bd340a2316551a4d30d7abf06b46c1da"

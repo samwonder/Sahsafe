@@ -11,6 +11,7 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import HomeScreen from '../screens/home';
 import SuccessScreen from '../screens/SuccessScreen'
 import SearchScreen from '../screens/SearchScreen'
+import IndustriesDetail from '../screens/IndustriesDetail'
 
 function NotificationsScreen({ navigation }) {
   return (
@@ -34,7 +35,8 @@ export default function App() {
         <Stack.Screen name="HomeScreen" component={HomeScreen} options={{headerShown: false}}/>
         <Stack.Screen name="SuccessScreen" component={SuccessScreen} options={{headerShown: false}}/>
         <Stack.Screen name="SearchScreen" component={SearchScreen} options={{headerShown: false}}/>
-        <Stack.Screen name="Notifications" component={NotificationsScreen} />
+        <Stack.Screen name="IndustriesDetail" component={IndustriesDetail} options={{headerShown: false}}/>
+        {/* <Stack.Screen name="IndustriesDetail" component={IndustriesDetail} options={{headerShown: false}}/> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

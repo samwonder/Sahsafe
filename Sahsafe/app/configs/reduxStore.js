@@ -6,6 +6,7 @@ import * as Reducers from '@redux/reducers';
 
 const rootReducer = combineReducers({
   common: Reducers.common,
+  landing: Reducers.landing,
 
 });
 

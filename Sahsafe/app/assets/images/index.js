@@ -13,6 +13,9 @@ const closeIcon = require('./close.png');
 const deleteIcon = require('./delete_icon.png');
 const successIcon = require('./Success.png');
 const backIcon = require('./back.png');
+const greenTickIcon = require('./green_tick.png');
+const greyTickIcon = require('./grey_tick.png');
+const dotsIcon = require('./dots.png');
 
 export const images = {
   indianFlag,
@@ -28,5 +31,8 @@ export const images = {
   closeIcon,
   deleteIcon,
   successIcon,
-  backIcon
+  backIcon,
+  greenTickIcon,
+  greyTickIcon,
+  dotsIcon
 };

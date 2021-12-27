@@ -90,10 +90,15 @@ const NavBar = ({
       {showBackButton ?
         <TouchableOpacity
           onPress={() => backButtonAction()}
+          style={{ height: 70, width: 150, alignItems: 'flex-end', flexDirection: 'row', }}
         >
-          <Text>hello</Text>
+          <Image
+            style={{ height: 30, width: 40, marginLeft: 10 }}
+            source={images.backIcon}
+          />
+          <Text style={{ fontSize: 18, textAlign: 'center', marginTop: 5 }}>{'  ShaSafe'}</Text>
         </TouchableOpacity>
-        : null }
+        : null}
     </View>
     <View style={styles.headerView}>
       <Text style={styles.titleText}>{title}</Text>
@@ -121,9 +126,9 @@ NavBar.defaultProps = {
   showBackButton: false,
   showRightButton: false,
   backButtonImage: null,
-  backButtonAction: () => {},
+  backButtonAction: () => { },
   rightButtonImage: null,
-  rightButtonAction: () => {},
+  rightButtonAction: () => { },
   hideRightView: false,
 };
 export default NavBar;

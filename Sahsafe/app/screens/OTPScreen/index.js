@@ -104,7 +104,6 @@ class OTPScreen extends React.Component {
       <View>
         <View style={styles.container}>
           <Text style={styles.text}>Enter OTP to Verify Mobile Number</Text>
-
           <OTPInput
             value={this.state.otp}
             onChange={this.handleOTPChange}
@@ -115,16 +114,22 @@ class OTPScreen extends React.Component {
           <CustomButton
             buttonTitle={'Verify OTP'}
             onPressButton={() => this.submitOTP()}
-            buttonStyle={{ color: 'black', height: 50, width: '80%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 5 }}
+            buttonStyle={{ color: 'black', height: 50, width: '80%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 5, marginTop: 30 }}
           // titleFontColor={'#707070'}
           />
-          <Button onPress={this.navigateToOTPScreen} title={`Resend OTP in ${this.state.counter}`} />
+          <CustomButton
+            buttonTitle={`Resend OTP in ${this.state.counter}`}
+            onPressButton={() => this.navigateToOTPScreen()}
+            buttonStyle={{ color: '#3434D6', justifyContent: 'center',  marginTop: 15 }}
+          // titleFontColor={'#707070'}
+          />
+          {/* <Button style={{ marginTop: 20 }} onPress={this.navigateToOTPScreen} title={`Resend OTP in ${this.state.counter}`} /> */}
         </View>
         <View style={styles.subContainer}>
           <CustomButton
             buttonTitle={'Change Mobile Number'}
             onPressButton={() => this.popBack()}
-            buttonStyle={{ color: 'black', height: 50, width: '80%', backgroundColor: '#E9E9E9', justifyContent: 'center', borderRadius: 5 }}
+            buttonStyle={{ color: 'black', height: 50, width: '80%', backgroundColor: '#E9E9E9', justifyContent: 'center', borderRadius: 5, marginTop: 15 }}
             titleFontColor={'#707070'}
           />
         </View>
@@ -135,17 +140,12 @@ class OTPScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    height: '80%',
-    // backgroundColor: 'red',
-    // backgroundColor: '#fff',
+    height: '85%',
     alignItems: 'center',
-    paddingTop: 150
-    // justifyContent: 'center',
+    paddingTop: '20%'
   },
   subContainer: {
-    height: '20%',
-    // backgroundColor: 'green',
+    height: '15%',
   },
   text: {
     marginBottom: 15,
@@ -160,8 +160,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   toggleLoader: state => dispatch(Actions.toggleLoader(state)),
   submitOTPAction: state => dispatch(Actions.submitOTP(state)),
-
-
 });
 
 export default connect(

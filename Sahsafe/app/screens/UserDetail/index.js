@@ -7,6 +7,7 @@ import CustomButton from '../../components/CustomButton';
 import { connect } from "react-redux";
 import * as Actions from "@redux/actions";
 import * as Services from "@services";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 class UpdateProfile extends React.Component {
 
@@ -97,49 +98,55 @@ class UpdateProfile extends React.Component {
   }
   render() {
     return (
-      <View>
-        <View style={styles.container}>
-          <CustomText
-            textStyle={{ fontSize: 30, fontWeight: '600', marginLeft: 15 }}
-            text={'Welcome to Sahsafe'} />
-          <CustomText
-            textStyle={{ fontSize: 16, marginLeft: 15 }}
-            text={'Platform to share your Document Securely'} />
-          <View style={{ marginTop: 50, }}>
+      <View style={{flex: 1}}>
+        <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1,}}
+          enableOnAndroid={true}
+        >
 
+          <View style={styles.container}>
             <CustomText
-              textStyle={{ fontSize: 16, fontWeight: '700', marginLeft: 15 }}
-              text={'Registration'} />
-          </View>
+              textStyle={{ fontSize: 30, fontWeight: '600', marginLeft: 15 }}
+              text={'Welcome to Sahsafe'} />
+            <CustomText
+              textStyle={{ fontSize: 16, marginLeft: 15 }}
+              text={'Platform to share your Document Securely'} />
+            <View style={{ marginTop: 50, }}>
 
-          <View style={{ flex: 1, marginTop: 30, alignItems: 'center' }}>
+              <CustomText
+                textStyle={{ fontSize: 16, fontWeight: '700', marginLeft: 15 }}
+                text={'Registration'} />
+            </View>
 
-            <RadioButton
-              onPressRadioButton={(id) => this.onPressRadioButton(id)}
-              isSelected={this.state.isSelected}
-            />
-            <MaterialTextInput
-              label='Your Name'
-              onSubmitEditing={() => this.onSubmit()}
-              value={this.state.firstName}
-              onChangeText={(text) => this.firstNameAction(text)}
-            />
-            <MaterialTextInput
-              label='Email'
-              onSubmitEditing={(text) => this.onSubmit(text)}
-              onChangeText={(text) => this.emailAction(text)}
-              value={this.state.email}
-            />
+            <View style={{ flex: 1, marginTop: 30, alignItems: 'center' }}>
+
+              <RadioButton
+                onPressRadioButton={(id) => this.onPressRadioButton(id)}
+                isSelected={this.state.isSelected}
+              />
+              <MaterialTextInput
+                label='Your Name'
+                onSubmitEditing={() => this.onSubmit()}
+                value={this.state.firstName}
+                onChangeText={(text) => this.firstNameAction(text)}
+              />
+              <MaterialTextInput
+                label='Email'
+                onSubmitEditing={(text) => this.onSubmit(text)}
+                onChangeText={(text) => this.emailAction(text)}
+                value={this.state.email}
+              />
+            </View>
           </View>
+          <View style={styles.subContainer}>
+            <CustomButton
+              buttonTitle={'Continue'}
+              onPressButton={() => this.onSubmitProfile()}
+              buttonStyle={{ color: 'black', height: 50, width: '80%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 5 }}
+              titleFontColor={'white'}
+            />
         </View>
-        <View style={styles.subContainer}>
-          <CustomButton
-            buttonTitle={'Continue'}
-            onPressButton={() => this.onSubmitProfile()}
-            buttonStyle={{ color: 'black', height: 50, width: '80%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 5 }}
-            titleFontColor={'white'}
-          />
-        </View>
+        </KeyboardAwareScrollView>
+
       </View>
     );
   }
@@ -148,15 +155,15 @@ class UpdateProfile extends React.Component {
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
-    height: '80%',
+    height: '85%',
     // backgroundColor: 'red',
     // backgroundColor: '#fff',
-    paddingTop: 100
+    paddingTop: 50
   },
-  alignItems: 'center',
-  justifyContent: 'center',
+  // alignItems: 'center',
+  // justifyContent: 'center',
   subContainer: {
-    height: '20%',
+    height: 100,
     // backgroundColor: 'green',
   },
   text: {

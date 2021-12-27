@@ -1,5 +1,5 @@
 export { toggleLoader, saveMobileNumber, submitOTP } from '@redux/actions/common';
 
-export { saveUserInfo } from '@redux/actions/landing';
+export { saveUserInfo, getAllDocument, getSahspaceCount, getDocmentList } from '@redux/actions/landing';
 
 
