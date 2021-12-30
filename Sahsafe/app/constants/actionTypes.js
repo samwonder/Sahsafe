@@ -8,7 +8,17 @@ const Common = {
   'SEARCH_CLIENT': 'getClientList',
   'CREATE_SAHSPACE': 'createSahspace',
   'GET_SAHSPACE_COUNT': 'getSahSpaceCount',
-  'GET_DOCUMENT_LIST': 'GetDocumentList'
+  'GET_DOCUMENT_LIST': 'GetDocumentList',
+  'UPLOAD_DOCUMENT': 'UploadDocuement',
+  'UPLOAD_SAPCE_DOCUMENT': 'UploadSpaceDocument',
+  'GET_USER_DETAIL': 'Getuserdetail',
+  'GET_SAHSPACE_LIST': 'GetSahspaceList',
+  'GET_SAHSPACE_DOCUMENT_TYPE_LIST': 'GetSahspaceDocumentTypeList',
+  'GET_SAHSPACE_YEAR': 'GetSpaceYear',
+  'GET_SAHSAPCE_MONTH': 'GetSpaceMonth',
+  'GET_SAHSPACE_DETAIL': 'GetSahspacedetail',
+  'EDIT_SAHSPACE_DETAIL': 'EditSahspacedetail',
+  'GET_SAHSPACE_ALL_USERS': 'GetSahspaceallUsers',
 }
 
 

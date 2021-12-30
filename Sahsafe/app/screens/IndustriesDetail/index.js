@@ -29,32 +29,36 @@ const tabbar = ['Info', 'Team', 'Documents']
 class IndustriesDetail extends Component {
   constructor(props) {
     super(props);
-    this.state ={
+    this.state = {
       currentTab: 'Info',
-      currentTabIndex: 1
+      currentTabIndex: 0,
+      sahspaceUser: props.route.params && props.route.params.sahspaceUser
     }
   }
 
-  componentDidMount() {
-    // setTimeout(() => {
-    //   // if (AppConstant.Api.ApiToken) {
-    //   //   this.props.navigation.navigate('HomeScreen');
-    //   // } else {
-    //     this.props.navigation.navigate('GetMobileNumber');
-    //   // }
-    // }, 3000)
+  async componentDidMount() {
+
+    await this.props.getSahspacedetail(this.state.sahspaceUser.sahspace_unique_id);
+    await this.props.getSahspaceallUsers(this.state.sahspaceUser.sahspace_unique_id);
+    // await this.props.getSahspaceDocumentTypeList(this.state.sahspaceUser.sahspace_unique_id, );
+
   }
-  
+  // sahspaceAllUsers
   popBack() {
     const { goBack } = this.props.navigation;
     goBack(null);
   }
 
   onTabSelect(data, index) {
-    this.setState({
-      currentTab: data,
-      currentTabIndex: index
-    });
+    if(index === 2) {
+      this.props.navigation.navigate('DocumentTypeFolder', {sahspaceUser: this.state.sahspaceUser})
+      // DocumentTypeFolder
+    } else {
+      this.setState({
+        currentTab: data,
+        currentTabIndex: index
+      });
+    }
     // this.myContestFilter(data);
   }
   render() {
@@ -65,15 +69,15 @@ class IndustriesDetail extends Component {
           backButtonImage={images.featureSearch}
           backButtonAction={() => this.popBack()}
         />
-          <View style={{backgroundColor: 'transparent'}}>
-            <CustomTopBar
-              topBarTitle={tabbar}
-              currentIndex={this.state.currentTabIndex}
-              onTabSelect={(data, index) => this.onTabSelect(data, index)}
-            />
-          </View>
-            {this.state.currentTabIndex === 0 && <InfoScreen  userDetail={this.props.userDetail} />}
-            {this.state.currentTabIndex === 1 && <TeamScreen />}
+        <View style={{ backgroundColor: 'transparent' }}>
+          <CustomTopBar
+            topBarTitle={tabbar}
+            currentIndex={this.state.currentTabIndex}
+            onTabSelect={(data, index) => this.onTabSelect(data, index)}
+          />
+        </View>
+        {this.state.currentTabIndex === 0 && <InfoScreen userDetail={this.props.sahspaceDetail} />}
+        {this.state.currentTabIndex === 1 && <TeamScreen sahspaceAllUsers={this.props.sahspaceAllUsers}/>}
       </View>
     );
   }
@@ -83,12 +87,15 @@ class IndustriesDetail extends Component {
 const mapStateToProps = state => ({
   mobileNumber: state.common.mobileNumber,
   userDetail: state.common.submitOTPResponse,
-  allDocument: state.landing.allDocument
+  sahspaceDetail: state.landing.getSahspaceDetail,
+  sahspaceAllUsers: state.landing.getSahspaceAllUsers,
+  sahspaceDocumentTypeList: state.landing.getSahspaceDocumentTypeList 
 });
 const mapDispatchToProps = dispatch => ({
   toggleLoader: state => dispatch(Actions.toggleLoader(state)),
-  getAllDocument: state => dispatch(Actions.getAllDocument(state)),
-
+  getSahspacedetail: state => dispatch(Actions.getSahspacedetail(state)),
+  getSahspaceallUsers: state => dispatch(Actions.getSahspaceallUsers(state)),
+  getSahspaceDocumentTypeList: state => dispatch(Actions.getSahspaceDocumentTypeList(state)),
 
 });
 

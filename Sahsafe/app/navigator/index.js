@@ -12,6 +12,13 @@ import HomeScreen from '../screens/home';
 import SuccessScreen from '../screens/SuccessScreen'
 import SearchScreen from '../screens/SearchScreen'
 import IndustriesDetail from '../screens/IndustriesDetail'
+import DocumentList from '../screens/DocumentList'
+import DocumentTypeFolder from '../screens/DocumentTypeFolder'
+import Month from '../screens/Month'
+import Year from '../screens/Year'
+import ShaspaceFolderDetail from '../screens/shaspaceFolderDetail'
+// import IndustriesDetail from '../screens/IndustriesDetail'
+// import IndustriesDetail from '../screens/IndustriesDetail'
 
 function NotificationsScreen({ navigation }) {
   return (
@@ -26,7 +33,7 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="HomeScreen">
+      <Stack.Navigator initialRouteName="Splash">
         <Stack.Screen name="Splash" component={Splash} options={{headerShown: false}}/>
         <Stack.Screen name="GetMobileNumber" component={GetMobileNumber} options={{headerShown: false}}/>
         <Stack.Screen name="OTPScreen" component={OTPScreen} options={{headerShown: false}}/>
@@ -36,6 +43,11 @@ export default function App() {
         <Stack.Screen name="SuccessScreen" component={SuccessScreen} options={{headerShown: false}}/>
         <Stack.Screen name="SearchScreen" component={SearchScreen} options={{headerShown: false}}/>
         <Stack.Screen name="IndustriesDetail" component={IndustriesDetail} options={{headerShown: false}}/>
+        <Stack.Screen name="DocumentTypeFolder" component={DocumentTypeFolder} options={{headerShown: false}}/>
+        <Stack.Screen name="ShaspaceFolderDetail" component={ShaspaceFolderDetail} options={{headerShown: false}}/>
+        <Stack.Screen name="Year" component={Year} options={{headerShown: false}}/>
+        {/* <Stack.Screen name="DocumentList" component={DocumentList} options={{headerShown: false}}/> */}
+        {/* <Stack.Screen name="Month" component={Month} options={{headerShown: false}}/> */}
         {/* <Stack.Screen name="IndustriesDetail" component={IndustriesDetail} options={{headerShown: false}}/> */}
       </Stack.Navigator>
     </NavigationContainer>

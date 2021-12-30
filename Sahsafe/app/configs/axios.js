@@ -16,7 +16,7 @@ export const axios = Axios.create({
 
 // Request interceptor
 axios.interceptors.request.use((config) => {
-  console.log("🚀 ~ file: axios.js ~ line 20 ~ =========================", AppConstant.Api.ApiToken)
+  // console.log("🚀 =========================", AppConstant.Api.ApiToken)
   if(AppConstant.Api.ApiToken)
   {
     config.headers = {
@@ -33,7 +33,7 @@ axios.interceptors.request.use((config) => {
     return config;
   }
 }, (error) => {
-console.log("🚀 ~ file: axios.js ~ line 35 ~ axios.interceptors.request.use ~ error", error)
+// console.log("🚀 ~ file: ==================== error", error)
   // DropDownHolder.dropDown.setAlert(AppConstant.Alert.Type.INFO, 'Error', AppConstant.Alert.Messages.NETWORK_ERROR);
   return Promise.reject(error);
 });
@@ -42,7 +42,7 @@ console.log("🚀 ~ file: axios.js ~ line 35 ~ axios.interceptors.request.use ~ 
 axios.interceptors.response.use((response) => {
   return response;
 }, (error) => {
-console.log("🚀 ~ file: axios.js ~ line 43 ~ axios.interceptors.response.use ~ error", error)
+// console.log("🚀 ~ file: axios.js ~ line 43 ~ axios.interceptors.response.use ~ error", error)
   // setTimeout(() => {
   //   // Services.NavigationService.navigate(AppConstant.Navigations.Survey.SURVEY);
   //   if (error.message == AppConstant.Alert.Messages.NETWORK_ERROR) {

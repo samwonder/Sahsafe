@@ -38,9 +38,9 @@ class Home extends Component {
 
   async componentDidMount() {
     // AppConstant.Api.ApiToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfY2xhaW0iLCJhdWQiOiJUaGVfQXVkIiwiaWF0IjoxNjQwMjgxNTYyLCJuYmYiOjE2NDAyODE1NzIsImV4cCI6MTY0MDI5NTk2MiwiZGF0YSI6eyJpZCI6IjEiLCJndV9pZCI6ImVqeTJ6b2lsZ3oifX0.iDUUbg-7C0gla17R1CyPj_HKOLnGyxqGTsvJV4Xw4-A';
-    // await this.props.getAllDocument();getSahspaceCount
-    // await this.props.getSahspaceCount();getDocmentList
-    // await this.props.getDocmentList();
+    // await this.props.getAllDocument(); //getSahspaceCount
+    await this.props.getSahspaceCount(); //getDocmentList
+    await this.props.getDocmentList(); // getUserSpaceDocList"
 
   }
 
@@ -81,10 +81,21 @@ class Home extends Component {
 
 
 
-  selectedButton() {
+ async selectedButton(value) {
+  console.log("🚀 ~ file: index.js ~ line 85 ~ Home ~ selectedButton ~ value", value)
+  if(value === 'sent') {
     this.setState({
-      selectedButton: !this.state.selectedButton,
+      selectedButton: true,
     })
+    await this.props.getDocmentList(value);
+  } else {
+    this.setState({
+      selectedButton: false,
+    })
+    await this.props.getDocmentList();
+  }
+
+    
   }
 
   uploadFileAction() {
@@ -107,7 +118,7 @@ class Home extends Component {
   }
 
   render() {
-    // const { name, email } = this.props.userDetail
+    // const { count } = this.props.sahspaceCount
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <View style={{ height: 220 }}>
@@ -116,7 +127,7 @@ class Home extends Component {
             <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', margin: 5 }}>
               <Text style={{ fontSize: 19, alignSelf: 'center', marginHorizontal: 5, }}>{`Hello, ${'name'}`}</Text>
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('SearchScreen')}
+                // onPress={() => this.props.navigation.navigate('SearchScreen')}
                 style={{ height: 30, width: 70, alignItems: 'flex-end', marginRight: 5 }}
               >
                 <Image
@@ -129,19 +140,19 @@ class Home extends Component {
           <View style={{ flex: 2, }} >
             <View style={{ flex: 1, flexDirection: 'row' }}>
               <ButtonWithIconAndText
-                buttonTitle={'56'}
+                buttonTitle={this.props.sahspaceCount && this.props.sahspaceCount.count ? this.props.sahspaceCount.count : 0}
                 headerText={'Sahspace'}
-                onPressButton={() => this.headerButtonAction()}
+                onPressButton={() => this.props.navigation.navigate('SearchScreen')}
                 buttonStyle={{ height: '80%', width: '47%', margin: '2%', borderRadius: 5, backgroundColor: '#E1EFFE', justifyContent: 'center', alignItems: 'center', }}
                 titleFontColor={'#002956'}
                 imageStyle={{ height: 25, width: 25 }}
                 imageName={images.shareIcon}
 
-              />
+              /> 
               <ButtonWithIconAndText
-                buttonTitle={'88'}
+                buttonTitle={this.props.sahspaceCount && this.props.sahspaceCount.count ? this.props.sahspaceCount.count : 0}
                 headerText={'Safe Manager'}
-                onPressButton={() => this.headerButtonAction()}
+                onPressButton={() => this.props.navigation.navigate('SearchScreen')}
                 buttonStyle={{ height: '80%', width: '45%', margin: '2%', borderRadius: 5, backgroundColor: '#FFF3EC', justifyContent: 'center', alignItems: 'center', }}
                 titleFontColor={'#8E4C00'}
                 imageStyle={{ height: 25, width: 25 }}
@@ -151,13 +162,13 @@ class Home extends Component {
             <View style={{ flexDirection: 'row', }}>
               <CustomButton
                 buttonTitle={'Recent Received'}
-                onPressButton={() => this.selectedButton(this.state.mobileNumber)}
+                onPressButton={() => this.selectedButton('recieved')}
                 buttonStyle={[{ color: 'white', height: 45, width: 150, justifyContent: 'center' }, !this.state.selectedButton && { borderBottomColor: 'grey', borderBottomWidth: 3 }]}
                 titleFontColor={'black'}
               />
               <CustomButton
                 buttonTitle={'Recent Sent'}
-                onPressButton={() => this.selectedButton(this.state.mobileNumber)}
+                onPressButton={() => this.selectedButton('sent')}
                 buttonStyle={[{ color: 'white', height: 45, width: 120, justifyContent: 'center', }, this.state.selectedButton && { borderBottomColor: 'grey', borderBottomWidth: 3 }]}
                 titleFontColor={'black'}
               />
@@ -167,19 +178,8 @@ class Home extends Component {
         </View>
         <View style={{ flex: 7.5, backgroundColor: '#FFFFFF' }} >
           <FlatList
-            data={[
-              { key: 'Devin' },
-              { key: 'Dan' },
-              { key: 'Dominic' },
-              { key: 'Jacksonh' },
-              { key: 'James' },
-              { key: 'Joel' },
-              { key: 'John' },
-              { key: 'Jillian' },
-              { key: 'Jimmy' },
-              { key: 'Julie' },
-            ]}
-            renderItem={({ item }) => <View style={{ height: 90, margin: 10, borderColor: '#DEDEDE', borderWidth: 1, borderRadius: 5 }}>
+            data={this.props.documentList}
+            renderItem={({ item }) => <View style={{ height: 100, margin: 10, borderColor: '#DEDEDE', borderWidth: 1, borderRadius: 5 }}>
               <View style={{ flexDirection: 'row', height: 90 }}>
                 <View style={{ width: '25%' }} >
                   <View style={{ flex: 1, backgroundColor: '#FFE6E2', justifyContent: 'center', alignItems: 'center', margin: 10, borderRadius: 5 }}>
@@ -190,13 +190,16 @@ class Home extends Component {
                   </View>
                 </View>
                 <View style={{ width: '75%', }} >
-                  <Text style={styles.item}>{item.key}</Text>
-                  <Text >{item.key}</Text>
+                  <Text style={styles.item}>{item.doc_name}</Text>
+                  {/* <View style={{flexDirection:'row', backgroundColor: 'red', height: 30}}> */}
+                  <Text style={{color: '#3072F3'}}>{item.name }</Text>
+                  <Text >{' > '+ item.document_name +' > '+ item.year +' > '+ item.month}</Text>
+                  {/* </View> */}
                   <View style={{ height: 1, backgroundColor: '#DEDEDE', marginVertical: 5 }}></View>
                   <View style={{ flexDirection: 'row', }}>
-                    <Text >{item.key}</Text>
+                    <Text >{item.user_name}</Text>
                     <View style={{ height: 15, width: 1, backgroundColor: '#DEDEDE', marginHorizontal: 5 }}></View>
-                    <Text >{item.key}</Text>
+                    <Text >{item.created_at}</Text>
 
                   </View>
                 </View>
@@ -253,10 +256,11 @@ Home.propTypes = {
 Home.defaultProps = {
   navigation: {},
 };
-const mapStateToProps = state => (console.log('=========', state), {
+const mapStateToProps = state => ({
   mobileNumber: state.common.mobileNumber,
   userDetail: state.common.submitOTPResponse,
-  allDocument: state.landing.allDocument
+  documentList: state.landing.documentList,
+  sahspaceCount: state.landing.sahspaceCount
 });
 const mapDispatchToProps = dispatch => ({
   toggleLoader: state => dispatch(Actions.toggleLoader(state)),

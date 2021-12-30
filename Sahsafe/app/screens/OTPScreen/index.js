@@ -68,8 +68,15 @@ class OTPScreen extends React.Component {
           "mobile_no": this.props.mobileNumber.mobile_no,
           "otp_code": this.state.otp
         }
-        this.props.submitOTPAction(data);
+       await this.props.submitOTPAction(data);
+       console.log("🚀 ~ file: -=-=-=-=-=-=-=-=-submitOTPResponse", this.props.submitOTPResponse)
+       if(this.props.submitOTPResponse.status === 0){
         this.props.navigation.navigate('UserDetail');
+       } else if(this.props.submitOTPResponse.sahspace_count === 0) {
+        this.props.navigation.navigate('WelcomeScreen'); 
+       } else {
+        this.props.navigation.navigate('HomeScreen');
+       }
       } catch (error) {
         console.log("🚀 ~ file: index.js ~ ===============", error)
         this.props.toggleLoader(false)
@@ -154,6 +161,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
+  submitOTPResponse: state.common.submitOTPResponse,
   mobileNumber: state.common.mobileNumber,
 });
 

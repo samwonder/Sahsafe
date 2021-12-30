@@ -33,40 +33,41 @@ const makeRandomColor = (myStr) => {
   console.log(matches.join(''));
   return matches.join('');
 }
-const Item = ({ title, status, position }) => (
+const Item = (item) => (
   <View style={styles.item}>
     <View style={{ height: 35, width: 35, justifyContent: 'center', alignItems: 'center', marginTop: 6, borderRadius: 18, backgroundColor: `hsla(${Math.random() * 360}, 100%, 50%, 1)` }}>
-      <Text style={{ fontSize: 16, color: 'white' }}>{makeRandomColor(title)}</Text>
+      <Text style={{ fontSize: 16, color: 'white' }}>
+        {makeRandomColor(item.item.name)}
+        </Text>
     </View>
     <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
       <View style={{ marginLeft: 10, justifyContent: 'center' }}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.subTitle}>{position}</Text>
+        <Text style={styles.title}>{item.item.name}</Text>
+        <Text style={styles.subTitle}>{item.item.access_type}</Text>
       </View>
       <View style={{ marginLeft: 10, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', width: '40%', }}>
         <View style={{ flexDirection: 'row', flex: 1, }}>
-          <View style={{ height: 10, width: 10, borderRadius: 5, backgroundColor: 'red', margin: 5 }} />
-          <Text style={styles.title}>{status}</Text>
+          <View style={[{ height: 10, width: 10, borderRadius: 5, margin: 5 },item.item.status === 'Active'? {backgroundColor: '#3BB54A'}: {backgroundColor: 'red'}]} />
+          <Text style={styles.title}>{item.item.status}</Text>
         </View>
         <Image
           style={{ height: 25, width: 25, margin: 10 }}
           source={images.dotsIcon}
         />
-        {/* <Text style={styles.subTitle}>{position}</Text> */}
       </View>
     </View>
   </View>
 );
 
 
-const InfoScreen = () => {
+const TeamScreen = (props) => {
   const renderItem = ({ item }) => (
-    <Item title={item.title} status={item.status} position={item.position} />
+    <Item item={item}/>
   );
   return (
     <View style={{ flex: 1, backgroundColor: 'white', paddingTop: 10 }}>
       <FlatList
-        data={DATA}
+        data={props.sahspaceAllUsers}
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
@@ -76,7 +77,6 @@ const InfoScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginTop: StatusBar.currentHeight || 0,
   },
   item: {
     height: 50,
@@ -86,12 +86,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     paddingHorizontal: 5
-
-
-    // backgroundColor: '#f9c2ff',
-    // padding: 20,
-    // marginVertical: 8,
-    // marginHorizontal: 16,
   },
   title: {
     fontSize: 16,
@@ -101,4 +95,4 @@ const styles = StyleSheet.create({
     color: '#7D7D7D'
   },
 });
-export default InfoScreen;
+export default TeamScreen;

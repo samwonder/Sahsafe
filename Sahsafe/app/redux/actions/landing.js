@@ -12,13 +12,10 @@ export const saveUserInfo = (value) => {
 }
 
 export const getAllDocument = (value) => {
-console.log("🚀 ~ file: =========action========== ~ getAllDocument ~ value", value, Services)
   return async dispatch => {
     dispatch(Actions.toggleLoader(true));
     try {
       let result = await Services.DocumentServices.getAllDocuments();
-      // console.log("🚀 ~ file: landing.js ~ line 20 ~ getAllDocument ~ result", result)
-      // AppConstant.Api.ApiToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfY2xhaW0iLCJhdWQiOiJUaGVfQXVkIiwiaWF0IjoxNjQwMjgxNTYyLCJuYmYiOjE2NDAyODE1NzIsImV4cCI6MTY0MDI5NTk2MiwiZGF0YSI6eyJpZCI6IjEiLCJndV9pZCI6ImVqeTJ6b2lsZ3oifX0.iDUUbg-7C0gla17R1CyPj_HKOLnGyxqGTsvJV4Xw4-A';
 
       dispatch(Actions.toggleLoader(false));
       dispatch({ type: AppConstant.ActionTypes.Common.GET_ALL_DOCUMENT, payload: result.data });
@@ -29,37 +26,161 @@ console.log("🚀 ~ file: =========action========== ~ getAllDocument ~ value", v
 };
 
 export const getSahspaceCount = (value) => {
-  console.log("🚀 ~ file: =========action========== ~ getAllDocument ~ value", value, Services)
-    return async dispatch => {
-      dispatch(Actions.toggleLoader(true));
-      try {
-        let result = await Services.DocumentServices.getSahspaceCountApi();
-        // console.log("🚀 ~ file: landing.js ~ line 20 ~ getAllDocument ~ result", result)
-        // AppConstant.Api.ApiToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfY2xhaW0iLCJhdWQiOiJUaGVfQXVkIiwiaWF0IjoxNjQwMjgxNTYyLCJuYmYiOjE2NDAyODE1NzIsImV4cCI6MTY0MDI5NTk2MiwiZGF0YSI6eyJpZCI6IjEiLCJndV9pZCI6ImVqeTJ6b2lsZ3oifX0.iDUUbg-7C0gla17R1CyPj_HKOLnGyxqGTsvJV4Xw4-A';
-  
-        dispatch(Actions.toggleLoader(false));
-        dispatch({ type: AppConstant.ActionTypes.Common.GET_SAHSPACE_COUNT, payload: result.data });
-      } catch (error) {
-        dispatch(Actions.toggleLoader(false));
-      }
-    };
+  return async dispatch => {
+    dispatch(Actions.toggleLoader(true));
+    try {
+      let result = await Services.DocumentServices.getSahspaceCountApi();
+
+      dispatch(Actions.toggleLoader(false));
+      dispatch({ type: AppConstant.ActionTypes.Common.GET_SAHSPACE_COUNT, payload: result.data });
+    } catch (error) {
+      dispatch(Actions.toggleLoader(false));
+    }
   };
+};
 
-  export const getDocmentList = (value) => {
-    console.log("🚀 ~ file: =========action========== -=-=-=-=-", value)
-      return async dispatch => {
-        dispatch(Actions.toggleLoader(true));
-        try {
-          let result = await Services.DocumentServices.getDocmentListApi();
-          // console.log("🚀 ~ file: landing.js ~ line 20 ~ getAllDocument ~ result", result)
-          // AppConstant.Api.ApiToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfY2xhaW0iLCJhdWQiOiJUaGVfQXVkIiwiaWF0IjoxNjQwMjgxNTYyLCJuYmYiOjE2NDAyODE1NzIsImV4cCI6MTY0MDI5NTk2MiwiZGF0YSI6eyJpZCI6IjEiLCJndV9pZCI6ImVqeTJ6b2lsZ3oifX0.iDUUbg-7C0gla17R1CyPj_HKOLnGyxqGTsvJV4Xw4-A';
-    
-          dispatch(Actions.toggleLoader(false));
-          dispatch({ type: AppConstant.ActionTypes.Common.GET_DOCUMENT_LIST, payload: result.data });
-        } catch (error) {
-          dispatch(Actions.toggleLoader(false));
-        }
-      };
-    };
+export const getDocmentList = (value) => {
+  console.log("🚀 ~ file: ========= -=-=-=-=-", value)
+  return async dispatch => {
+    dispatch(Actions.toggleLoader(true));
+    try {
+      let result = await Services.DocumentServices.getDocmentListApi(value);
+      dispatch(Actions.toggleLoader(false));
+      dispatch({ type: AppConstant.ActionTypes.Common.GET_DOCUMENT_LIST, payload: result.data });
+    } catch (error) {
+      dispatch(Actions.toggleLoader(false));
+    }
+  };
+};
 
-  // 
+export const uploadDocuement = (value) => {
+  console.log("🚀 ~ file: =========action========== -=-=-=-=-", value)
+  return async dispatch => {
+    dispatch(Actions.toggleLoader(true));
+    try {
+      let result = await Services.DocumentServices.uploadDocuementApi();
+      dispatch(Actions.toggleLoader(false));
+      dispatch({ type: AppConstant.ActionTypes.Common.GET_DOCUMENT_LIST, payload: result.data });
+    } catch (error) {
+      dispatch(Actions.toggleLoader(false));
+    }
+  };
+};
+export const uploadSpaceDocument = (value) => {
+  console.log("🚀 ~ file: =========action========== -=-=-=-=-", value)
+  return async dispatch => {
+    dispatch(Actions.toggleLoader(true));
+    try {
+      let result = await Services.DocumentServices.uploadSpaceDocumentApi();
+      dispatch(Actions.toggleLoader(false));
+      dispatch({ type: AppConstant.ActionTypes.Common.GET_DOCUMENT_LIST, payload: result.data });
+    } catch (error) {
+      dispatch(Actions.toggleLoader(false));
+    }
+  };
+};
+export const getuserdetail = (value) => {
+  console.log("🚀 ~ file: =========action========== -=-=-=-=-", value)
+  return async dispatch => {
+    dispatch(Actions.toggleLoader(true));
+    try {
+      let result = await Services.DocumentServices.getuserdetailApi();
+      dispatch(Actions.toggleLoader(false));
+      dispatch({ type: AppConstant.ActionTypes.Common.GET_DOCUMENT_LIST, payload: result.data });
+    } catch (error) {
+      dispatch(Actions.toggleLoader(false));
+    }
+  };
+};
+export const getSahspaceList = (value) => {
+  console.log("🚀 ~ file: =========action========== -=-=-=-=-", value)
+  return async dispatch => {
+    dispatch(Actions.toggleLoader(true));
+    try {
+      let result = await Services.DocumentServices.getSahspaceListApi();
+      dispatch(Actions.toggleLoader(false));
+      dispatch({ type: AppConstant.ActionTypes.Common.GET_SAHSPACE_LIST, payload: result.data });
+    } catch (error) {
+      dispatch(Actions.toggleLoader(false));
+    }
+  };
+};
+export const getSahspaceDocumentTypeList = (value, fileType) => {
+  // console.log("🚀 ~ file: =========action========== -=-=-=-=-", value)
+  return async dispatch => {
+    dispatch(Actions.toggleLoader(true));
+    try {
+      let result = await Services.DocumentServices.getSahspaceDocumentTypeListApi(value, fileType);
+      dispatch(Actions.toggleLoader(false));
+      dispatch({ type: AppConstant.ActionTypes.Common.GET_SAHSPACE_DOCUMENT_TYPE_LIST, payload: result.data });
+    } catch (error) {
+      dispatch(Actions.toggleLoader(false));
+    }
+  };
+};
+export const getSpaceYear= (value) => {
+  console.log("🚀 ~ file: =========action========== -=-=-=-=-", value)
+  return async dispatch => {
+    dispatch(Actions.toggleLoader(true));
+    try {
+      let result = await Services.DocumentServices.getSpaceYearApi();
+      dispatch(Actions.toggleLoader(false));
+      dispatch({ type: AppConstant.ActionTypes.Common.GET_SAHSPACE_YEAR, payload: result.data });
+    } catch (error) {
+      dispatch(Actions.toggleLoader(false));
+    }
+  };
+};
+export const getSpaceMonth = (value) => {
+  console.log("🚀 ~ file: =========action========== -=-=-=-=-", value)
+  return async dispatch => {
+    dispatch(Actions.toggleLoader(true));
+    try {
+      let result = await Services.DocumentServices.getSpaceMonthApi();
+      dispatch(Actions.toggleLoader(false));
+      dispatch({ type: AppConstant.ActionTypes.Common.GET_DOCUMENT_LIST, payload: result.data });
+    } catch (error) {
+      dispatch(Actions.toggleLoader(false));
+    }
+  };
+};
+export const getSahspacedetail = (value) => {
+  // console.log("🚀 ~ file: =========action========== -=-=-=-=-", value)
+  return async dispatch => {
+    dispatch(Actions.toggleLoader(true));
+    try {
+      let result = await Services.DocumentServices.getSahspacedetailApi(value);
+      dispatch(Actions.toggleLoader(false));
+      dispatch({ type: AppConstant.ActionTypes.Common.GET_SAHSPACE_DETAIL, payload: result.data });
+    } catch (error) {
+      dispatch(Actions.toggleLoader(false));
+    }
+  };
+};
+export const editSahspacedetail = (value) => {
+  console.log("🚀 ~ file: =========action========== -=-=-=-=-", value)
+  return async dispatch => {
+    dispatch(Actions.toggleLoader(true));
+    try {
+      let result = await Services.DocumentServices.editSahspacedetailApi();
+      dispatch(Actions.toggleLoader(false));
+      dispatch({ type: AppConstant.ActionTypes.Common.GET_DOCUMENT_LIST, payload: result.data });
+    } catch (error) {
+      dispatch(Actions.toggleLoader(false));
+    }
+  };
+};
+export const getSahspaceallUsers = (value) => {
+  // console.log("🚀 ~ file: =========action========== -=-=-=-=-", value)
+  return async dispatch => {
+    dispatch(Actions.toggleLoader(true));
+    try {
+      let result = await Services.DocumentServices.getSahspaceallUsersApi(value);
+      dispatch(Actions.toggleLoader(false));
+      dispatch({ type: AppConstant.ActionTypes.Common.GET_SAHSPACE_ALL_USERS, payload: result.data });
+    } catch (error) {
+      dispatch(Actions.toggleLoader(false));
+    }
+  };
+};
+
