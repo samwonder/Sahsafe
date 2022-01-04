@@ -63,13 +63,13 @@ class IndustriesDetail extends Component {
   }
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: 'white', }}>
         <NavigationBar
           showBackButton={Boolean(true)}
           backButtonImage={images.featureSearch}
           backButtonAction={() => this.popBack()}
         />
-        <View style={{ backgroundColor: 'transparent' }}>
+        <View style={{ backgroundColor: 'transparent', marginTop: 20 }}>
           <CustomTopBar
             topBarTitle={tabbar}
             currentIndex={this.state.currentTabIndex}

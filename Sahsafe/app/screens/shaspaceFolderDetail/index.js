@@ -9,7 +9,7 @@ import CustomText from '../../components/CustomText';
 import { connect } from "react-redux";
 import * as Actions from "@redux/actions";
 import * as Services from "@services";
-
+import EmptyScreen from '../../components/EmptyScreen'
 class DocumentTypeScreen extends Component {
   constructor(props) {
     super(props);
@@ -18,18 +18,18 @@ class DocumentTypeScreen extends Component {
       folderType: props.route.params && props.route.params.folderType
     }
   }
- async componentDidMount() {
-  console.log("🚀 ~ -=-------------============ componentDidMount", this.state.sahspaceUser, this.state.folderType)
-        await this.props.getSahspaceDocumentTypeList(this.state.sahspaceUser.sahspace_unique_id, this.state.folderType);
-        console.log("🚀 ~ file: ----------------------1111", this.props.sahspaceDocumentTypeList)
+  async componentDidMount() {
+    console.log("🚀 ~ -=-------------============ componentDidMount", this.state.sahspaceUser, this.state.folderType)
+    await this.props.getSahspaceDocumentTypeList(this.state.sahspaceUser.sahspace_unique_id, this.state.folderType);
+    console.log("🚀 ~ file: ----------------------1111", this.props.sahspaceDocumentTypeList)
 
   }
   navigationToDocumentList(item) {
     // this.state.sahspaceUser
-    this.props.navigation.navigate('Year', {sahspaceUser: this.state.sahspaceUser})
-  
-  
-    }
+    this.props.navigation.navigate('Year', { sahspaceUser: this.state.sahspaceUser })
+
+
+  }
   popBack() {
     const { goBack } = this.props.navigation;
     goBack(null);
@@ -43,8 +43,11 @@ class DocumentTypeScreen extends Component {
           backButtonAction={() => this.popBack()}
         />
         <FlatList
+          showsHorizontalScrollIndicator={Boolean(false)}
           data={this.props.sahspaceDocumentTypeList}
           numColumns={3}
+          style={{marginTop: 20}}
+          ListEmptyComponent={<EmptyScreen />}
           renderItem={({ item, index }) =>
             <View style={{ width: '30%', height: 110, margin: '1%', }}>
               <TouchableOpacity
@@ -57,7 +60,7 @@ class DocumentTypeScreen extends Component {
               </TouchableOpacity>
               <CustomText
                 textStyle={{ fontSize: 14, color: 'black', fontWeight: '600', textAlign: 'center' }}
-                text={item.key} />
+                text={item.name} />
             </View>
           }
         // ItemSeparatorComponent={this.renderSeparator}
@@ -73,6 +76,7 @@ class DocumentTypeScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white'
   },
   item: {
     // margin: 10,
@@ -85,7 +89,7 @@ const mapStateToProps = state => ({
   mobileNumber: state.common.mobileNumber,
   userDetail: state.common.submitOTPResponse,
   sahspaceDetail: state.landing.getSahspaceDetail,
-  sahspaceDocumentTypeList: state.landing.getSahspaceDocumentTypeList 
+  sahspaceDocumentTypeList: state.landing.getSahspaceDocumentTypeList
 });
 const mapDispatchToProps = dispatch => ({
   toggleLoader: state => dispatch(Actions.toggleLoader(state)),

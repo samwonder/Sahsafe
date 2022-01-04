@@ -19,6 +19,7 @@ const Common = {
   'GET_SAHSPACE_DETAIL': 'GetSahspacedetail',
   'EDIT_SAHSPACE_DETAIL': 'EditSahspacedetail',
   'GET_SAHSPACE_ALL_USERS': 'GetSahspaceallUsers',
+  'GET_SPACE_UPLOADED_DOC_LIST':'GetSpaceUploadedDocList'
 }
 
 

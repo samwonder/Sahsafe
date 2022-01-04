@@ -123,7 +123,7 @@ export const getSpaceYear= (value) => {
   return async dispatch => {
     dispatch(Actions.toggleLoader(true));
     try {
-      let result = await Services.DocumentServices.getSpaceYearApi();
+      let result = await Services.DocumentServices.getSpaceYearApi(value);
       dispatch(Actions.toggleLoader(false));
       dispatch({ type: AppConstant.ActionTypes.Common.GET_SAHSPACE_YEAR, payload: result.data });
     } catch (error) {
@@ -131,14 +131,14 @@ export const getSpaceYear= (value) => {
     }
   };
 };
-export const getSpaceMonth = (value) => {
+export const getSpaceMonth = (value, year) => {
   console.log("🚀 ~ file: =========action========== -=-=-=-=-", value)
   return async dispatch => {
     dispatch(Actions.toggleLoader(true));
     try {
-      let result = await Services.DocumentServices.getSpaceMonthApi();
+      let result = await Services.DocumentServices.getSpaceMonthApi(value, year);
       dispatch(Actions.toggleLoader(false));
-      dispatch({ type: AppConstant.ActionTypes.Common.GET_DOCUMENT_LIST, payload: result.data });
+      dispatch({ type: AppConstant.ActionTypes.Common.GET_SAHSAPCE_MONTH, payload: result.data });
     } catch (error) {
       dispatch(Actions.toggleLoader(false));
     }
@@ -178,6 +178,20 @@ export const getSahspaceallUsers = (value) => {
       let result = await Services.DocumentServices.getSahspaceallUsersApi(value);
       dispatch(Actions.toggleLoader(false));
       dispatch({ type: AppConstant.ActionTypes.Common.GET_SAHSPACE_ALL_USERS, payload: result.data });
+    } catch (error) {
+      dispatch(Actions.toggleLoader(false));
+    }
+  };
+};
+
+export const getSpaceUploadedDocList = (value) => {
+  // console.log("🚀 ~ file: =========action========== -=-=-=-=-", value)
+  return async dispatch => {
+    dispatch(Actions.toggleLoader(true));
+    try {
+      let result = await Services.DocumentServices.getSpaceUploadedDocListApi(value);
+      dispatch(Actions.toggleLoader(false));
+      dispatch({ type: AppConstant.ActionTypes.Common.GET_SPACE_UPLOADED_DOC_LIST, payload: result.data });
     } catch (error) {
       dispatch(Actions.toggleLoader(false));
     }

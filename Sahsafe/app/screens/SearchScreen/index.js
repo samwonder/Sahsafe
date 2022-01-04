@@ -22,6 +22,8 @@ import { images } from '../../assets/images/index'
 import * as Animatable from "react-native-animatable";
 import * as AppConstant from "@constants";
 import CustomButton from '../../components/CustomButton';
+import EmptyScreen from '../../components/EmptyScreen'
+import NavigationBar from '../../components/NavigationBar';
 
 class SuccessScreen extends Component {
   constructor(props) {
@@ -52,7 +54,7 @@ class SuccessScreen extends Component {
   }
   onClickCell(item) {
     console.log("🚀 ~ file: index.js ~ line 54 ~ SuccessScreen ~ onClickCell ~ item", item)
-    this.props.navigation.navigate('IndustriesDetail', {sahspaceUser: item})
+    this.props.navigation.navigate('IndustriesDetail', { sahspaceUser: item })
   }
 
   renderItem = ({ item }) => (
@@ -79,22 +81,20 @@ class SuccessScreen extends Component {
   showSearchResult() {
     Alert.alert('Work in Progress..')
   }
+  popBack() {
+    const { goBack } = this.props.navigation;
+    goBack(null);
+  }
+
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
-        <View style={{ height: 50, marginTop: 50, width: '100%', borderBottomColor: 'grey', borderBottomWidth: 1 }}>
-          <TouchableOpacity
-            onPress={() => this.navigateBack()}
-            style={{ height: 50, width: 120, flexDirection: 'row' }}
-          >
-            <Image
-              style={{ height: 30, width: 40, marginLeft: 10 }}
-              source={images.backIcon}
-            />
-            <Text style={{ fontSize: 18, textAlign: 'center', marginTop: 5 }}>{'  ShaSafe'}</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={{ flex: 1, alignItems: 'center', marginTop: 10 }}>
+        <NavigationBar
+          showBackButton={Boolean(true)}
+          backButtonImage={images.featureSearch}
+          backButtonAction={() => this.popBack()}
+        />
+        <View style={{ flex: 1, alignItems: 'center', marginTop: 20, }}>
           <View style={{ width: '96%', height: 50, justifyContent: 'space-between', flexDirection: 'row', padding: 5, borderColor: 'grey', borderWidth: 1 }}>
             <TextInput
               style={{ height: 40, width: '80%', fontSize: 18 }}
@@ -112,13 +112,17 @@ class SuccessScreen extends Component {
               />
             </TouchableOpacity>
           </View>
+          <View style={{ marginTop: 10, flex: 1, width: '100%' }}>
+            <FlatList
+              showsHorizontalScrollIndicator={Boolean(false)}
+              ListEmptyComponent={<EmptyScreen />}
+              data={this.props.sahspaceList}
+              renderItem={this.renderItem}
+              keyExtractor={item => item.id}
+              style={{ flex: 1, width: '100%' }}
+            />
+          </View>
 
-          <FlatList
-            data={this.props.sahspaceList}
-            renderItem={this.renderItem}
-            keyExtractor={item => item.id}
-            style={{ flex: 1, width: '100%' }}
-          />
         </View>
       </View>
     );

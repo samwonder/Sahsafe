@@ -102,8 +102,13 @@ const getSahspaceDocumentTypeListApi = async (data, fileType) => {
   }
 }
 const getSpaceYearApi = async (data) => {
+console.log("🚀 ~ ==------------~ data", data)
+  let clientId = {
+    "sahspace_unique_id": data,
+    "document_type_id": 1
+  }
   try {
-    const response = await Config.axios.post(AppConstant.Api.Document.GET_SAHSPACE_YEAR);
+    const response = await Config.axios.post(AppConstant.Api.Document.GET_SAHSPACE_YEAR, clientId);
     console.log("🚀 ~ file:============= ~ response", response)
     if (response.status) {
       return response;
@@ -112,9 +117,15 @@ const getSpaceYearApi = async (data) => {
     return null;
   }
 }
-const getSpaceMonthApi = async (data) => {
+const getSpaceMonthApi = async (data, year) => {
+console.log("🚀 ~ file: documentServices.js ~ line 121 ~ getSpaceMonthApi ~ data, year", data, year)
+  let clientId = {
+    "sahspace_unique_id": data,
+    "document_type_id": 1,
+    'year': year.year
+  }
   try {
-    const response = await Config.axios.post(AppConstant.Api.Document.GET_SAHSAPCE_MONTH);
+    const response = await Config.axios.post(AppConstant.Api.Document.GET_SAHSAPCE_MONTH, clientId);
     console.log("🚀 ~ file:============= ~ response", response)
     if (response.status) {
       return response;
@@ -164,11 +175,22 @@ const getSahspaceallUsersApi = async (data) => {
       return response;
     }
   } catch (error) {
-    // console.log("🚀 ~ file: documentServices.js ~ line 159 ~ getSahspaceallUsersApi ~ error", error)
     return null;
   }
 }
+const getSpaceUploadedDocListApi = async (data) => {
+  console.log("🚀 ~ file:========121212132====---==--==--== ~ data", data)
 
+  try {
+    const response = await Config.axios.post(AppConstant.Api.Document.GET_SAHSPACE_ALL_USERS, data);
+    console.log("🚀 ~ file:============= ~ response", response.data)
+    if (response.status) {
+      return response;
+    }
+  } catch (error) {
+    return null;
+  }
+}
 export default {
   getAllDocuments,
   getSahspaceCountApi,
@@ -183,5 +205,7 @@ export default {
   getSahspacedetailApi,
   editSahspacedetailApi,
   getSahspaceallUsersApi,
+  getSpaceUploadedDocListApi
 }
 
+// 'GET_SPACE_UPLOADED_DOC_LIST':'getSpaceUploadedDocList'

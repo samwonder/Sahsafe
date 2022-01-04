@@ -17,7 +17,7 @@ import DocumentTypeFolder from '../screens/DocumentTypeFolder'
 import Month from '../screens/Month'
 import Year from '../screens/Year'
 import ShaspaceFolderDetail from '../screens/shaspaceFolderDetail'
-// import IndustriesDetail from '../screens/IndustriesDetail'
+import SahspaceManager from '../screens/SahSpaceManager'
 // import IndustriesDetail from '../screens/IndustriesDetail'
 
 function NotificationsScreen({ navigation }) {
@@ -46,9 +46,9 @@ export default function App() {
         <Stack.Screen name="DocumentTypeFolder" component={DocumentTypeFolder} options={{headerShown: false}}/>
         <Stack.Screen name="ShaspaceFolderDetail" component={ShaspaceFolderDetail} options={{headerShown: false}}/>
         <Stack.Screen name="Year" component={Year} options={{headerShown: false}}/>
-        {/* <Stack.Screen name="DocumentList" component={DocumentList} options={{headerShown: false}}/> */}
-        {/* <Stack.Screen name="Month" component={Month} options={{headerShown: false}}/> */}
-        {/* <Stack.Screen name="IndustriesDetail" component={IndustriesDetail} options={{headerShown: false}}/> */}
+        <Stack.Screen name="Month" component={Month} options={{headerShown: false}}/>
+        <Stack.Screen name="DocumentList" component={DocumentList} options={{headerShown: false}}/>
+        <Stack.Screen name="SahspaceManager" component={SahspaceManager} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

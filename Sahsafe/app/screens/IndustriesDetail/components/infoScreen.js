@@ -41,6 +41,7 @@ const InfoScreen = (props) => {
       </View>
 
       <FlatList
+      showsHorizontalScrollIndicator={Boolean(false)}
         data={props.userDetail.document_ids}
         renderItem={({ item }) =>
           <View style={{ backgroundColor: 'white', height: 50, width: '94%', marginHorizontal: '3%', }}>

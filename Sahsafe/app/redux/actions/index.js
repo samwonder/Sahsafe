@@ -13,7 +13,8 @@ export {
   getSahspaceDocumentTypeList,
   getSahspaceList,
   getuserdetail,
-  uploadSpaceDocument
+  uploadSpaceDocument,
+  getSpaceUploadedDocList
 } from '@redux/actions/landing';
 
 

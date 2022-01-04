@@ -27,6 +27,7 @@ const Document = {
   'GET_SAHSPACE_DETAIL': 'getSahspaceDetail',
   'EDIT_SAHSPACE_DETAIL': 'editSahspaceDetail',
   'GET_SAHSPACE_ALL_USERS': 'getSpaceUsers',
+  'GET_SPACE_UPLOADED_DOC_LIST':'getSpaceUploadedDocList'
 }
 
 export default {

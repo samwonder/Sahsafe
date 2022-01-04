@@ -33,16 +33,27 @@ class Home extends Component {
     this.state = {
       topView: false,
       selectedButton: false,
+      months: {}
     }
   }
 
   async componentDidMount() {
-    // AppConstant.Api.ApiToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfY2xhaW0iLCJhdWQiOiJUaGVfQXVkIiwiaWF0IjoxNjQwMjgxNTYyLCJuYmYiOjE2NDAyODE1NzIsImV4cCI6MTY0MDI5NTk2MiwiZGF0YSI6eyJpZCI6IjEiLCJndV9pZCI6ImVqeTJ6b2lsZ3oifX0.iDUUbg-7C0gla17R1CyPj_HKOLnGyxqGTsvJV4Xw4-A';
-    // await this.props.getAllDocument(); //getSahspaceCount
-    await this.props.getSahspaceCount(); //getDocmentList
-    await this.props.getDocmentList(); // getUserSpaceDocList"
+    await this.props.getSahspaceCount(); 
+    await this.props.getDocmentList(); 
+    this.generateArrayOfYears()
 
   }
+  generateArrayOfYears() {
+    var max = new Date().getFullYear()
+    var min = max - 9
+    var years = []
+  
+    for (var i = max; i >= min; i--) {
+      years.push(i)
+    }
+    return years
+  }
+
 
   popBack() {
     const { goBack } = this.props.navigation;
@@ -125,7 +136,9 @@ class Home extends Component {
           <View style={{ flex: 1 }} >
             <View style={{ flex: 1 }} />
             <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', margin: 5 }}>
-              <Text style={{ fontSize: 19, alignSelf: 'center', marginHorizontal: 5, }}>{`Hello, ${'name'}`}</Text>
+              <Text style={{ fontSize: 19, alignSelf: 'center', marginHorizontal: 5, }}>
+                {`Hello, ${this.props.userDetail.name}`}
+                </Text>
               <TouchableOpacity
                 // onPress={() => this.props.navigation.navigate('SearchScreen')}
                 style={{ height: 30, width: 70, alignItems: 'flex-end', marginRight: 5 }}
@@ -152,7 +165,7 @@ class Home extends Component {
               <ButtonWithIconAndText
                 buttonTitle={this.props.sahspaceCount && this.props.sahspaceCount.count ? this.props.sahspaceCount.count : 0}
                 headerText={'Safe Manager'}
-                onPressButton={() => this.props.navigation.navigate('SearchScreen')}
+                onPressButton={() => this.props.navigation.navigate('SahspaceManager')}
                 buttonStyle={{ height: '80%', width: '45%', margin: '2%', borderRadius: 5, backgroundColor: '#FFF3EC', justifyContent: 'center', alignItems: 'center', }}
                 titleFontColor={'#8E4C00'}
                 imageStyle={{ height: 25, width: 25 }}
@@ -178,8 +191,9 @@ class Home extends Component {
         </View>
         <View style={{ flex: 7.5, backgroundColor: '#FFFFFF' }} >
           <FlatList
+          showsHorizontalScrollIndicator={Boolean(false)}
             data={this.props.documentList}
-            renderItem={({ item }) => <View style={{ height: 100, margin: 10, borderColor: '#DEDEDE', borderWidth: 1, borderRadius: 5 }}>
+            renderItem={({ item }) => <View style={{ height: 100, margin: 5, borderColor: '#DEDEDE', borderWidth: 1, borderRadius: 5 }}>
               <View style={{ flexDirection: 'row', height: 90 }}>
                 <View style={{ width: '25%' }} >
                   <View style={{ flex: 1, backgroundColor: '#FFE6E2', justifyContent: 'center', alignItems: 'center', margin: 10, borderRadius: 5 }}>

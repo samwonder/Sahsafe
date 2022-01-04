@@ -67,6 +67,7 @@ const TeamScreen = (props) => {
   return (
     <View style={{ flex: 1, backgroundColor: 'white', paddingTop: 10 }}>
       <FlatList
+      showsHorizontalScrollIndicator={Boolean(false)}
         data={props.sahspaceAllUsers}
         renderItem={renderItem}
         keyExtractor={item => item.id}

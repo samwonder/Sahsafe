@@ -26,6 +26,7 @@ import CustomButton from '../../components/CustomButton';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const countries = ["Egypt", "Canada", "Australia", "Ireland"]
+var monthList = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 class Splash extends Component {
   constructor(props) {
@@ -34,12 +35,30 @@ class Splash extends Component {
       documentName: null,
       firstName: null,
       description: null,
+      months: monthList,
+      years: {},
+      selectedMonth: null,
+      selectedYear: null,
     }
   }
 
   componentDidMount() {
-
+    this.generateArrayOfYears()
   }
+ generateArrayOfYears() {
+    var max = new Date().getFullYear()
+    var min = max - 10
+    var yr = []
+  
+    for (var i = max + 1; i >= min; i--) {
+      yr.push(i)
+    }
+    this.setState({
+      years: yr,
+    })
+    return yr
+  }
+
 
   documentNameAction = (text) => {
     console.log("🚀 ~ file: index.js -=-=-=-=-=-=-=-t", text)
@@ -93,6 +112,7 @@ class Splash extends Component {
                   return selectedItem;
                 }}
                 rowTextForSelection={(item, index) => {
+                  
                   return item;
                 }}
                 buttonStyle={styles.dropdown1BtnStyle}
@@ -114,8 +134,9 @@ class Splash extends Component {
 
               <View style={{ flexDirection: 'row' }}>
                 <SelectDropdown
-                  data={countries}
-                  // defaultValueByIndex={1}
+                  data={this.state.years}
+                  defaultValue={this.state.years[0]}
+                  
                   onSelect={(selectedItem, index) => {
                     console.log(selectedItem, index);
                   }}
@@ -143,8 +164,8 @@ class Splash extends Component {
                   rowTextStyle={styles.dropdown4RowTxtStyle}
                 />
                 <SelectDropdown
-                  data={countries}
-                  // defaultValueByIndex={1}
+                  data={this.state.months}
+                  defaultValue={this.state.months[0]}
                   onSelect={(selectedItem, index) => {
                     console.log(selectedItem, index);
                   }}
@@ -319,8 +340,13 @@ const styles = StyleSheet.create({
     borderColor: "#8D8D8D",
     margin: 10
   },
-  dropdown4BtnTxtStyle: { color: "#8D8D8D", textAlign: "left" },
-  dropdown4DropdownStyle: { backgroundColor: "#EFEFEF" },
+  dropdown4BtnTxtStyle: { 
+    color: "black", 
+    textAlign: "left" 
+  },
+  dropdown4DropdownStyle: {
+     backgroundColor: "#EFEFEF" 
+    },
   dropdown4RowStyle: {
     backgroundColor: "#EFEFEF",
     borderBottomColor: "#C5C5C5",

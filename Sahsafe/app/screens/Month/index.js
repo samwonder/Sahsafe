@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   AppRegistry, FlatList,
-  StyleSheet, Image, View, Alert
+  StyleSheet, Image, View, TouchableOpacity
 } from 'react-native';
 import NavigationBar from '../../components/NavigationBar';
 import { images } from '../../assets/images/index';
@@ -9,24 +9,31 @@ import CustomText from '../../components/CustomText';
 import { connect } from "react-redux";
 import * as Actions from "@redux/actions";
 import * as Services from "@services";
-
+import EmptyScreen from '../../components/EmptyScreen'
 class DocumentTypeScreen extends Component {
-
-  renderSeparator = () => {
-    return (
-      <View
-        style={{
-          height: 1,
-          width: "100%",
-          backgroundColor: "#000",
-        }}
-      />
-    );
-  };
-  //handling onPress action  
-  getListViewItem = (item) => {
-    Alert.alert(item.key);
+  constructor(props) {
+    super(props);
+    this.state = {
+      sahspaceUser: props.route.params && props.route.params.sahspaceUser,
+      selectedYear: props.route.params && props.route.params.selectedYear,
+    }
   }
+  async componentDidMount() {
+    await this.props.getSpaceMonth(this.state.sahspaceUser.sahspace_unique_id, this.state.selectedYear);
+    console.log("🚀 ~ file: ----====-----====--------", this.props.getSahspaceMonth)
+
+  }
+  navigationToDocumentList(index) {
+  // this.state.sahspaceUser
+  this.props.navigation.navigate('DocumentList', {
+    sahspaceUser: this.state.sahspaceUser, 
+    selectedYear: this.state.selectedYear,
+    selectedMonth: this.props.getSahspaceMonth[index]
+  })
+
+
+  }
+
   popBack() {
     const { goBack } = this.props.navigation;
     goBack(null);
@@ -40,24 +47,26 @@ class DocumentTypeScreen extends Component {
           backButtonAction={() => this.popBack()}
         />
         <FlatList
-          data={[
-            { key: 'Android' }, { key: 'iOS' }, { key: 'Java' }, { key: 'Swift' },
-            { key: 'Php' }, { key: 'Hadoop' }, { key: 'Sap' },
-          ]}
+        showsHorizontalScrollIndicator={Boolean(false)}
+          data={this.props.getSahspaceMonth}
           numColumns={3}
-          renderItem={({ item }) =>
-            <View style={{ width: '30%', height: 110, margin: '1%', }}>
-              <View style={{ height: 80, backgroundColor: '#F4F8FF', margin: '1%', borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+          style={{marginTop: 20}}
+          renderItem={({ item, index }) =>
+            <View style={{ width: '30%', height: 110, margin: '1%',  }}>
+              <TouchableOpacity
+              onPress={() => this.navigationToDocumentList(index)} 
+              style={{ height: 80, backgroundColor: '#F4F8FF', margin: '1%', borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
                 <Image
                   style={{ height: 70, width: 70 }}
                   source={images.folderIcon}
                 />
-              </View>
+              </TouchableOpacity>
               <CustomText
                 textStyle={{ fontSize: 14, color: 'black', fontWeight: '600', textAlign: 'center' }}
-                text={'Document Type Access'} />
+                text={item.month} />
             </View>
           }
+          ListEmptyComponent={<EmptyScreen />}
         // ItemSeparatorComponent={this.renderSeparator}
         />
       </View>
@@ -71,6 +80,7 @@ class DocumentTypeScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white'
   },
   item: {
     // margin: 10,
@@ -82,11 +92,11 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   mobileNumber: state.common.mobileNumber,
   userDetail: state.common.submitOTPResponse,
-  sahspaceDetail: state.landing.getSahspaceDetail,
+  getSahspaceMonth: state.landing.getSahspaceMonth,
 });
 const mapDispatchToProps = dispatch => ({
   toggleLoader: state => dispatch(Actions.toggleLoader(state)),
-  getSahspacedetail: state => dispatch(Actions.getSahspacedetail(state)),
+  getSpaceMonth: (state, year) => dispatch(Actions.getSpaceMonth(state, year)),
 });
 
 export default connect(

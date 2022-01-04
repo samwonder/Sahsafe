@@ -14,13 +14,14 @@ import CustomText from '../../components/CustomText';
 import { connect } from "react-redux";
 import * as Actions from "@redux/actions";
 import * as Services from "@services";
+import EmptyScreen from '../../components/EmptyScreen'
 
 class DocumentTypeScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       sahspaceUser: props.route.params && props.route.params.sahspaceUser,
-      
+
     }
   }
   async componentDidMount() {
@@ -29,13 +30,13 @@ class DocumentTypeScreen extends Component {
 
   }
   navigationToDocumentList(item) {
-  console.log("🚀 ~ file: index.js ===========----- ~ data", item)
-  let foldername = 'send';
-  if(item === 1) {
-    foldername = 'recieved'
-  } 
-  // this.state.sahspaceUser
-  this.props.navigation.navigate('ShaspaceFolderDetail', {sahspaceUser: this.state.sahspaceUser, folderType: foldername})
+    console.log("🚀 ~ file: index.js ===========----- ~ data", item)
+    let foldername = 'send';
+    if (item === 1) {
+      foldername = 'recieved'
+    }
+    // this.state.sahspaceUser
+    this.props.navigation.navigate('ShaspaceFolderDetail', { sahspaceUser: this.state.sahspaceUser, folderType: foldername })
 
 
   }
@@ -54,14 +55,17 @@ class DocumentTypeScreen extends Component {
           backButtonAction={() => this.popBack()}
         />
         <FlatList
+          showsHorizontalScrollIndicator={Boolean(false)}
           data={[{ key: 'Send' }, { key: 'Recieve' }]}
           numColumns={3}
+          style={{marginTop: 20}}
+          ListEmptyComponent={<EmptyScreen />}
           renderItem={({ item, index }) =>
             <View style={{ width: '30%', height: 110, margin: '1%', }}>
               <TouchableOpacity
                 onPress={() => this.navigationToDocumentList(index)}
                 style={{ height: 80, backgroundColor: '#F4F8FF', margin: '1%', borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                  {console.log("🚀 ~ file:  item.key", item.key)}
+                {console.log("🚀 ~ file:  item.key", item.key)}
                 <Image
                   style={{ height: 70, width: 70 }}
                   source={images.folderIcon}
@@ -84,6 +88,7 @@ class DocumentTypeScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white'
   },
   item: {
     // margin: 10,

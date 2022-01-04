@@ -57,5 +57,7 @@
 	<string>$(PRODUCT_NAME) want to use your photo gallery</string>
 	<key>NSDocumentsFolderUsageDescription</key>
 	<string>$(PRODUCT_NAME) want to use your document</string>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 </dict>
 </plist>

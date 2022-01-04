@@ -15,6 +15,7 @@ const initialState = {
   getUserDetail: {},
   uploadSpaceDocument: {},
   uploadDocument: {},
+  getSpaceUploadedDocList: {},
 };
 
 export default (state, action) => {
@@ -111,6 +112,13 @@ export default (state, action) => {
       }
     }
       break;
+      case AppConstant.ActionTypes.Common.GET_SPACE_UPLOADED_DOC_LIST: {
+        return {
+          ...state,
+          getSpaceUploadedDocList: action.payload.data,
+        }
+      }
+        break;
     default:
       return state;
   }
