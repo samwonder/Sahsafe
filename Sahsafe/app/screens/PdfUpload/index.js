@@ -35,18 +35,24 @@ class Splash extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      documentName: null,
-      firstName: null,
-      description: null,
+      documentName: '',
+      firstName: '',
+      description: '',
       months: monthList,
       years: {},
-      selectedMonth: null,
-      selectedYear: null,
+      selectedMonth: '',
+      selectedYear: '',
       sahspaceList: [],
       sahspaceSelectedList: [],
+      selectedSahspace: '',
+      selectedSahspaceDoc: '',
+      sahspace_unique_id: ''
+
     }
   }
-
+  // this.setState({
+  //   selectedSahspaceDoc: selectedItem
+  // })
   async componentDidMount() {
     this.generateArrayOfYears();
     await this.props.getSahspaceList();
@@ -93,10 +99,12 @@ class Splash extends Component {
     })
 
   }
- async sahspaceListItemSelected(selectedItem, index) {
-    console.log("🚀 ~ file: index.js ~ line 160 ~", this.props.sahspaceList[index].sahspace_unique_id)
-   await this.props.getSahspaceDocumentTypeList(this.props.sahspaceList[index].sahspace_unique_id);
-
+  async sahspaceListItemSelected(selectedItem, index) {
+    await this.props.getSahspaceDocumentTypeList(this.props.sahspaceList[index].sahspace_unique_id);
+    this.setState({
+      selectedSahspace: selectedItem,
+      sahspace_unique_id: this.props.sahspaceList[index].sahspace_unique_id
+    })
     console.log(selectedItem, index, this.props.sahspaceDocumentTypeList);
     this.getSahspaceListItemSelected()
   }
@@ -105,10 +113,24 @@ class Splash extends Component {
     for (var i = 0; i < this.props.sahspaceDocumentTypeList.length; i++) {
       originArray.push(this.props.sahspaceDocumentTypeList[i].name)
     }
-    console.log("🚀 ~ file: index.js ~ ---------originArray", originArray)
     this.setState({
       sahspaceSelectedList: originArray
     })
+  }
+
+  uploadFile() {
+    let data = {
+      "sahspace_unique_id": this.state.sahspace_unique_id,
+      "document_type_id": 1,
+      "document_name": this.state.documentName,
+      "year" : this.state.selectedYear,
+      "month": this.state.selectedMonth,
+      "description": this.state.description,
+      "file_id" : 3
+}
+    console.log("🚀 ~ file: index.js ~================>>>>>>>>>>>>>>", data)
+
+    this.props.uploadFileAction(data)
   }
   render() {
     return (
@@ -173,6 +195,9 @@ class Splash extends Component {
                   data={this.state.sahspaceSelectedList}
 
                   onSelect={(selectedItem, index) => {
+                    this.setState({
+                      selectedSahspaceDoc: selectedItem
+                    })
                     console.log(selectedItem, index);
                   }}
                   defaultButtonText={"GST Return"}
@@ -206,6 +231,9 @@ class Splash extends Component {
                   defaultValue={this.state.years[0]}
 
                   onSelect={(selectedItem, index) => {
+                    this.setState({
+                      selectedYear: selectedItem
+                    })
                     console.log(selectedItem, index);
                   }}
                   defaultButtonText={"Year"}
@@ -234,6 +262,9 @@ class Splash extends Component {
                   data={this.state.months}
                   defaultValue={this.state.months[0]}
                   onSelect={(selectedItem, index) => {
+                    this.setState({
+                      selectedMonth: selectedItem
+                    })
                     console.log(selectedItem, index);
                   }}
                   defaultButtonText={"Month"}
@@ -274,7 +305,7 @@ class Splash extends Component {
               <View style={{ marginVertical: 20 }}>
                 <CustomButton
                   buttonTitle={'Upload File'}
-                  onPressButton={() => this.props.uploadFileAction()}
+                  onPressButton={() => this.uploadFile()}
                   buttonStyle={{ color: 'white', height: 45, width: '80%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}
                   titleFontColor={'white'}
                 />
@@ -423,7 +454,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   submitOTPResponse: state.common.submitOTPResponse,
   sahspaceList: state.landing.getSahspaceList,
-  sahspaceDocumentTypeList: state.landing.getSahspaceDocumentTypeList 
+  sahspaceDocumentTypeList: state.landing.getSahspaceDocumentTypeList
 });
 
 const mapDispatchToProps = dispatch => ({
