@@ -1,15 +1,16 @@
 export default (() => {
   return {
-    quicksand_dash: "Quicksand_Dash",
-    quicksand_bold: "Quicksand-Bold",
-    quicksand_bold_italic: "Quicksand-BoldItalic",
-    quicksand_italic: "Quicksand-Italic",
-    quicksand_light: "Quicksand-Light",
-    quicksand_light_italic: "Quicksand-LightItalic",
-    quicksand_regular: "Quicksand-Regular",
-    quicksand_medium: "Quicksand-Medium",
-    monteserrat_bold: "Montserrat-Bold",
-    monteserrat_medium: "Montserrat-Medium",
-    monteserrat_regular: "Montserrat-Regular"
+    roboto_black: "Roboto-Black",
+    roboto_black_italic: "Roboto-BlackItalic",
+    roboto_bold: "Roboto-Bold",
+    roboto_bold_italic: "Roboto-BoldItalic",
+    roboto_italic: "Roboto-Italic",
+    roboto_light: "Roboto-Light",
+    roboto_light_italic: "Roboto-LightItalic",
+    roboto_regular: "Roboto-Regular",
+    roboto_medium: "Roboto-Medium",
+    roboto_medium_italic: "Roboto-MediumItalic",
+    roboto_thin: "Roboto-Thin",
+    roboto_thin_italic: "Roboto-ThinItalic",
   };
 })();

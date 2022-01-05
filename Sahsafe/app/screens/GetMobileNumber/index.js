@@ -23,7 +23,8 @@ import { connect } from "react-redux";
 import * as Actions from "@redux/actions";
 import * as Services from "@services";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import * as Common from "@common"
+import * as Common from "@common";
+import * as AppConstant from "@constants";
 
 class GetMobileNumber extends Component {
   constructor(props) {
@@ -83,11 +84,11 @@ class GetMobileNumber extends Component {
                 source={images.infoFlex}
                 resizeMethod={'resize'}
               />
-              <Text style={{ fontSize: 30, textAlign: 'center', color: 'black', }}>Share Documents, Securely !!</Text>
+              <Text style={{ fontSize: 30, textAlign: 'center', color: 'black',fontFamily : AppConstant.Fonts.roboto_bold_italic }}>Share Documents, Securely !!</Text>
             </Animatable.View>
           </View>
           <View style={{ flex: 0.5 }}>
-            <Text style={{ marginLeft: '4%', fontSize: 18, fontWeight: '700' }}>{'Get Started'}</Text>
+            <Text style={{ marginLeft: '4%', fontSize: 18, fontFamily : "Roboto-Italic"}}>{'Get Started'}</Text>
             <View style={{ flexDirection: 'row', width: '90%', justifyContent: 'center', alignItems: 'center', height: 60, margin: 15, borderWidth: 1, borderColor: '#A5A5A5' }}>
               <IconWithText
                 title='+91 '
