@@ -240,16 +240,15 @@ class Home extends Component {
                 />
               </Animatable.View>
             </View>
-            : <CustomButton
-              buttonTitle={'+ Share File'}
-              onPressButton={() => this.increaseHeight(1)}
-              buttonStyle={{ color: 'white', height: 45, width: '40%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}
-              titleFontColor={'white'}
-            />}
+            : 
+            <View style={{height: 50, width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{ color: 'white', height: 45, width: '40%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}>
+            <DocumentPickerScreen handleError={() => this.handleError()}/>
+          </View>
+            </View>
+           }
         </View>
-        <View style={{height: 300, width: '100%', backgroundColor: 'red'}}>
-          <DocumentPickerScreen handleError={() => this.handleError()}/>
-        </View>
+
       </View>
     );
   }

@@ -18,6 +18,7 @@ const greyTickIcon = require('./grey_tick.png');
 const dotsIcon = require('./dots.png');
 const rightArrow = require('./rightArrow.png');
 const folderIcon = require('./folder_icon.png');
+const downArrow = require('./down_arrow.png');
 
 export const images = {
   indianFlag,
@@ -38,5 +39,6 @@ export const images = {
   greyTickIcon,
   dotsIcon,
   rightArrow,
-  folderIcon
+  folderIcon,
+  downArrow
 };

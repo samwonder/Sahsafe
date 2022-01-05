@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { StyleSheet, View, Text, Button } from 'react-native'
+import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native'
 import DocumentPicker, {
   DirectoryPickerResponse,
   DocumentPickerResponse,
@@ -20,8 +20,8 @@ const DocumentPickerScreen = (props) => {
 
   return (
     <View style={styles.container}>
-      <Button
-        title="open picker for single file selection"
+      <TouchableOpacity
+        title="+ Share File"
         onPress={async () => {
           try {
             const pickerResult = await DocumentPicker.pickSingle({
@@ -36,7 +36,9 @@ const DocumentPickerScreen = (props) => {
             props.handleError(e)
           }
         }}
-      />
+      >
+        <Text style={{fontSize: 18, color: 'white', fontWeight: '500'}}>+ Share File</Text>
+      </TouchableOpacity>
     </View>
   )
 }

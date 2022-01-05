@@ -24,6 +24,9 @@ import MaterialTextInput from '../../components/materialTextInput';
 import SelectDropdown from 'react-native-select-dropdown'
 import CustomButton from '../../components/CustomButton';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { connect } from "react-redux";
+import * as Actions from "@redux/actions";
+import * as Services from "@services";
 
 const countries = ["Egypt", "Canada", "Australia", "Ireland"]
 var monthList = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -32,24 +35,48 @@ class Splash extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      documentName: null,
-      firstName: null,
-      description: null,
+      documentName: '',
+      firstName: '',
+      description: '',
       months: monthList,
       years: {},
-      selectedMonth: null,
-      selectedYear: null,
+      selectedMonth: '',
+      selectedYear: '',
+      sahspaceList: [],
+      sahspaceSelectedList: [],
+      selectedSahspace: '',
+      selectedSahspaceDoc: '',
+      sahspace_unique_id: ''
+
     }
   }
+  // this.setState({
+  //   selectedSahspaceDoc: selectedItem
+  // })
+  async componentDidMount() {
+    this.generateArrayOfYears();
+    await this.props.getSahspaceList();
+    console.log("🚀 ~ file: ---------", this.props.sahspaceList)
+    this.getsahspaceListDetail();
 
-  componentDidMount() {
-    this.generateArrayOfYears()
   }
- generateArrayOfYears() {
+
+  getsahspaceListDetail() {
+    let originArray = [];
+    for (var i = 0; i < this.props.sahspaceList.length; i++) {
+      originArray.push(this.props.sahspaceList[i].name)
+    }
+    console.log("🚀 ~ file: index.js ~ ---------originArray", originArray)
+    this.setState({
+      sahspaceList: originArray
+    })
+  }
+
+  generateArrayOfYears() {
     var max = new Date().getFullYear()
     var min = max - 10
     var yr = []
-  
+
     for (var i = max + 1; i >= min; i--) {
       yr.push(i)
     }
@@ -72,7 +99,39 @@ class Splash extends Component {
     })
 
   }
+  async sahspaceListItemSelected(selectedItem, index) {
+    await this.props.getSahspaceDocumentTypeList(this.props.sahspaceList[index].sahspace_unique_id);
+    this.setState({
+      selectedSahspace: selectedItem,
+      sahspace_unique_id: this.props.sahspaceList[index].sahspace_unique_id
+    })
+    console.log(selectedItem, index, this.props.sahspaceDocumentTypeList);
+    this.getSahspaceListItemSelected()
+  }
+  getSahspaceListItemSelected() {
+    let originArray = [];
+    for (var i = 0; i < this.props.sahspaceDocumentTypeList.length; i++) {
+      originArray.push(this.props.sahspaceDocumentTypeList[i].name)
+    }
+    this.setState({
+      sahspaceSelectedList: originArray
+    })
+  }
 
+  uploadFile() {
+    let data = {
+      "sahspace_unique_id": this.state.sahspace_unique_id,
+      "document_type_id": 1,
+      "document_name": this.state.documentName,
+      "year" : this.state.selectedYear,
+      "month": this.state.selectedMonth,
+      "description": this.state.description,
+      "file_id" : 3
+}
+    console.log("🚀 ~ file: index.js ~================>>>>>>>>>>>>>>", data)
+
+    this.props.uploadFileAction(data)
+  }
   render() {
     return (
       <View style={{ height: height, backgroundColor: 'white', borderRadius: 15 }}>
@@ -101,43 +160,80 @@ class Splash extends Component {
               />
 
               <SelectDropdown
-                data={countries}
+                data={this.state.sahspaceList}
                 // defaultValueByIndex={1}
-                // defaultValue={'Egypt'}
+                defaultValue={this.state.sahspaceList[0]}
                 onSelect={(selectedItem, index) => {
+                  this.sahspaceListItemSelected(selectedItem, index)
                   console.log(selectedItem, index);
                 }}
-                defaultButtonText={"GST Return"}
+                defaultButtonText={"Sahspace"}
                 buttonTextAfterSelection={(selectedItem, index) => {
                   return selectedItem;
                 }}
                 rowTextForSelection={(item, index) => {
-                  
+
                   return item;
                 }}
                 buttonStyle={styles.dropdown1BtnStyle}
                 buttonTextStyle={styles.dropdown1BtnTxtStyle}
                 renderDropdownIcon={(isOpened) => {
-                  // return (
-                  //   <FontAwesome
-                  //     name={isOpened ? "chevron-up" : "chevron-down"}
-                  //     color={"#8D8D8D"}
-                  //     size={18}
-                  //   />
-                  // );
+                  return (
+                    <Image
+                      style={{ height: 20, width: 20 }}
+                      source={images.downArrow}
+                    />
+                  );
                 }}
                 dropdownIconPosition={"right"}
                 dropdownStyle={styles.dropdown1DropdownStyle}
                 rowStyle={styles.dropdown1RowStyle}
                 rowTextStyle={styles.dropdown1RowTxtStyle}
               />
+              <View style={{ marginTop: 7 }}>
+                <SelectDropdown
+                  data={this.state.sahspaceSelectedList}
+
+                  onSelect={(selectedItem, index) => {
+                    this.setState({
+                      selectedSahspaceDoc: selectedItem
+                    })
+                    console.log(selectedItem, index);
+                  }}
+                  defaultButtonText={"GST Return"}
+                  buttonTextAfterSelection={(selectedItem, index) => {
+                    return selectedItem;
+                  }}
+                  rowTextForSelection={(item, index) => {
+
+                    return item;
+                  }}
+                  buttonStyle={styles.dropdown1BtnStyle}
+                  buttonTextStyle={styles.dropdown1BtnTxtStyle}
+                  renderDropdownIcon={(isOpened) => {
+                    return (
+                      <Image
+                        style={{ height: 20, width: 20 }}
+                        source={images.downArrow}
+                      />
+                    );
+                  }}
+                  dropdownIconPosition={"right"}
+                  dropdownStyle={styles.dropdown1DropdownStyle}
+                  rowStyle={styles.dropdown1RowStyle}
+                  rowTextStyle={styles.dropdown1RowTxtStyle}
+                />
+              </View>
 
               <View style={{ flexDirection: 'row' }}>
                 <SelectDropdown
                   data={this.state.years}
                   defaultValue={this.state.years[0]}
-                  
+
                   onSelect={(selectedItem, index) => {
+                    this.setState({
+                      selectedYear: selectedItem
+                    })
                     console.log(selectedItem, index);
                   }}
                   defaultButtonText={"Year"}
@@ -150,13 +246,12 @@ class Splash extends Component {
                   buttonStyle={styles.dropdown4BtnStyle}
                   buttonTextStyle={styles.dropdown4BtnTxtStyle}
                   renderDropdownIcon={(isOpened) => {
-                    // return (
-                    //   <FontAwesome
-                    //     name={isOpened ? "chevron-up" : "chevron-down"}
-                    //     color={"#8D8D8D"}
-                    //     size={18}
-                    //   />
-                    // );
+                    return (
+                      <Image
+                        style={{ height: 20, width: 20 }}
+                        source={images.downArrow}
+                      />
+                    );
                   }}
                   dropdownIconPosition={"right"}
                   dropdownStyle={styles.dropdown4DropdownStyle}
@@ -167,6 +262,9 @@ class Splash extends Component {
                   data={this.state.months}
                   defaultValue={this.state.months[0]}
                   onSelect={(selectedItem, index) => {
+                    this.setState({
+                      selectedMonth: selectedItem
+                    })
                     console.log(selectedItem, index);
                   }}
                   defaultButtonText={"Month"}
@@ -179,13 +277,12 @@ class Splash extends Component {
                   buttonStyle={styles.dropdown4BtnStyle}
                   buttonTextStyle={styles.dropdown4BtnTxtStyle}
                   renderDropdownIcon={(isOpened) => {
-                    // return (
-                    //   <FontAwesome
-                    //     name={isOpened ? "chevron-up" : "chevron-down"}
-                    //     color={"#8D8D8D"}
-                    //     size={18}
-                    //   />
-                    // );
+                    return (
+                      <Image
+                        style={{ height: 20, width: 20 }}
+                        source={images.downArrow}
+                      />
+                    );
                   }}
                   dropdownIconPosition={"right"}
                   dropdownStyle={styles.dropdown4DropdownStyle}
@@ -197,7 +294,7 @@ class Splash extends Component {
               <View style={{ height: 150, width: '90%', }}>
                 <Text style={{ fontSize: 19, justifyContent: 'center', marginVertical: 10 }}>{'Description'}</Text>
                 <TextInput
-                  style={{ height: 100, borderColor: '#8D8D8D', borderWidth: 1, borderRadius: 2 }}
+                  style={{ height: 100, borderColor: '#8D8D8D', borderWidth: 1, borderRadius: 2, padding: 5 }}
                   placeholder="Type here to translate!"
                   onChangeText={text => this.setDescription(text)}
                   multiline={true}
@@ -208,7 +305,7 @@ class Splash extends Component {
               <View style={{ marginVertical: 20 }}>
                 <CustomButton
                   buttonTitle={'Upload File'}
-                  onPressButton={() => this.props.uploadFileAction()}
+                  onPressButton={() => this.uploadFile()}
                   buttonStyle={{ color: 'white', height: 45, width: '80%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}
                   titleFontColor={'white'}
                 />
@@ -258,7 +355,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#8D8D8D",
   },
-  dropdown1BtnTxtStyle: { color: "#8D8D8D", textAlign: "left" },
+  dropdown1BtnTxtStyle: { color: "black", textAlign: "left" },
   dropdown1DropdownStyle: { backgroundColor: "#EFEFEF" },
   dropdown1RowStyle: {
     backgroundColor: "#EFEFEF",
@@ -340,13 +437,13 @@ const styles = StyleSheet.create({
     borderColor: "#8D8D8D",
     margin: 10
   },
-  dropdown4BtnTxtStyle: { 
-    color: "black", 
-    textAlign: "left" 
+  dropdown4BtnTxtStyle: {
+    color: "black",
+    textAlign: "left"
   },
   dropdown4DropdownStyle: {
-     backgroundColor: "#EFEFEF" 
-    },
+    backgroundColor: "#EFEFEF"
+  },
   dropdown4RowStyle: {
     backgroundColor: "#EFEFEF",
     borderBottomColor: "#C5C5C5",
@@ -354,12 +451,19 @@ const styles = StyleSheet.create({
   dropdown4RowTxtStyle: { color: "#8D8D8D", textAlign: "left" },
 });
 
-Splash.propTypes = {
-  navigation: PropTypes.objectOf(PropTypes.any),
-};
+const mapStateToProps = state => ({
+  submitOTPResponse: state.common.submitOTPResponse,
+  sahspaceList: state.landing.getSahspaceList,
+  sahspaceDocumentTypeList: state.landing.getSahspaceDocumentTypeList
+});
 
-Splash.defaultProps = {
-  navigation: {},
-};
+const mapDispatchToProps = dispatch => ({
+  toggleLoader: state => dispatch(Actions.toggleLoader(state)),
+  getSahspaceList: state => dispatch(Actions.getSahspaceList(state)),
+  getSahspaceDocumentTypeList: state => dispatch(Actions.getSahspaceDocumentTypeList(state)),
+});
 
-export default Splash;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Splash);
