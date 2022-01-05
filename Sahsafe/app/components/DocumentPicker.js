@@ -29,10 +29,10 @@ const DocumentPickerScreen = (props) => {
               copyTo: 'cachesDirectory',
             })
             console.log('result-------------------', pickerResult)
+            props.handleSuccessUpload(pickerResult)
            // setResult([pickerResult])
-           // let result = await Services.DocumentServices.uploadDocuementApi(pickerResult);
-           // console.log("API result",result.data)
-            props.onFileSelect()
+            // let result = await Services.DocumentServices.uploadDocuementApi(pickerResult);
+            //console.log("API result",result.data)
           } catch (e) {
             console.log("error--------------",e)
             props.handleError(e)
