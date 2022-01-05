@@ -45,11 +45,11 @@ class Splash extends Component {
   componentDidMount() {
     this.generateArrayOfYears()
   }
- generateArrayOfYears() {
+  generateArrayOfYears() {
     var max = new Date().getFullYear()
     var min = max - 10
     var yr = []
-  
+
     for (var i = max + 1; i >= min; i--) {
       yr.push(i)
     }
@@ -107,36 +107,67 @@ class Splash extends Component {
                 onSelect={(selectedItem, index) => {
                   console.log(selectedItem, index);
                 }}
-                defaultButtonText={"GST Return"}
+                defaultButtonText={"Sahspace"}
                 buttonTextAfterSelection={(selectedItem, index) => {
                   return selectedItem;
                 }}
                 rowTextForSelection={(item, index) => {
-                  
+
                   return item;
                 }}
                 buttonStyle={styles.dropdown1BtnStyle}
                 buttonTextStyle={styles.dropdown1BtnTxtStyle}
                 renderDropdownIcon={(isOpened) => {
-                  // return (
-                  //   <FontAwesome
-                  //     name={isOpened ? "chevron-up" : "chevron-down"}
-                  //     color={"#8D8D8D"}
-                  //     size={18}
-                  //   />
-                  // );
+                  return (
+                    <Image
+                      style={{ height: 20, width: 20 }}
+                      source={images.downArrow}
+                    />
+                  );
                 }}
                 dropdownIconPosition={"right"}
                 dropdownStyle={styles.dropdown1DropdownStyle}
                 rowStyle={styles.dropdown1RowStyle}
                 rowTextStyle={styles.dropdown1RowTxtStyle}
               />
+              <View style={{ marginTop: 7 }}>
+                <SelectDropdown
+                  data={countries}
+                  // defaultValueByIndex={1}
+                  // defaultValue={'Egypt'}
+                  onSelect={(selectedItem, index) => {
+                    console.log(selectedItem, index);
+                  }}
+                  defaultButtonText={"GST Return"}
+                  buttonTextAfterSelection={(selectedItem, index) => {
+                    return selectedItem;
+                  }}
+                  rowTextForSelection={(item, index) => {
+
+                    return item;
+                  }}
+                  buttonStyle={styles.dropdown1BtnStyle}
+                  buttonTextStyle={styles.dropdown1BtnTxtStyle}
+                  renderDropdownIcon={(isOpened) => {
+                    return (
+                      <Image
+                        style={{ height: 20, width: 20 }}
+                        source={images.downArrow}
+                      />
+                    );
+                  }}
+                  dropdownIconPosition={"right"}
+                  dropdownStyle={styles.dropdown1DropdownStyle}
+                  rowStyle={styles.dropdown1RowStyle}
+                  rowTextStyle={styles.dropdown1RowTxtStyle}
+                />
+              </View>
 
               <View style={{ flexDirection: 'row' }}>
                 <SelectDropdown
                   data={this.state.years}
                   defaultValue={this.state.years[0]}
-                  
+
                   onSelect={(selectedItem, index) => {
                     console.log(selectedItem, index);
                   }}
@@ -150,13 +181,12 @@ class Splash extends Component {
                   buttonStyle={styles.dropdown4BtnStyle}
                   buttonTextStyle={styles.dropdown4BtnTxtStyle}
                   renderDropdownIcon={(isOpened) => {
-                    // return (
-                    //   <FontAwesome
-                    //     name={isOpened ? "chevron-up" : "chevron-down"}
-                    //     color={"#8D8D8D"}
-                    //     size={18}
-                    //   />
-                    // );
+                    return (
+                      <Image
+                        style={{ height: 20, width: 20 }}
+                        source={images.downArrow}
+                      />
+                    );
                   }}
                   dropdownIconPosition={"right"}
                   dropdownStyle={styles.dropdown4DropdownStyle}
@@ -179,13 +209,12 @@ class Splash extends Component {
                   buttonStyle={styles.dropdown4BtnStyle}
                   buttonTextStyle={styles.dropdown4BtnTxtStyle}
                   renderDropdownIcon={(isOpened) => {
-                    // return (
-                    //   <FontAwesome
-                    //     name={isOpened ? "chevron-up" : "chevron-down"}
-                    //     color={"#8D8D8D"}
-                    //     size={18}
-                    //   />
-                    // );
+                    return (
+                      <Image
+                        style={{ height: 20, width: 20 }}
+                        source={images.downArrow}
+                      />
+                    );
                   }}
                   dropdownIconPosition={"right"}
                   dropdownStyle={styles.dropdown4DropdownStyle}
@@ -340,13 +369,13 @@ const styles = StyleSheet.create({
     borderColor: "#8D8D8D",
     margin: 10
   },
-  dropdown4BtnTxtStyle: { 
-    color: "black", 
-    textAlign: "left" 
+  dropdown4BtnTxtStyle: {
+    color: "black",
+    textAlign: "left"
   },
   dropdown4DropdownStyle: {
-     backgroundColor: "#EFEFEF" 
-    },
+    backgroundColor: "#EFEFEF"
+  },
   dropdown4RowStyle: {
     backgroundColor: "#EFEFEF",
     borderBottomColor: "#C5C5C5",
