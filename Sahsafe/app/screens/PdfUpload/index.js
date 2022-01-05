@@ -24,6 +24,9 @@ import MaterialTextInput from '../../components/materialTextInput';
 import SelectDropdown from 'react-native-select-dropdown'
 import CustomButton from '../../components/CustomButton';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { connect } from "react-redux";
+import * as Actions from "@redux/actions";
+import * as Services from "@services";
 
 const countries = ["Egypt", "Canada", "Australia", "Ireland"]
 var monthList = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -39,12 +42,30 @@ class Splash extends Component {
       years: {},
       selectedMonth: null,
       selectedYear: null,
+      sahspaceList: [],
+      sahspaceSelectedList: [],
     }
   }
 
-  componentDidMount() {
-    this.generateArrayOfYears()
+  async componentDidMount() {
+    this.generateArrayOfYears();
+    await this.props.getSahspaceList();
+    console.log("🚀 ~ file: ---------", this.props.sahspaceList)
+    this.getsahspaceListDetail();
+
   }
+
+  getsahspaceListDetail() {
+    let originArray = [];
+    for (var i = 0; i < this.props.sahspaceList.length; i++) {
+      originArray.push(this.props.sahspaceList[i].name)
+    }
+    console.log("🚀 ~ file: index.js ~ ---------originArray", originArray)
+    this.setState({
+      sahspaceList: originArray
+    })
+  }
+
   generateArrayOfYears() {
     var max = new Date().getFullYear()
     var min = max - 10
@@ -72,7 +93,23 @@ class Splash extends Component {
     })
 
   }
+ async sahspaceListItemSelected(selectedItem, index) {
+    console.log("🚀 ~ file: index.js ~ line 160 ~", this.props.sahspaceList[index].sahspace_unique_id)
+   await this.props.getSahspaceDocumentTypeList(this.props.sahspaceList[index].sahspace_unique_id);
 
+    console.log(selectedItem, index, this.props.sahspaceDocumentTypeList);
+    this.getSahspaceListItemSelected()
+  }
+  getSahspaceListItemSelected() {
+    let originArray = [];
+    for (var i = 0; i < this.props.sahspaceDocumentTypeList.length; i++) {
+      originArray.push(this.props.sahspaceDocumentTypeList[i].name)
+    }
+    console.log("🚀 ~ file: index.js ~ ---------originArray", originArray)
+    this.setState({
+      sahspaceSelectedList: originArray
+    })
+  }
   render() {
     return (
       <View style={{ height: height, backgroundColor: 'white', borderRadius: 15 }}>
@@ -101,10 +138,11 @@ class Splash extends Component {
               />
 
               <SelectDropdown
-                data={countries}
+                data={this.state.sahspaceList}
                 // defaultValueByIndex={1}
-                // defaultValue={'Egypt'}
+                defaultValue={this.state.sahspaceList[0]}
                 onSelect={(selectedItem, index) => {
+                  this.sahspaceListItemSelected(selectedItem, index)
                   console.log(selectedItem, index);
                 }}
                 defaultButtonText={"Sahspace"}
@@ -132,9 +170,8 @@ class Splash extends Component {
               />
               <View style={{ marginTop: 7 }}>
                 <SelectDropdown
-                  data={countries}
-                  // defaultValueByIndex={1}
-                  // defaultValue={'Egypt'}
+                  data={this.state.sahspaceSelectedList}
+
                   onSelect={(selectedItem, index) => {
                     console.log(selectedItem, index);
                   }}
@@ -226,7 +263,7 @@ class Splash extends Component {
               <View style={{ height: 150, width: '90%', }}>
                 <Text style={{ fontSize: 19, justifyContent: 'center', marginVertical: 10 }}>{'Description'}</Text>
                 <TextInput
-                  style={{ height: 100, borderColor: '#8D8D8D', borderWidth: 1, borderRadius: 2 }}
+                  style={{ height: 100, borderColor: '#8D8D8D', borderWidth: 1, borderRadius: 2, padding: 5 }}
                   placeholder="Type here to translate!"
                   onChangeText={text => this.setDescription(text)}
                   multiline={true}
@@ -287,7 +324,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#8D8D8D",
   },
-  dropdown1BtnTxtStyle: { color: "#8D8D8D", textAlign: "left" },
+  dropdown1BtnTxtStyle: { color: "black", textAlign: "left" },
   dropdown1DropdownStyle: { backgroundColor: "#EFEFEF" },
   dropdown1RowStyle: {
     backgroundColor: "#EFEFEF",
@@ -383,12 +420,19 @@ const styles = StyleSheet.create({
   dropdown4RowTxtStyle: { color: "#8D8D8D", textAlign: "left" },
 });
 
-Splash.propTypes = {
-  navigation: PropTypes.objectOf(PropTypes.any),
-};
+const mapStateToProps = state => ({
+  submitOTPResponse: state.common.submitOTPResponse,
+  sahspaceList: state.landing.getSahspaceList,
+  sahspaceDocumentTypeList: state.landing.getSahspaceDocumentTypeList 
+});
 
-Splash.defaultProps = {
-  navigation: {},
-};
+const mapDispatchToProps = dispatch => ({
+  toggleLoader: state => dispatch(Actions.toggleLoader(state)),
+  getSahspaceList: state => dispatch(Actions.getSahspaceList(state)),
+  getSahspaceDocumentTypeList: state => dispatch(Actions.getSahspaceDocumentTypeList(state)),
+});
 
-export default Splash;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Splash);
