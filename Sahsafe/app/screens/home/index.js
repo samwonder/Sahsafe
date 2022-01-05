@@ -35,7 +35,8 @@ class Home extends Component {
     this.state = {
       topView: false,
       selectedButton: false,
-      months: {}
+      months: {},
+      pickerResult: null,
     }
   }
 
@@ -132,7 +133,11 @@ class Home extends Component {
       throw err
     }
   }
-
+  uploadSuccessData(data) {
+    this.setState({
+      pickerResult: data,
+    },() => this.increaseHeight(1) )
+  }
   render() {
     // const { count } = this.props.sahspaceCount
     return (
@@ -212,7 +217,7 @@ class Home extends Component {
                   <Text style={styles.item}>{item.doc_name}</Text>
                   {/* <View style={{flexDirection:'row', backgroundColor: 'red', height: 30}}> */}
                   <Text style={{ color: '#3072F3', fontSize: 16 }}>{item.name}
-                  <Text style={{ color: '#000000', fontSize: 15 }}>{' > ' + item.document_name + ' > ' + item.year + ' > ' + item.month}</Text>
+                    <Text style={{ color: '#000000', fontSize: 15 }}>{' > ' + item.document_name + ' > ' + item.year + ' > ' + item.month}</Text>
                   </Text>
                   {/* </View> */}
                   <View style={{ height: 1, backgroundColor: '#DEDEDE', marginVertical: 3 }}></View>
@@ -251,7 +256,8 @@ class Home extends Component {
             // />
             <View style={{ height: 50, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
               <View style={{ color: 'white', height: 45, width: '40%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}>
-                <DocumentPickerScreen handleError={() => this.handleError()} />
+                <DocumentPickerScreen
+                  handleSuccessUpload={(data) => this.uploadSuccessData(data)} handleError={() => this.handleError()} />
               </View>
             </View>
           }
