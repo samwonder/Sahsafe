@@ -249,10 +249,10 @@ class Home extends Component {
             //   buttonStyle={{ color: 'white', height: 45, width: '40%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}
             //   titleFontColor={'white'}
             // />
-            <View style={{ height: 50, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-              <View style={{ color: 'white', height: 45, width: '40%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}>
-                <DocumentPickerScreen handleError={() => this.handleError()} />
-              </View>
+            <View style={{height: 50, width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{ color: 'white', height: 45, width: '40%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}>
+                <DocumentPickerScreen handleError={() => this.handleError()} onFileSelect={() => this.increaseHeight(1)}/>
+          </View>
             </View>
           }
         </View>

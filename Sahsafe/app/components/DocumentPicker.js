@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react'
 import * as Services from "@services";
 
 const DocumentPickerScreen = (props) => {
-  console.log("🚀 ~ file: DocumentPi========== ~ props", props)
+  //console.log("🚀 ~ file: DocumentPi========== ~ props", props)
   //   const [result, setResult] = React.useState<Array<DocumentPickerResponse> | DirectoryPickerResponse | undefined | null>()
   const [result, setResult] = useState(null);
   //   useEffect(() => {
@@ -30,9 +30,11 @@ const DocumentPickerScreen = (props) => {
             })
             console.log('result-------------------', pickerResult)
            // setResult([pickerResult])
-            let result = await Services.DocumentServices.uploadDocuementApi(pickerResult);
-            console.log("API result",result.data)
+           // let result = await Services.DocumentServices.uploadDocuementApi(pickerResult);
+           // console.log("API result",result.data)
+            props.onFileSelect()
           } catch (e) {
+            console.log("error--------------",e)
             props.handleError(e)
           }
         }}
