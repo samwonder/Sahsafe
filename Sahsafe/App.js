@@ -9,6 +9,7 @@
  import Navigator from './app/navigator';
  import * as Config from "@configs";
  import AppLoader from "@components/appLoader";
+ import { LogBox } from 'react-native';
  
  const Store = Config.reduxInit();
  export default class App extends Component {
@@ -17,7 +18,7 @@
      this.state = {};
      //  runRootSaga();
      // for hide warning messages
-     console.disableYellowBox = true;
+     LogBox.ignoreAllLogs();
     }
     
     render() {

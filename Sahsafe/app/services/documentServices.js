@@ -45,7 +45,9 @@ const getDocmentListApi = async (data) => {
 
 const uploadDocuementApi = async (data) => {
   try {
-    const response = await Config.axios.post(AppConstant.Api.Document.GET_DOCUMENT_LIST);
+    const formData = new FormData();
+    formData.append("file", data);
+    const response = await Config.axios.post(AppConstant.Api.Document.UPLOAD_DOCUMENT,formData);
     if (response.status) {
       return response;
     }

@@ -7,15 +7,16 @@ import DocumentPicker, {
   isInProgress,
   types,
 } from 'react-native-document-picker'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import * as Services from "@services";
 
 const DocumentPickerScreen = (props) => {
-console.log("🚀 ~ file: DocumentPi========== ~ props", props, DocumentPicker)
-//   const [result, setResult] = React.useState<Array<DocumentPickerResponse> | DirectoryPickerResponse | undefined | null>()
-
-//   useEffect(() => {
-//     console.log(JSON.stringify(result, null, 2))
-//   }, [result])
+  console.log("🚀 ~ file: DocumentPi========== ~ props", props)
+  //   const [result, setResult] = React.useState<Array<DocumentPickerResponse> | DirectoryPickerResponse | undefined | null>()
+  const [result, setResult] = useState(null);
+  //   useEffect(() => {
+  //     console.log(JSON.stringify(result, null, 2))
+  //   }, [result])
 
   return (
     <View style={styles.container}>
@@ -27,7 +28,10 @@ console.log("🚀 ~ file: DocumentPi========== ~ props", props, DocumentPicker)
               presentationStyle: 'fullScreen',
               copyTo: 'cachesDirectory',
             })
-            setResult([pickerResult])
+            console.log('result-------------------', pickerResult)
+           // setResult([pickerResult])
+            let result = await Services.DocumentServices.uploadDocuementApi(pickerResult);
+            console.log("API result",result.data)
           } catch (e) {
             props.handleError(e)
           }

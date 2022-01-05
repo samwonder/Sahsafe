@@ -14,7 +14,8 @@ import {
   TouchableOpacity,
   FlatList,
   Image,
-  Alert
+  Alert,
+  BackHandler
 } from 'react-native';
 import { images } from '../../assets/images/index'
 import CustomButton from '../../components/CustomButton';
@@ -26,6 +27,7 @@ import { connect } from "react-redux";
 import * as Actions from "@redux/actions";
 import * as Services from "@services";
 import DocumentPickerScreen from '../../components/DocumentPicker';
+import * as Common from "@common";
 
 class Home extends Component {
   constructor(props) {
@@ -41,7 +43,9 @@ class Home extends Component {
     await this.props.getSahspaceCount(); 
     await this.props.getDocmentList(); 
     this.generateArrayOfYears()
-
+    Common.BackPress(() => {
+      BackHandler.exitApp()
+    });
   }
   generateArrayOfYears() {
     var max = new Date().getFullYear()
@@ -243,9 +247,9 @@ class Home extends Component {
               titleFontColor={'white'}
             />}
         </View>
-        {/* <View style={{height: 300, width: '100%', backgroundColor: 'red'}}>
+        <View style={{height: 300, width: '100%', backgroundColor: 'red'}}>
           <DocumentPickerScreen handleError={() => this.handleError()}/>
-        </View> */}
+        </View>
       </View>
     );
   }

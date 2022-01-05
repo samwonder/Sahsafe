@@ -12,7 +12,8 @@ import {
   Image,
   StyleSheet,
   TextInput,
-  Alert
+  Alert,
+  BackHandler
 } from 'react-native';
 import * as Animatable from "react-native-animatable";
 import { images } from '../../assets/images';
@@ -22,6 +23,7 @@ import { connect } from "react-redux";
 import * as Actions from "@redux/actions";
 import * as Services from "@services";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import * as Common from "@common"
 
 class GetMobileNumber extends Component {
   constructor(props) {
@@ -30,6 +32,12 @@ class GetMobileNumber extends Component {
       mobileNumber: null,
     };
 
+  }
+
+  componentDidMount() {
+    Common.BackPress(() => {
+      BackHandler.exitApp()
+    });
   }
 
   async navigateToOTPScreen(phone) {
