@@ -40,8 +40,8 @@ class Home extends Component {
   }
 
   async componentDidMount() {
-    await this.props.getSahspaceCount(); 
-    await this.props.getDocmentList(); 
+    await this.props.getSahspaceCount();
+    await this.props.getDocmentList();
     this.generateArrayOfYears()
     Common.BackPress(() => {
       BackHandler.exitApp()
@@ -51,7 +51,7 @@ class Home extends Component {
     var max = new Date().getFullYear()
     var min = max - 9
     var years = []
-  
+
     for (var i = max; i >= min; i--) {
       years.push(i)
     }
@@ -96,24 +96,25 @@ class Home extends Component {
 
 
 
- async selectedButton(value) {
-  console.log("🚀 ~ file: index.js ~ line 85 ~ Home ~ selectedButton ~ value", value)
-  if(value === 'sent') {
-    this.setState({
-      selectedButton: true,
-    })
-    await this.props.getDocmentList(value);
-  } else {
-    this.setState({
-      selectedButton: false,
-    })
-    await this.props.getDocmentList();
+  async selectedButton(value) {
+    console.log("🚀 ~ file: index.js ~ line 85 ~ Home ~ selectedButton ~ value", value)
+    if (value === 'sent') {
+      this.setState({
+        selectedButton: true,
+      })
+      await this.props.getDocmentList(value);
+    } else {
+      this.setState({
+        selectedButton: false,
+      })
+      await this.props.getDocmentList();
+    }
+
+
   }
 
-    
-  }
-
-  uploadFileAction() {
+  uploadFileAction(data) {
+    console.log("🚀 ~ file: index.js ~ ================home============ data", data)
     this.setState({
       topView: false,
     }, () => {
@@ -142,7 +143,7 @@ class Home extends Component {
             <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', margin: 5 }}>
               <Text style={{ fontSize: 19, alignSelf: 'center', marginHorizontal: 5, }}>
                 {`Hello, ${this.props.userDetail.name}`}
-                </Text>
+              </Text>
               <TouchableOpacity
                 // onPress={() => this.props.navigation.navigate('SearchScreen')}
                 style={{ height: 30, width: 70, alignItems: 'flex-end', marginRight: 5 }}
@@ -165,7 +166,7 @@ class Home extends Component {
                 imageStyle={{ height: 25, width: 25 }}
                 imageName={images.shareIcon}
 
-              /> 
+              />
               <ButtonWithIconAndText
                 buttonTitle={this.props.sahspaceCount && this.props.sahspaceCount.count ? this.props.sahspaceCount.count : 0}
                 headerText={'Safe Manager'}
@@ -195,10 +196,10 @@ class Home extends Component {
         </View>
         <View style={{ flex: 7.5, backgroundColor: '#FFFFFF' }} >
           <FlatList
-          showsHorizontalScrollIndicator={Boolean(false)}
+            showsHorizontalScrollIndicator={Boolean(false)}
             data={this.props.documentList}
-            renderItem={({ item }) => <View style={{ height: 100, margin: 5, borderColor: '#DEDEDE', borderWidth: 1, borderRadius: 5 }}>
-              <View style={{ flexDirection: 'row', height: 90 }}>
+            renderItem={({ item }) => <View style={{ height: 110, margin: 5, borderColor: '#DEDEDE', borderWidth: 1, borderRadius: 5 }}>
+              <View style={{ flexDirection: 'row', height: 110 }}>
                 <View style={{ width: '25%' }} >
                   <View style={{ flex: 1, backgroundColor: '#FFE6E2', justifyContent: 'center', alignItems: 'center', margin: 10, borderRadius: 5 }}>
                     <Image
@@ -210,10 +211,11 @@ class Home extends Component {
                 <View style={{ width: '75%', }} >
                   <Text style={styles.item}>{item.doc_name}</Text>
                   {/* <View style={{flexDirection:'row', backgroundColor: 'red', height: 30}}> */}
-                  <Text style={{color: '#3072F3'}}>{item.name }</Text>
-                  <Text >{' > '+ item.document_name +' > '+ item.year +' > '+ item.month}</Text>
+                  <Text style={{ color: '#3072F3', fontSize: 16 }}>{item.name}
+                  <Text style={{ color: '#000000', fontSize: 15 }}>{' > ' + item.document_name + ' > ' + item.year + ' > ' + item.month}</Text>
+                  </Text>
                   {/* </View> */}
-                  <View style={{ height: 1, backgroundColor: '#DEDEDE', marginVertical: 5 }}></View>
+                  <View style={{ height: 1, backgroundColor: '#DEDEDE', marginVertical: 3 }}></View>
                   <View style={{ flexDirection: 'row', }}>
                     <Text >{item.user_name}</Text>
                     <View style={{ height: 15, width: 1, backgroundColor: '#DEDEDE', marginHorizontal: 5 }}></View>
@@ -236,17 +238,23 @@ class Home extends Component {
                 style={{ height: '100%', width: '100%', borderRadius: 50 }}>
                 <PDFScreen
                   onPressButton={() => this.increaseHeight(this.state.mobileNumber)}
-                  uploadFileAction={() => this.uploadFileAction()}
+                  uploadFileAction={(data) => this.uploadFileAction(data)}
                 />
               </Animatable.View>
             </View>
-            : 
-            <View style={{height: 50, width: '100%', justifyContent: 'center', alignItems: 'center'}}>
-            <View style={{ color: 'white', height: 45, width: '40%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}>
-            <DocumentPickerScreen handleError={() => this.handleError()}/>
-          </View>
+            :
+            // <CustomButton
+            //   buttonTitle={'+ Share File'}
+            //   onPressButton={() => this.increaseHeight(1)}
+            //   buttonStyle={{ color: 'white', height: 45, width: '40%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}
+            //   titleFontColor={'white'}
+            // />
+            <View style={{ height: 50, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+              <View style={{ color: 'white', height: 45, width: '40%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}>
+                <DocumentPickerScreen handleError={() => this.handleError()} />
+              </View>
             </View>
-           }
+          }
         </View>
 
       </View>
@@ -284,7 +292,7 @@ const mapDispatchToProps = dispatch => ({
   getAllDocument: state => dispatch(Actions.getAllDocument(state)),
   getSahspaceCount: state => dispatch(Actions.getSahspaceCount(state)),
   getDocmentList: state => dispatch(Actions.getDocmentList(state)),
-  
+
 });
 
 export default connect(
