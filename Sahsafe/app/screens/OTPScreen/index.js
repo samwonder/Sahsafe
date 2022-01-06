@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert, TouchableOpacity } from 'react-native';
 import OTPInput from 'react-native-otp';
 import CustomButton from '../../components/CustomButton';
 import { connect } from "react-redux";
@@ -69,15 +69,15 @@ class OTPScreen extends React.Component {
           "mobile_no": this.props.mobileNumber.mobile_no,
           "otp_code": this.state.otp
         }
-       await this.props.submitOTPAction(data);
-       console.log("🚀 ~ file: -=-=-=-=-=-=-=-=-submitOTPResponse", this.props.submitOTPResponse)
-       if(this.props.submitOTPResponse.status === 0){
-        this.props.navigation.navigate('UserDetail');
-       } else if(this.props.submitOTPResponse.sahspace_count === 0) {
-        this.props.navigation.navigate('WelcomeScreen'); 
-       } else {
-        this.props.navigation.navigate('HomeScreen');
-       }
+        await this.props.submitOTPAction(data);
+        console.log("🚀 ~ file: -=-=-=-=-=-=-=-=-submitOTPResponse", this.props.submitOTPResponse)
+        if (this.props.submitOTPResponse.status === 0) {
+          this.props.navigation.navigate('UserDetail');
+        } else if (this.props.submitOTPResponse.sahspace_count === 0) {
+          this.props.navigation.navigate('WelcomeScreen');
+        } else {
+          this.props.navigation.navigate('HomeScreen');
+        }
       } catch (error) {
         console.log("🚀 ~ file: index.js ~ ===============", error)
         this.props.toggleLoader(false)
@@ -95,6 +95,9 @@ class OTPScreen extends React.Component {
     } else if (phone.toString().length === 10) {
       this.props.toggleLoader(true)
       try {
+        this.setState({
+          counter: 30
+        })
         let result = await Services.UserServices.RegisterPhoneNumber(this.props.mobileNumber.mobile_no);
         console.log("🚀 ~ file: index.js ~ line 43 ~ ============", result)
         this.props.toggleLoader(false)
@@ -111,7 +114,7 @@ class OTPScreen extends React.Component {
     return (
       <View>
         <View style={styles.container}>
-          <Text style={styles.text}>Enter OTP to Verify Mobile Number</Text>
+          <Text style={styles.text}>Enter <Text style={{color: '#3434D6', fontFamily: AppConstant.Fonts.roboto_bold}}>OTP</Text> to Verify Mobile Number</Text>
           <OTPInput
             value={this.state.otp}
             onChange={this.handleOTPChange}
@@ -122,16 +125,15 @@ class OTPScreen extends React.Component {
           <CustomButton
             buttonTitle={'Verify OTP'}
             onPressButton={() => this.submitOTP()}
-            buttonStyle={{ color: 'black', height: 50, width: '80%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 5, marginTop: 30 }}
-          // titleFontColor={'#707070'}
+            buttonStyle={{ color: 'black', height: 50, width: '80%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 5, marginTop: 30,  }}
+            titleFontColor={'#FFFFFF'}
           />
-          <CustomButton
-            buttonTitle={`Resend OTP in ${this.state.counter}`}
-            onPressButton={() => this.navigateToOTPScreen()}
-            buttonStyle={{ color: '#3434D6', justifyContent: 'center',  marginTop: 15 }}
-          // titleFontColor={'#707070'}
-          />
-          {/* <Button style={{ marginTop: 20 }} onPress={this.navigateToOTPScreen} title={`Resend OTP in ${this.state.counter}`} /> */}
+          <TouchableOpacity  onPress={() => this.navigateToOTPScreen(this.props.mobileNumber.mobile_no)}>
+            <Text style={{ color: '#000000', fontSize: 16, fontFamily: AppConstant.Fonts.roboto_medium }}>
+              {'Resend OTP in'}
+              <Text style={{ color: '#3434D6', fontSize: 17, fontFamily: AppConstant.Fonts.roboto_medium }}>{` ${this.state.counter} sec`}</Text>
+            </Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.subContainer}>
           <CustomButton
@@ -158,8 +160,8 @@ const styles = StyleSheet.create({
   text: {
     marginBottom: 15,
     fontSize: 30,
-    fontFamily: AppConstant.Fonts.roboto_bold,
-    paddingHorizontal:30
+    fontFamily: AppConstant.Fonts.roboto_medium,
+    paddingHorizontal: 30
   }
 });
 

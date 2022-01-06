@@ -13,7 +13,8 @@ import {
   StyleSheet,
   TextInput,
   Alert,
-  BackHandler
+  BackHandler,
+  Platform
 } from 'react-native';
 import * as Animatable from "react-native-animatable";
 import { images } from '../../assets/images';
@@ -90,16 +91,17 @@ class GetMobileNumber extends Component {
           <View style={{ flex: 0.5 }}>
             <Text style={{ marginLeft: '4%', fontSize: 18, fontFamily: AppConstant.Fonts.roboto_bold }}>{'Get Started'}</Text>
             <View style={{ flexDirection: 'row', width: '90%', justifyContent: 'center', alignItems: 'center', height: 60, margin: 15, borderWidth: 1, borderColor: '#A5A5A5' }}>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{flexDirection: 'row', justifyContent: 'center' }}>
                 <Image
                   style={{ height: 25, width: 30 }}
                   source={images.indianFlag}
                   resizeMode='contain'
                 />
-                <Text style={{ fontFamily: AppConstant.Fonts.roboto_medium, color: 'black', fontSize: 17, textAlign: 'center',  }}>{" +91"}</Text>
+                <Text style={{ height: 25, fontFamily: AppConstant.Fonts.roboto_regular, color: 'black', fontSize: 17, marginTop: Platform.OS === 'ios' ? 4 : 1  }}>
+                  {" +91"}</Text>
               </View>
               <TextInput
-                style={{ width: '75%',  fontFamily: AppConstant.Fonts.roboto_medium }}
+                style={{ width: '75%',  fontFamily: AppConstant.Fonts.roboto_regular,  height: 50, top: 1 }}
                 keyboardType='numeric'
                 onChangeText={(text) => this.onTextChanged(text)}
                 placeholder='Mobile number'
