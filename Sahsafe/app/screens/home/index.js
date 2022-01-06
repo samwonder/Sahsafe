@@ -105,11 +105,13 @@ class Home extends Component {
         selectedButton: true,
       })
       await this.props.getDocmentList(value);
+      await this.props.getSahspaceCount();
     } else {
       this.setState({
         selectedButton: false,
       })
       await this.props.getDocmentList();
+      await this.props.getSahspaceCount();
     }
 
 
@@ -189,13 +191,13 @@ class Home extends Component {
                 buttonTitle={'Recent Received'}
                 onPressButton={() => this.selectedButton('recieved')}
                 buttonStyle={[{ color: 'white', height: 45, width: 150, justifyContent: 'center' }, !this.state.selectedButton && { borderBottomColor: 'grey', borderBottomWidth: 3 }]}
-                titleFontColor={'black'}
+                titleFontColor={this.state.selectedButton ? '#6A6A6A' : 'black'}
               />
               <CustomButton
                 buttonTitle={'Recent Sent'}
                 onPressButton={() => this.selectedButton('sent')}
                 buttonStyle={[{ color: 'white', height: 45, width: 120, justifyContent: 'center', }, this.state.selectedButton && { borderBottomColor: 'grey', borderBottomWidth: 3 }]}
-                titleFontColor={'black'}
+                titleFontColor={!this.state.selectedButton ? '#6A6A6A' : 'black'}
               />
 
             </View>
@@ -217,17 +219,14 @@ class Home extends Component {
                 </View>
                 <View style={{ width: '75%', }} >
                   <Text style={styles.item}>{item.doc_name}</Text>
-                  {/* <View style={{flexDirection:'row', backgroundColor: 'red', height: 30}}> */}
                   <Text style={{ color: '#3072F3', fontSize: 16 , fontFamily:AppConstant.Fonts.roboto_medium }}>{item.name}
                     <Text style={{ color: '#000000', fontSize: 15 ,fontFamily:AppConstant.Fonts.roboto_medium}}>{' > ' + item.document_name + ' > ' + item.year + ' > ' + item.month}</Text>
                   </Text>
-                  {/* </View> */}
                   <View style={{ height: 1, backgroundColor: '#DEDEDE', marginVertical: 3 }}></View>
                   <View style={{ flexDirection: 'row', }}>
                     <Text style={{fontFamily:AppConstant.Fonts.roboto_bold}}>{item.user_name}</Text>
                     <View style={{ height: 15, width: 1, backgroundColor: '#DEDEDE', marginHorizontal: 5 }}></View>
-                    <Text style={{fontFamily:AppConstant.Fonts.roboto_bold}}>{item.created_at}</Text>
-
+                    <Text style={{fontFamily:AppConstant.Fonts.roboto_regular}}>{item.created_at}</Text>
                   </View>
                 </View>
               </View>
