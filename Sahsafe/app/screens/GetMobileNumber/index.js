@@ -84,24 +84,28 @@ class GetMobileNumber extends Component {
                 source={images.infoFlex}
                 resizeMethod={'resize'}
               />
-              <Text style={{ fontSize: 30, textAlign: 'center', color: 'black',fontFamily : AppConstant.Fonts.roboto_regular }}>Share Documents, Securely !!</Text>
+              <Text style={{ fontSize: 30, textAlign: 'center', color: 'black', fontFamily: AppConstant.Fonts.roboto_regular }}>Share Documents, Securely !!</Text>
             </Animatable.View>
           </View>
           <View style={{ flex: 0.5 }}>
-            <Text style={{ marginLeft: '4%', fontSize: 18, fontFamily : AppConstant.Fonts.roboto_bold}}>{'Get Started'}</Text>
+            <Text style={{ marginLeft: '4%', fontSize: 18, fontFamily: AppConstant.Fonts.roboto_bold }}>{'Get Started'}</Text>
             <View style={{ flexDirection: 'row', width: '90%', justifyContent: 'center', alignItems: 'center', height: 60, margin: 15, borderWidth: 1, borderColor: '#A5A5A5' }}>
-              <IconWithText
-                title='+91 '
-                image={images.indianFlag}
-              />
+              <View style={{flexDirection: 'row'}}>
+                <Image
+                  style={{ height: 25, width: 30 }}
+                  source={images.indianFlag}
+                  resizeMode='contain'
+                />
+                <Text style={{ fontFamily: AppConstant.Fonts.roboto_medium, color: 'black', fontSize: 17, textAlign: 'center',  }}>{" +91"}</Text>
+              </View>
               <TextInput
-                style={{ width: '75%', height: 40,fontFamily : AppConstant.Fonts.roboto_medium }}
+                style={{ width: '75%',  fontFamily: AppConstant.Fonts.roboto_medium }}
                 keyboardType='numeric'
                 onChangeText={(text) => this.onTextChanged(text)}
                 placeholder='Mobile number'
                 value={this.state.mobileNumber}
                 maxLength={10}
-                fontSize={16}
+                fontSize={17}
               />
 
             </View>
@@ -109,8 +113,9 @@ class GetMobileNumber extends Component {
           <View style={{ flex: 1, alignItems: 'center', }}>
             <CustomButton
               buttonTitle={'Login'}
+              titleFontColor={'white'}
               onPressButton={() => this.navigateToOTPScreen(this.state.mobileNumber)}
-              buttonStyle={{ color: 'black', height: 50, width: '80%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 5 }}
+              buttonStyle={{ height: 50, width: '80%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 5 }}
             />
           </View>
         </KeyboardAwareScrollView>
