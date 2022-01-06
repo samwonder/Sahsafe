@@ -115,13 +115,21 @@ class Home extends Component {
 
   }
 
-  uploadFileAction(data) {
+  async uploadFileAction(data) {
     console.log("🚀 ~ file: index.js ~ ================home============ data", data)
-    this.setState({
-      topView: false,
-    }, () => {
-      this.props.navigation.navigate('SuccessScreen')
-    })
+    this.props.toggleLoader(true)
+    try {
+      let result = await Services.DocumentServices.uploadSpaceDocumentApi(data);
+      console.log("🚀 ~ ========================", result.data)
+      this.props.toggleLoader(false)
+      this.setState({
+        topView: false,
+      }, () => {
+        this.props.navigation.navigate('SuccessScreen')
+      })
+    } catch (error) {
+      this.props.toggleLoader(false)
+    }
   }
 
   handleError(err) {

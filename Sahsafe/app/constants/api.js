@@ -18,7 +18,7 @@ const Document = {
   'GET_SAHSPACE_COUNT': 'getUserSpaceCount',
   'GET_DOCUMENT_LIST': 'getUserSpaceDocList',
   'UPLOAD_DOCUMENT': 'document/upload',
-  'UPLOAD_SAPCE_DOCUMENT': 'uploadSpaceDocument',
+  'UPLOAD_SPACE_DOCUMENT': 'uploadSpaceDocument',
   'GET_USER_DETAIL': 'getUserDetail',
   'GET_SAHSPACE_LIST': 'getSahspaceList',
   'GET_SAHSPACE_DOCUMENT_TYPE_LIST': 'getSahspaceDocList',

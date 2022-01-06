@@ -14,7 +14,8 @@ import {
   TouchableOpacity,
   Dimensions,
   TextInput,
-  ScrollView
+  ScrollView,
+  Alert
 } from 'react-native';
 const { width, height } = Dimensions.get("window");
 import { images } from '../../assets/images/index'
@@ -31,7 +32,7 @@ import * as Services from "@services";
 const countries = ["Egypt", "Canada", "Australia", "Ireland"]
 var monthList = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-class Splash extends Component {
+class PDFUpload extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -68,8 +69,10 @@ class Splash extends Component {
     }
     console.log("🚀 ~ file: index.js ~ ---------originArray", originArray)
     this.setState({
-      sahspaceList: originArray
+      sahspaceList: originArray,
+      selectedSahspace: originArray[0]
     })
+    this.sahspaceListItemSelected(originArray[0],0)
   }
 
   generateArrayOfYears() {
@@ -82,6 +85,8 @@ class Splash extends Component {
     }
     this.setState({
       years: yr,
+      selectedYear: yr[0],
+      selectedMonth: monthList[0]
     })
     return yr
   }
@@ -114,23 +119,37 @@ class Splash extends Component {
       originArray.push(this.props.sahspaceDocumentTypeList[i].name)
     }
     this.setState({
-      sahspaceSelectedList: originArray
+      sahspaceSelectedList: originArray,
+      selectedSahspaceDoc: originArray[0]
     })
   }
 
   uploadFile() {
-    let data = {
-      "sahspace_unique_id": this.state.sahspace_unique_id,
-      "document_type_id": 1,
-      "document_name": this.state.documentName,
-      "year" : this.state.selectedYear,
-      "month": this.state.selectedMonth,
-      "description": this.state.description,
-      "file_id" : 3
-}
-    console.log("🚀 ~ file: index.js ~================>>>>>>>>>>>>>>", data)
-
-    this.props.uploadFileAction(data)
+    // if (this.state.documentName.length === 0) {
+    //   Alert.alert('Please enter a document name.')
+    // } else if (this.state.selectedSahspace.length === 0) {
+    //   Alert.alert('Please select a sahspace.')
+    // } else if (this.state.selectedSahspaceDoc.length === 0) {
+    //   Alert.alert('Please select a sahspace document.')
+    // } else if (this.state.selectedYear.length === 0) {
+    //   Alert.alert('Please select a year.')
+    // } else if (this.state.selectedMonth.length === 0) {
+    //   Alert.alert('Please select a month.')
+    // } else if (this.state.description.length === 0) {
+    //   Alert.alert('Please enter a description.')
+    // } else {
+          let data = {
+            "sahspace_unique_id": this.state.sahspace_unique_id,
+            "document_type_id": 1,
+            "document_name": "Test",//this.state.documentName,
+            "year" : this.state.selectedYear,
+            "month": this.state.selectedMonth.toLowerCase(),
+            "description": "Test Description",//this.state.description,
+            "file_id" : 3
+      }
+       //console.log("🚀 ~ file: index.js ~================>>>>>>>>>>>>>>", data)
+      this.props.uploadFileAction(data)
+   // }
   }
   render() {
     return (
@@ -466,4 +485,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Splash);
+)(PDFUpload);

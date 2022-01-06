@@ -10,7 +10,7 @@ const Common = {
   'GET_SAHSPACE_COUNT': 'getSahSpaceCount',
   'GET_DOCUMENT_LIST': 'GetDocumentList',
   'UPLOAD_DOCUMENT': 'UploadDocuement',
-  'UPLOAD_SAPCE_DOCUMENT': 'UploadSpaceDocument',
+  'UPLOAD_SPACE_DOCUMENT': 'UploadSpaceDocument',
   'GET_USER_DETAIL': 'Getuserdetail',
   'GET_SAHSPACE_LIST': 'GetSahspaceList',
   'GET_SAHSPACE_DOCUMENT_TYPE_LIST': 'GetSahspaceDocumentTypeList',

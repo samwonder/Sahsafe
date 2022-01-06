@@ -57,7 +57,8 @@ const uploadDocuementApi = async (data) => {
 }
 const uploadSpaceDocumentApi = async (data) => {
   try {
-    const response = await Config.axios.post(AppConstant.Api.Document.UPLOAD_SAPCE_DOCUMENT);
+    const response = await Config.axios.post(AppConstant.Api.Document.UPLOAD_SPACE_DOCUMENT, data);
+    //console.log("response-----------------",response.data,data)
     if (response.status) {
       return response;
     }

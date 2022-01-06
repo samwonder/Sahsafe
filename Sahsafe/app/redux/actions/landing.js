@@ -60,7 +60,7 @@ export const uploadDocuement = (value) => {
     try {
       let result = await Services.DocumentServices.uploadDocuementApi();
       dispatch(Actions.toggleLoader(false));
-      dispatch({ type: AppConstant.ActionTypes.Common.GET_DOCUMENT_LIST, payload: result.data });
+      dispatch({ type: AppConstant.ActionTypes.Common.UPLOAD_DOCUMENT, payload: result.data });
     } catch (error) {
       dispatch(Actions.toggleLoader(false));
     }
@@ -71,9 +71,9 @@ export const uploadSpaceDocument = (value) => {
   return async dispatch => {
     dispatch(Actions.toggleLoader(true));
     try {
-      let result = await Services.DocumentServices.uploadSpaceDocumentApi();
+      let result = await Services.DocumentServices.uploadSpaceDocumentApi(value);
       dispatch(Actions.toggleLoader(false));
-      dispatch({ type: AppConstant.ActionTypes.Common.GET_DOCUMENT_LIST, payload: result.data });
+      dispatch({ type: AppConstant.ActionTypes.Common.UPLOAD_SPACE_DOCUMENT, payload: result.data });
     } catch (error) {
       dispatch(Actions.toggleLoader(false));
     }

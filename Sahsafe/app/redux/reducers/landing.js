@@ -49,7 +49,7 @@ export default (state, action) => {
       }
     }
       break;
-    case AppConstant.ActionTypes.Common.UPLOAD_SAPCE_DOCUMENT: {
+    case AppConstant.ActionTypes.Common.UPLOAD_SPACE_DOCUMENT: {
       return {
         ...state,
         uploadSpaceDocument: action.payload.data,
