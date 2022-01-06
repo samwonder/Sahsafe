@@ -19,10 +19,10 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     flexDirection: 'row',
-    height: isIOS ? (isIphoneX ? 84 : 64) : 54,
-    alignSelf: 'stretch',
+    height: isIOS ? (isIphoneX ? 84 : 64) : 64,
+    // alignSelf: 'stretch',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
   },
   headerView: {
     flex: 1,
@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 60
+    // marginRight: 60, 
+    backgroundColor: 'green'
   },
   titleText: {
     color: colors.appRedColor,
@@ -39,12 +40,13 @@ const styles = StyleSheet.create({
     fontFamily:AppConstant.Fonts.roboto_bold
   },
   leftView: {
-    flex: 0.18,
+    flex: 1,
     width: 60,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingLeft: 10,
+    // paddingLeft: 10,
+    // backgroundColor: 'green'
   },
   navImage: {
     width: 25,
@@ -86,23 +88,20 @@ const NavBar = ({
   hideRightView,
 }) => (
   <View style={styles.container}>
-    <View style={styles.leftView}>
-      {showBackButton ?
+      
         <TouchableOpacity
           onPress={() => backButtonAction()}
-          style={{ height: 70, width: 150, alignItems: 'flex-end', flexDirection: 'row', }}
+          style={{ height: isIOS ? (isIphoneX ? 84 : 64) : 64, width: 150, alignItems: 'center', flexDirection: 'row' }}
         >
+          <View style={{flexDirection: 'row', marginTop: 15, alignItems: 'center',}}>
           <Image
             style={{ height: 30, width: 40, marginLeft: 10 }}
             source={images.backIcon}
           />
-          <Text style={{ fontSize: 18, textAlign: 'center', marginTop: 5 }}>{'  ShaSafe'}</Text>
+          <Text style={{ fontSize: 18, textAlign: 'center',  fontFamily: AppConstant.Fonts.roboto_regular}}>{'  ShaSafe'}</Text>
+          </View>
         </TouchableOpacity>
-        : null}
-    </View>
-    <View style={styles.headerView}>
-      <Text style={styles.titleText}>{title}</Text>
-    </View>
+       
   </View>
 );
 

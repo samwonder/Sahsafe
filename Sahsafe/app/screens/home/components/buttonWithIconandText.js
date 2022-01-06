@@ -50,8 +50,8 @@ const ButtonWithIconAndText = ({
         />
       </View>
       <View>
-        <Text style={{ alignSelf: 'center', fontSize: 17, marginLeft: 10, fontFamily: AppConstant.Fonts.roboto_medium }}>{headerText}</Text>
-        <Text style={{ alignSelf: 'center', fontSize: 22, color: titleFontColor, fontFamily: AppConstant.Fonts.roboto_regular }}>{buttonTitle}</Text>
+        <Text style={{ alignSelf: 'center', fontSize: 17, marginLeft: 10, fontFamily: AppConstant.Fonts.roboto_regular }}>{headerText}</Text>
+        <Text style={{ alignSelf: 'center', fontSize: 22, color: titleFontColor, fontFamily: AppConstant.Fonts.roboto_medium }}>{buttonTitle}</Text>
       </View>
     </View>
   </TouchableOpacity>

@@ -119,7 +119,7 @@ class OTPScreen extends React.Component {
             value={this.state.otp}
             onChange={this.handleOTPChange}
             tintColor="#FB6C6A"
-            offTintColor="#BBBCBE"
+            offTintColor="#0055ff"
             otpLength={5}
           />
           <CustomButton

@@ -31,7 +31,7 @@ const IconWithText = ({
       onPress={() => onPressButton()}
       style={buttonStyle}
     >
-      <Text style={{ alignSelf: 'center', fontSize: 18, color: titleFontColor,fontFamily : AppConstant.Fonts.roboto_bold, }}>{buttonTitle}</Text>
+      <Text style={{ alignSelf: 'center', fontSize: 18, color: titleFontColor,fontFamily : AppConstant.Fonts.roboto_medium, }}>{buttonTitle}</Text>
     </TouchableOpacity>
   </Animatable.View>
 );

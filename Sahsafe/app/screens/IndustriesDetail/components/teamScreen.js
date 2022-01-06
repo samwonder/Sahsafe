@@ -38,7 +38,7 @@ const Item = (item) => (
   <View style={styles.item}>
     <View style={{ height: 35, width: 35, justifyContent: 'center', alignItems: 'center', marginTop: 6, borderRadius: 18, backgroundColor: `hsla(${Math.random() * 360}, 100%, 50%, 1)` }}>
       <Text style={{ fontSize: 16, color: 'white' ,fontFamily:AppConstant.Fonts.roboto_medium}}>
-        {makeRandomColor(item.item.name)}
+        {makeRandomColor(item.item.name).slice(0, 2)}
         </Text>
     </View>
     <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
