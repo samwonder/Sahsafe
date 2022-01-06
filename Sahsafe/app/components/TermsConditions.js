@@ -9,7 +9,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-
+import * as AppConstant from "@constants"
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     color: 'rgb(62, 151, 220)',
     fontSize: 16,
     textAlign: 'right',
+    fontFamily:AppConstant.Fonts.roboto_medium
   },
   termConditionIconTocuh: {
     width: 35,

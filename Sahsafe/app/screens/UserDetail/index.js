@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import * as Actions from "@redux/actions";
 import * as Services from "@services";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-
+import * as AppConstant from "@constants"
 class UpdateProfile extends React.Component {
 
   state = {
@@ -105,7 +105,7 @@ class UpdateProfile extends React.Component {
 
           <View style={styles.container}>
             <CustomText
-              textStyle={{ fontSize: 30, fontWeight: '600', marginLeft: 15 }}
+              textStyle={{ fontSize: 30, fontFamily:AppConstant.Fonts.roboto_medium, marginLeft: 15 }}
               text={'Welcome to Sahsafe'} />
             <CustomText
               textStyle={{ fontSize: 16, marginLeft: 15 }}
@@ -113,7 +113,7 @@ class UpdateProfile extends React.Component {
             <View style={{ marginTop: 50, }}>
 
               <CustomText
-                textStyle={{ fontSize: 16, fontWeight: '700', marginLeft: 15 }}
+                textStyle={{ fontSize: 16, fontFamily:AppConstant.Fonts.roboto_bold, marginLeft: 15 }}
                 text={'Registration'} />
             </View>
 

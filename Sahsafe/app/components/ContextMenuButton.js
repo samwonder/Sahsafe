@@ -5,7 +5,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import PropTypes from 'prop-types';
-
+import * as AppConstant from "@constants"
 const style = StyleSheet.create({
   contextMenuButton: {
     justifyContent: 'center',
@@ -18,10 +18,12 @@ const style = StyleSheet.create({
   contextMenuButtonText: {
     fontSize: 16,
     color: '#2544A7',
+    fontFamily:AppConstant.Fonts.roboto_medium
   },
   contextMenuButtonTextAlt: {
     fontSize: 16,
     color: '#FA0054',
+    fontFamily:AppConstant.Fonts.roboto_medium
   },
 });
 

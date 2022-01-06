@@ -1,11 +1,7 @@
 module.exports = {
-    dependency: {
-        platforms: {
-            ios: {},
-            android:{},
-        },
-        "assets": [
-            "./src/assets/fonts/"
-        ]
-    }
-}
+    project: {
+        ios: {},
+        android: {},
+    },
+    assets: ['./app/assets/fonts/'],
+};

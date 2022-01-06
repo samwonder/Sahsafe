@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet, View, FlatList, StatusBar, Image } from 'react-native';
 import { images } from '../../../assets/images/index'
+import * as AppConstant from "@constants";
 const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -36,7 +37,7 @@ const makeRandomColor = (myStr) => {
 const Item = (item) => (
   <View style={styles.item}>
     <View style={{ height: 35, width: 35, justifyContent: 'center', alignItems: 'center', marginTop: 6, borderRadius: 18, backgroundColor: `hsla(${Math.random() * 360}, 100%, 50%, 1)` }}>
-      <Text style={{ fontSize: 16, color: 'white' }}>
+      <Text style={{ fontSize: 16, color: 'white' ,fontFamily:AppConstant.Fonts.roboto_medium}}>
         {makeRandomColor(item.item.name)}
         </Text>
     </View>
@@ -90,10 +91,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
+    fontFamily:AppConstant.Fonts.roboto_medium
   },
   subTitle: {
     fontSize: 14,
-    color: '#7D7D7D'
+    color: '#7D7D7D',
+    fontFamily:AppConstant.Fonts.roboto_regular
   },
 });
 export default TeamScreen;

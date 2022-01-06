@@ -95,7 +95,7 @@ class SahspaceManager extends Component {
                   />
                 </TouchableOpacity>
                 <CustomText
-                  textStyle={{ fontSize: 14, color: 'black', fontWeight: '600', textAlign: 'center' }}
+                  textStyle={{ fontSize: 14, color: 'black', fontFamily:AppConstant.Fonts.roboto_medium, textAlign: 'center' }}
                   text={item.name} />
               </View>
             )}

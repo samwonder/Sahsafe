@@ -9,7 +9,8 @@ import CustomText from '../../components/CustomText';
 import { connect } from "react-redux";
 import * as Actions from "@redux/actions";
 import * as Services from "@services";
-import EmptyScreen from '../../components/EmptyScreen'
+import EmptyScreen from '../../components/EmptyScreen';
+import * as AppConstant from "@constants"
 class DocumentTypeScreen extends Component {
   constructor(props) {
     super(props);
@@ -62,7 +63,7 @@ class DocumentTypeScreen extends Component {
                 />
               </TouchableOpacity>
               <CustomText
-                textStyle={{ fontSize: 14, color: 'black', fontWeight: '600', textAlign: 'center' }}
+                textStyle={{ fontSize: 14, color: 'black', fontFamily:AppConstant.Fonts.roboto_medium, textAlign: 'center' }}
                 text={item.month} />
             </View>
           }

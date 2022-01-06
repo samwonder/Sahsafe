@@ -5,6 +5,7 @@ import CustomButton from '../../components/CustomButton';
 import { connect } from "react-redux";
 import * as Actions from "@redux/actions";
 import * as Services from "@services";
+import * as AppConstant from "@constants";
 
 class OTPScreen extends React.Component {
   constructor(props) {
@@ -156,7 +157,9 @@ const styles = StyleSheet.create({
   },
   text: {
     marginBottom: 15,
-    fontSize: 30
+    fontSize: 30,
+    fontFamily: AppConstant.Fonts.roboto_bold,
+    paddingHorizontal:30
   }
 });
 

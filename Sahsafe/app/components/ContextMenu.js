@@ -8,7 +8,7 @@ import {
   Platform,
 } from 'react-native';
 import PropTypes from 'prop-types';
-
+import * as AppConstant from "@constants"
 const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 16,
-    fontWeight: '900',
+    fontFamily:AppConstant.Fonts.roboto_bold,
     alignSelf: 'center',
   },
   dividerLine: {

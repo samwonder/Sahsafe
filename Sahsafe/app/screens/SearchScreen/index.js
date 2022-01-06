@@ -62,7 +62,7 @@ class SuccessScreen extends Component {
       onPress={() => this.onClickCell(item)}
       style={styles.item}>
       <View style={{ height: 35, width: 35, justifyContent: 'center', alignItems: 'center', marginTop: 6, borderRadius: 18, backgroundColor: `hsla(${Math.random() * 360}, 100%, 50%, 1)` }}>
-        <Text style={{ fontSize: 16, color: 'white' }}>{this.makeRandomColor(item.name)}</Text>
+        <Text style={{ fontSize: 16, color: 'white',fontFamily:AppConstant.Fonts.roboto_medium }}>{this.makeRandomColor(item.name)}</Text>
       </View>
       <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
         <View style={{ marginLeft: 10, justifyContent: 'center' }}>
@@ -150,6 +150,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
+    fontFamily:AppConstant.Fonts.roboto_medium
   },
 })
 

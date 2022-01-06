@@ -13,7 +13,7 @@ import {
 import colors from '../theme/colors';
 import { NavBarHeight, isIOS, isIphoneX } from '../utils/platformSpecific';
 import { images } from '../assets/images';
-
+import * as AppConstant from "@constants"
 const config = {
   velocityThreshold: 0.3,
   directionalOffsetThreshold: 80
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
     fontFamily: 'Arial',
-    fontWeight: '500',
+    fontFamily:AppConstant.Fonts.roboto_regular
   },
   leftView: {
     flex: 0.18,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 14,
     textAlign: 'center',
-    // fontFamily: 'RobotoCondensed-Regular',
+    fontFamily:AppConstant.Fonts.roboto_regular
   },
   rightInfoIcon: {
     width: 20,

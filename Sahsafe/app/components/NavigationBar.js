@@ -12,7 +12,7 @@ import {
 import { images } from '../assets/images';
 import { NavBarHeight, isIOS, isIphoneX } from '../utils/platformSpecific';
 import colors from '../theme/colors';
-
+import * as AppConstant from "@constants"
 const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     color: colors.appRedColor,
     fontSize: 20,
     textAlign: 'center',
-    // fontFamily: 'RobotoCondensed-Bold',
+    fontFamily:AppConstant.Fonts.roboto_bold
   },
   leftView: {
     flex: 0.18,
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 14,
     textAlign: 'center',
-    // fontFamily: 'RobotoCondensed-Regular',
+    fontFamily:AppConstant.Fonts.roboto_regular
   },
   rightInfoIcon: {
     width: 20,

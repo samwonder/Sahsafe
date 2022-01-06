@@ -8,7 +8,7 @@ import {
   Dimensions,
   Platform,
 } from 'react-native';
-
+import * as AppConstant from "@constants"
 const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   inputTitle: {
     color: 'white',
     fontSize: 15,
-    fontWeight: '400',
+    fontFamily:AppConstant.Fonts.roboto_regular,
     textAlign: 'left',
     marginBottom: 10,
   },
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     color: 'white',
     borderBottomWidth: 1,
     borderBottomColor: 'white',
+    fontFamily:AppConstant.Fonts.roboto_medium
   },
 });
 

@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import * as Animatable from "react-native-animatable";
-
+import * as AppConstant from "@constants"
 const styles = StyleSheet.create({
 
 });
@@ -31,7 +31,7 @@ const IconWithText = ({
       onPress={() => onPressButton()}
       style={buttonStyle}
     >
-      <Text style={{ alignSelf: 'center', fontSize: 18, color: titleFontColor }}>{buttonTitle}</Text>
+      <Text style={{ alignSelf: 'center', fontSize: 18, color: titleFontColor,fontFamily : AppConstant.Fonts.roboto_bold, }}>{buttonTitle}</Text>
     </TouchableOpacity>
   </Animatable.View>
 );

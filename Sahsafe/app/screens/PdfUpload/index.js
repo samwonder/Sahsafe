@@ -138,7 +138,7 @@ class Splash extends Component {
         <KeyboardAwareScrollView>
           <View style={{ height: '100%', borderRadius: 10 }}>
             <View style={{ height: 50, justifyContent: 'space-between', flexDirection: 'row', borderBottomColor: '#DEDEDE', borderBottomWidth: 1 }}>
-              <Text style={{ fontSize: 19, justifyContent: 'center', margin: 10 }}>{'Document Upload'}</Text>
+              <Text style={{ fontSize: 19, justifyContent: 'center', margin: 10 ,fontFamily:AppConstant.Fonts.roboto_medium}}>{'Document Upload'}</Text>
               <TouchableOpacity
                 onPress={() => this.props.onPressButton()}
                 style={{ height: 30, width: 70, alignItems: 'flex-end', margin: 10 }}
@@ -294,7 +294,7 @@ class Splash extends Component {
               <View style={{ height: 150, width: '90%', }}>
                 <Text style={{ fontSize: 19, justifyContent: 'center', marginVertical: 10 }}>{'Description'}</Text>
                 <TextInput
-                  style={{ height: 100, borderColor: '#8D8D8D', borderWidth: 1, borderRadius: 2, padding: 5 }}
+                  style={{ height: 100, borderColor: '#8D8D8D', borderWidth: 1, borderRadius: 2, padding: 5, fontFamily:AppConstant.Fonts.roboto_medium }}
                   placeholder="Type here to translate!"
                   onChangeText={text => this.setDescription(text)}
                   multiline={true}
@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#F6F6F6",
   },
-  headerTitle: { color: "#000", fontWeight: "bold", fontSize: 16 },
+  headerTitle: { color: "#000", fontFamily:AppConstant.Fonts.roboto_bold, fontSize: 16 },
   saveAreaViewContainer: { flex: 1, backgroundColor: "#000" },
   viewContainer: { flex: 1, width, backgroundColor: "#FFF" },
   scrollViewContainer: {
@@ -355,13 +355,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#8D8D8D",
   },
-  dropdown1BtnTxtStyle: { color: "black", textAlign: "left" },
+  dropdown1BtnTxtStyle: { color: "black", textAlign: "left" ,fontFamily:AppConstant.Fonts.roboto_regular},
   dropdown1DropdownStyle: { backgroundColor: "#EFEFEF" },
   dropdown1RowStyle: {
     backgroundColor: "#EFEFEF",
     borderBottomColor: "#C5C5C5",
   },
-  dropdown1RowTxtStyle: { color: "#8D8D8D", textAlign: "left" },
+  dropdown1RowTxtStyle: { color: "#8D8D8D", textAlign: "left" ,fontFamily:AppConstant.Fonts.roboto_medium},
 
   dropdown2BtnStyle: {
     width: "90%",
@@ -372,14 +372,14 @@ const styles = StyleSheet.create({
   dropdown2BtnTxtStyle: {
     color: "#FFF",
     textAlign: "center",
-    fontWeight: "bold",
+    fontFamily:AppConstant.Fonts.roboto_bold,
   },
   dropdown2DropdownStyle: { backgroundColor: "#8D8D8D" },
   dropdown2RowStyle: { backgroundColor: "#8D8D8D", borderBottomColor: "#C5C5C5" },
   dropdown2RowTxtStyle: {
     color: "#FFF",
     textAlign: "center",
-    fontWeight: "bold",
+    fontFamily:AppConstant.Fonts.roboto_bold,
   },
 
   dropdown3BtnStyle: {
@@ -402,7 +402,7 @@ const styles = StyleSheet.create({
   dropdown3BtnTxt: {
     color: "#8D8D8D",
     textAlign: "center",
-    fontWeight: "bold",
+    fontFamily:AppConstant.Fonts.roboto_bold,
     fontSize: 24,
     marginHorizontal: 12,
   },
@@ -423,7 +423,7 @@ const styles = StyleSheet.create({
   dropdown3RowTxt: {
     color: "#F1F1F1",
     textAlign: "center",
-    fontWeight: "bold",
+    fontFamily:AppConstant.Fonts.roboto_bold,
     fontSize: 24,
     marginHorizontal: 12,
   },

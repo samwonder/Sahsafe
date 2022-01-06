@@ -28,6 +28,7 @@ import * as Actions from "@redux/actions";
 import * as Services from "@services";
 import DocumentPickerScreen from '../../components/DocumentPicker';
 import * as Common from "@common";
+import * as AppConstant from "@constants";
 
 class Home extends Component {
   constructor(props) {
@@ -147,7 +148,7 @@ class Home extends Component {
           <View style={{ flex: 1 }} >
             <View style={{ flex: 1 }} />
             <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', margin: 5 }}>
-              <Text style={{ fontSize: 19, alignSelf: 'center', marginHorizontal: 5, }}>
+              <Text style={{ fontSize: 19, alignSelf: 'center', marginHorizontal: 5, fontFamily:AppConstant.Fonts.roboto_medium}}>
                 {`Hello, ${this.props.userDetail.name}`}
               </Text>
               <TouchableOpacity
@@ -217,15 +218,15 @@ class Home extends Component {
                 <View style={{ width: '75%', }} >
                   <Text style={styles.item}>{item.doc_name}</Text>
                   {/* <View style={{flexDirection:'row', backgroundColor: 'red', height: 30}}> */}
-                  <Text style={{ color: '#3072F3', fontSize: 16 }}>{item.name}
-                    <Text style={{ color: '#000000', fontSize: 15 }}>{' > ' + item.document_name + ' > ' + item.year + ' > ' + item.month}</Text>
+                  <Text style={{ color: '#3072F3', fontSize: 16 , fontFamily:AppConstant.Fonts.roboto_medium }}>{item.name}
+                    <Text style={{ color: '#000000', fontSize: 15 ,fontFamily:AppConstant.Fonts.roboto_medium}}>{' > ' + item.document_name + ' > ' + item.year + ' > ' + item.month}</Text>
                   </Text>
                   {/* </View> */}
                   <View style={{ height: 1, backgroundColor: '#DEDEDE', marginVertical: 3 }}></View>
                   <View style={{ flexDirection: 'row', }}>
-                    <Text >{item.user_name}</Text>
+                    <Text style={{fontFamily:AppConstant.Fonts.roboto_bold}}>{item.user_name}</Text>
                     <View style={{ height: 15, width: 1, backgroundColor: '#DEDEDE', marginHorizontal: 5 }}></View>
-                    <Text >{item.created_at}</Text>
+                    <Text style={{fontFamily:AppConstant.Fonts.roboto_bold}}>{item.created_at}</Text>
 
                   </View>
                 </View>
@@ -277,6 +278,7 @@ const styles = StyleSheet.create({
   item: {
     marginTop: 10,
     fontSize: 18,
+    fontFamily:AppConstant.Fonts.roboto_bold
     // height: 44,
   },
 });

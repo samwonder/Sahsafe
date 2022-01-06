@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import * as Animatable from "react-native-animatable";
 import { images } from '../../../assets/images';
+import * as AppConstant from "@constants";
 const styles = StyleSheet.create({
 
 });
@@ -48,8 +49,8 @@ const ButtonWithIconAndText = ({
           />
         </View>
         <View> 
-          <Text style={{ alignSelf: 'center', fontSize: 17, marginLeft: 10 }}>{headerText}</Text>
-          <Text style={{ alignSelf: 'center', fontSize: 22, color: titleFontColor,  }}>{buttonTitle}</Text>
+          <Text style={{ alignSelf: 'center', fontSize: 17, marginLeft: 10,fontFamily:AppConstant.Fonts.roboto_medium }}>{headerText}</Text>
+          <Text style={{ alignSelf: 'center', fontSize: 22, color: titleFontColor,fontFamily:AppConstant.Fonts.roboto_regular  }}>{buttonTitle}</Text>
         </View>
       </View>
     </TouchableOpacity>

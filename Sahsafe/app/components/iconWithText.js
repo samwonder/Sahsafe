@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import * as Animatable from "react-native-animatable";
-
+import * as AppConstant from "@constants"
 const styles = StyleSheet.create({
 
 });
@@ -30,7 +30,7 @@ const IconWithText = ({
       source={image}
       resizeMode='contain'
     />
-    <Text style={{fontWeight: '600', color: 'black'}}>{" " + title}</Text>
+    <Text style={{fontFamily : AppConstant.Fonts.roboto_medium, color: 'black'}}>{" " + title}</Text>
   </Animatable.View>
 );
 

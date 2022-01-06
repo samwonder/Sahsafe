@@ -6,6 +6,7 @@ import * as Common from '@common';
 import { connect } from "react-redux";
 import * as Actions from "@redux/actions";
 import * as Services from "@services";
+import * as AppConstant from "@constants"
 class WelcomeScreen extends Component {
   constructor(props) {
     super(props);
@@ -52,7 +53,7 @@ class WelcomeScreen extends Component {
     return (
       <View style={styles.container}>
         <CustomText
-          textStyle={{ fontSize: 22, fontWeight: '600' }}
+          textStyle={{ fontSize: 22, fontFamily:AppConstant.Fonts.roboto_medium }}
           text={`Welcome ${name}`} />
         <CustomText
           textStyle={{ fontSize: 16, marginTop: 5, color: 'black' }}

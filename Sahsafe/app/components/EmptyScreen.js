@@ -10,7 +10,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import * as Animatable from "react-native-animatable";
-
+import * as AppConstant from "@constants"
 const styles = StyleSheet.create({
 
 });
@@ -24,7 +24,7 @@ const EmptyScreen = ({
             duration={1000}
             delay={200}
             style={{ height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center', }}>
-            <Text style={{ alignSelf: 'center', fontSize: 18, color: 'grey' }}>{'No Document Found'}</Text>
+            <Text style={{ alignSelf: 'center', fontSize: 18, color: 'grey',fontFamily:AppConstant.Fonts.roboto_medium }}>{'No Document Found'}</Text>
         </Animatable.View>
     </View>
 );

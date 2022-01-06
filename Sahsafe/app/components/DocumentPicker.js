@@ -9,7 +9,7 @@ import DocumentPicker, {
 } from 'react-native-document-picker'
 import { useEffect, useState } from 'react'
 import * as Services from "@services";
-
+import * as AppConstant from "@constants"
 const DocumentPickerScreen = (props) => {
   //console.log("🚀 ~ file: DocumentPi========== ~ props", props)
   //   const [result, setResult] = React.useState<Array<DocumentPickerResponse> | DirectoryPickerResponse | undefined | null>()
@@ -39,7 +39,7 @@ const DocumentPickerScreen = (props) => {
           }
         }}
       >
-        <Text style={{fontSize: 18, color: 'white', fontWeight: '500'}}>+ Share File</Text>
+        <Text style={{fontSize: 18, color: 'white', fontFamily:AppConstant.Fonts.roboto_medium}}>+ Share File</Text>
       </TouchableOpacity>
     </View>
   )

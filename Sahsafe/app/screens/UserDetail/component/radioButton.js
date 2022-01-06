@@ -2,6 +2,7 @@ import { useLinkProps } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { images } from '../../../assets/images';
+import * as AppConstant from "@constants"
 const RadioButton = (props) => {
   return (
     <View style={styles.container}>
@@ -47,10 +48,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   selectedButton: { height: 50, width: '45%', backgroundColor: '#F4F5F7', justifyContent: 'center', borderColor: '#3498DB', borderWidth: 1, borderRadius: 5 },
-  selectedText: { alignSelf: 'center', fontSize: 14, marginLeft: 5, fontWeight: '600' },
+  selectedText: { alignSelf: 'center', fontSize: 14, marginLeft: 5, fontFamily:AppConstant.Fonts.roboto_medium },
   iconStyle: { height: 20, width: 20 },
   deselectedButton: { height: 50, width: '45%', backgroundColor: '#F4F5F7', justifyContent: 'center', borderColor: '#B4B4B4', borderWidth: 1, borderRadius: 5 },
-  deselectedText: { alignSelf: 'center', color: '#B4B4B4', fontSize: 14, marginLeft: 5, fontWeight: '600' },
+  deselectedText: { alignSelf: 'center', color: '#B4B4B4', fontSize: 14, marginLeft: 5, fontFamily:AppConstant.Fonts.roboto_medium },
   subContainer: { flexDirection: 'row', marginLeft: 15 }
 });
 

@@ -53,7 +53,7 @@ class SuccessScreen extends Component {
             duration={1000}
             delay={1000}
           >
-            <Text style={{ fontSize: 22, textAlign: 'center', fontWeight: '600' }}>{'You Have Successfully Added Document'}</Text>
+            <Text style={{ fontSize: 22, textAlign: 'center', fontFamily:AppConstant.Fonts.roboto_medium }}>{'You Have Successfully Added Document'}</Text>
           </Animatable.View>
         </View>
         <View style={{ height: 80, position: 'absolute', marginTop: 50 }}>

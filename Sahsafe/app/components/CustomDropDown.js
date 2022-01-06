@@ -11,7 +11,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { images } from '../assets/images';
-
+import * as AppConstant from "@constants"
 const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -61,14 +61,14 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 18,
     textAlign: 'center',
-    // fontFamily: 'RobotoCondensed-Bold',
+    fontFamily:AppConstant.Fonts.roboto_bold,
     marginVertical: 3,
   },
   categoryName: {
     color: 'black',
     fontSize: 16,
     textAlign: 'center',
-    fontWeight: '600',
+    fontFamily:AppConstant.Fonts.roboto_medium,
     marginVertical: 3,
   },
   closeView: {
@@ -88,8 +88,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 14,
     textAlign: 'center',
-    fontWeight: '400',
-    // fontFamily: 'RobotoCondensed-Regular',
+    fontFamily:AppConstant.Fonts.roboto_regular
   },
 
   listContainer: {
@@ -117,7 +116,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 18,
     textAlign: 'left',
-    // fontFamily: 'RobotoCondensed-Regular',
+    fontFamily:AppConstant.Fonts.roboto_regular,
     marginRight: 5,
   },
   favoriteView: {
