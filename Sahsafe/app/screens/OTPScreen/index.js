@@ -70,10 +70,11 @@ class OTPScreen extends React.Component {
           "otp_code": this.state.otp
         }
         await this.props.submitOTPAction(data);
-        console.log("🚀 ~ file: -=-=-=-=-=-=-=-=-submitOTPResponse", this.props.submitOTPResponse)
-        if (this.props.submitOTPResponse.status === 0) {
+        let result = await this.props.submitOTPResponse;
+        console.log("🚀 ~ file: -=-=-=-=-=-=-=-=-submitOTPResponse", result)
+        if (result.status === 0) {
           this.props.navigation.navigate('UserDetail');
-        } else if (this.props.submitOTPResponse.sahspace_count === 0) {
+        } else if (result.sahspace_count === 0) {
           this.props.navigation.navigate('WelcomeScreen');
         } else {
           this.props.navigation.navigate('HomeScreen');

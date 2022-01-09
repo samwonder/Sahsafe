@@ -28,6 +28,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { connect } from "react-redux";
 import * as Actions from "@redux/actions";
 import * as Services from "@services";
+import moment from 'moment'
 
 const countries = ["Egypt", "Canada", "Australia", "Ireland"]
 var monthList = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -47,8 +48,8 @@ class PDFUpload extends Component {
       sahspaceSelectedList: [],
       selectedSahspace: '',
       selectedSahspaceDoc: '',
-      sahspace_unique_id: ''
-
+      sahspace_unique_id: '',
+      isFileView: true 
     }
   }
   // this.setState({
@@ -71,8 +72,9 @@ class PDFUpload extends Component {
     this.setState({
       sahspaceList: originArray,
       selectedSahspace: originArray[0]
+    },() => {
+      this.sahspaceListItemSelected(originArray[0],0)
     })
-    this.sahspaceListItemSelected(originArray[0],0)
   }
 
   generateArrayOfYears() {
@@ -124,6 +126,28 @@ class PDFUpload extends Component {
     })
   }
 
+  onDeleteFile() {
+    Alert.alert(
+      "Message",
+      "Are you sure you want to remove document?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        {
+          text: "OK", onPress: () => {
+            this.setState({
+              isFileView: false
+            })
+            this.props.onPressButton()
+          }
+        }
+      ]
+    );
+  }
+
   uploadFile() {
     // if (this.state.documentName.length === 0) {
     //   Alert.alert('Please enter a document name.')
@@ -138,18 +162,21 @@ class PDFUpload extends Component {
     // } else if (this.state.description.length === 0) {
     //   Alert.alert('Please enter a description.')
     // } else {
-          let data = {
-            "sahspace_unique_id": this.state.sahspace_unique_id,
-            "document_type_id": 1,
-            "document_name": "Test",//this.state.documentName,
-            "year" : this.state.selectedYear,
-            "month": this.state.selectedMonth.toLowerCase(),
-            "description": "Test Description",//this.state.description,
-            "file_id" : 3
+    if (!this.state.isFileView) {
+      Alert.alert('Please select a document to upload.')
+    } else {
+      let data = {
+        "sahspace_unique_id": this.state.sahspace_unique_id,
+        "document_type_id": 1,
+        "document_name": "Test",//this.state.documentName,
+        "year": this.state.selectedYear,
+        "month": this.state.selectedMonth.toLowerCase(),
+        "description": "Test Description",//this.state.description,
+        "file_id": 3
       }
-       //console.log("🚀 ~ file: index.js ~================>>>>>>>>>>>>>>", data)
+      //console.log("🚀 ~ file: index.js ~================>>>>>>>>>>>>>>", data)
       this.props.uploadFileAction(data)
-   // }
+    }
   }
   render() {
     return (
@@ -159,7 +186,7 @@ class PDFUpload extends Component {
             <View style={{ height: 50, justifyContent: 'space-between', flexDirection: 'row', borderBottomColor: '#DEDEDE', borderBottomWidth: 1 }}>
               <Text style={{ fontSize: 19, justifyContent: 'center', margin: 10 ,fontFamily:AppConstant.Fonts.roboto_medium}}>{'Document Upload'}</Text>
               <TouchableOpacity
-                onPress={() => this.props.onPressButton()}
+                onPress={() => this.props.onPressButton(1)}
                 style={{ height: 30, width: 70, alignItems: 'flex-end', margin: 10 }}
               >
                 <Image
@@ -169,8 +196,37 @@ class PDFUpload extends Component {
               </TouchableOpacity>
             </View>
 
-            <View style={{ height: 80, width: '95%', alignItems: 'flex-end', margin: 10, backgroundColor: 'blue' }}></View>
-            <View style={{ justifyContent: 'center', alignItems: 'center', }}>
+            {/* <View style={{ height: 80, width: '95%', alignItems: 'flex-end', margin: 10,}}> */}
+            {this.state.isFileView && ( <View style={{ height: 110, marginHorizontal: 10,marginTop:10, borderColor: '#DEDEDE', borderWidth: 1, borderRadius: 5 }}>
+             <View style={{ flexDirection: 'row', height: 110 }}>
+                <View style={{ width: '25%' }} >
+                  <View style={{ flex: 1, backgroundColor: '#FFE6E2', justifyContent: 'center', alignItems: 'center', margin: 10, borderRadius: 5 }}>
+                    <Image
+                      style={{ height: 40, width: 50 }}
+                      source={images.pdfIcon}
+                    />
+                  </View>
+                </View>
+                <View style={{ width: '60%', justifyContent: "center" }} >
+                  <Text style={styles.txtFileDesc} numberOfLines={1}>{this.props.fileDetail.name}</Text>
+                  <View style={{ flexDirection: 'row', }}>
+                    <Text style={styles.txtFileDateTime}>{moment().format('DD MMM YYYY')}</Text>
+                    <View style={{ height: 15, width: 1, backgroundColor: '#DEDEDE', marginHorizontal: 5, alignSelf: "center" }}></View>
+                    <Text style={styles.txtFileDateTime}>{moment().format('HH.mm')}</Text>
+                  </View>
+                </View>
+                <View style={{ width: '15%' }} >
+                  <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }} onPress={() => this.onDeleteFile()}>
+                    <Image
+                      style={{ height: 30, width: 20 }}
+                      source={images.deleteIcon}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>)}
+            {/* </View> */}
+            <View style={{ justifyContent: 'center', alignItems: 'center',marginTop:10 }}>
               <MaterialTextInput
                 label='Document Name'
                 onSubmitEditing={() => this.onSubmit()}
@@ -468,6 +524,14 @@ const styles = StyleSheet.create({
     borderBottomColor: "#C5C5C5",
   },
   dropdown4RowTxtStyle: { color: "#8D8D8D", textAlign: "left" },
+  txtFileDesc: {
+    fontSize: 16,
+    fontFamily:AppConstant.Fonts.roboto_regular
+  },
+  txtFileDateTime: {
+    fontSize: 13,
+    fontFamily:AppConstant.Fonts.roboto_regular
+  },
 });
 
 const mapStateToProps = state => ({

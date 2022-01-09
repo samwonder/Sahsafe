@@ -13,7 +13,7 @@ const getAllDocuments = async (data) => {
   }
 }
 
-const getSahspaceCountApi = async (data) => {
+const getSahspaceCountApi = async () => {
   try {
     const response = await Config.axios.post(AppConstant.Api.Document.GET_SAHSPACE_COUNT);
     if (response.status) {
@@ -27,7 +27,7 @@ const getSahspaceCountApi = async (data) => {
 // 
 const getDocmentListApi = async (data) => {
   try {
-    if (data) {
+    if (data && data.length === 0) {
       let response = await Config.axios.post(AppConstant.Api.Document.GET_DOCUMENT_LIST, { 'sent': '1' });
       if (response.status) {
         return response;

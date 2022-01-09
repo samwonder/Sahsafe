@@ -17,7 +17,7 @@ export const saveMobileNumber = (value) => {
   }
   return async dispatch => {
     try {
-      dispatch({ type: AppConstant.ActionTypes.Common.SAVE_MOBILE_NUMBER, payload: data });
+     await dispatch({ type: AppConstant.ActionTypes.Common.SAVE_MOBILE_NUMBER, payload: data });
     } catch (error) {
     }
   };
@@ -31,7 +31,7 @@ export const submitOTP = (value) => {
       AppConstant.Api.ApiToken = result.data.token;
 
       dispatch(Actions.toggleLoader(false));
-      dispatch({ type: AppConstant.ActionTypes.Common.SUBMIT_OTP, payload: result.data });
+      await dispatch({ type: AppConstant.ActionTypes.Common.SUBMIT_OTP, payload: result.data });
     } catch (error) {
       dispatch(Actions.toggleLoader(false));
     }

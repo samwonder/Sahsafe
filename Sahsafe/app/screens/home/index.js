@@ -41,13 +41,12 @@ class Home extends Component {
     }
   }
 
-  async componentDidMount() {
-    await this.props.getSahspaceCount();
-    await this.props.getDocmentList();
+   componentDidMount() {
     this.generateArrayOfYears()
     Common.BackPress(() => {
       BackHandler.exitApp()
     });
+     this.selectedButton('recieved');
   }
   generateArrayOfYears() {
     var max = new Date().getFullYear()
@@ -67,8 +66,7 @@ class Home extends Component {
   }
 
   async increaseHeight(param) {
-
-    if (this.state.topView) {
+    if (this.state.topView && param) {
       Alert.alert(
         "Message",
         "Are you sure you want to Discard Upload",
@@ -103,18 +101,21 @@ class Home extends Component {
     if (value === 'sent') {
       this.setState({
         selectedButton: true,
-      })
-      await this.props.getDocmentList(value);
-      await this.props.getSahspaceCount();
+      }, () => {
+        this.callAPi(value)
+      })     
     } else {
       this.setState({
         selectedButton: false,
+      }, () => {
+        this.callAPi("")
       })
-      await this.props.getDocmentList();
-      await this.props.getSahspaceCount();
     }
+  }
 
-
+  async callAPi(value) {
+    await this.props.getDocmentList(value);
+    await this.props.getSahspaceCount();
   }
 
   async uploadFileAction(data) {
@@ -148,7 +149,9 @@ class Home extends Component {
     console.log("date00000000000000000000000000",data)
     this.setState({
       pickerResult: data,
-    },() => this.increaseHeight(1) )
+    }, () =>
+      this.increaseHeight(1))
+     // console.log("date00000000000000000000000000"))
   }
   render() {
     // const { count } = this.props.sahspaceCount
@@ -251,7 +254,8 @@ class Home extends Component {
                 delay={200}
                 style={{ height: '100%', width: '100%', borderRadius: 50 }}>
                 <PDFScreen
-                  onPressButton={() => this.increaseHeight(this.state.mobileNumber)}
+                  fileDetail={this.state.pickerResult}
+                  onPressButton={(value) => this.increaseHeight(value)}
                   uploadFileAction={(data) => this.uploadFileAction(data)}
                 />
               </Animatable.View>
