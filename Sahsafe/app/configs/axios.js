@@ -1,6 +1,9 @@
 import Axios from "axios";
 import * as AppConstant from "@constants";
 // import DropDownHolder from "@components/dropDownHolder";
+import {
+  Alert,  
+} from 'react-native';
 import * as Actions from '@redux/actions';
 const CancelToken = Axios.CancelToken;
 export let cancel;
@@ -16,7 +19,7 @@ export const axios = Axios.create({
 
 // Request interceptor
 axios.interceptors.request.use((config) => {
-  // console.log("🚀 =========================", AppConstant.Api.ApiToken)
+  console.log("🚀 =========================", AppConstant.Api.ApiToken)
   if(AppConstant.Api.ApiToken)
   {
     config.headers = {
@@ -42,7 +45,13 @@ axios.interceptors.request.use((config) => {
 axios.interceptors.response.use((response) => {
   return response;
 }, (error) => {
-// console.log("🚀 ~ file: axios.js ~ line 43 ~ axios.interceptors.response.use ~ error", error)
+console.log("🚀 ~---------------------axios.interceptors.response.use ~ error", error.response.data)
+if(error.response.data.status === 400) {
+Alert.alert(error.response.data.messages.message);
+} else {
+  Alert.alert('Somthing went wrong');
+
+}
   // setTimeout(() => {
   //   // Services.NavigationService.navigate(AppConstant.Navigations.Survey.SURVEY);
   //   if (error.message == AppConstant.Alert.Messages.NETWORK_ERROR) {
