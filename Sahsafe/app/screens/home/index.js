@@ -207,7 +207,8 @@ class Home extends Component {
               <CustomButton
                 buttonTitle={'Recent Sent'}
                 onPressButton={() => this.selectedButton('sent')}
-                buttonStyle={[{ color: 'white', height: 45, width: 120, justifyContent: 'center', }, this.state.selectedButton && { borderBottomColor: 'grey', borderBottomWidth: 3 }]}
+                buttonStyle={[{ color: 'white', height: 45, width: 120, justifyContent: 'center', }, 
+                this.state.selectedButton && { borderBottomColor: 'grey', borderBottomWidth: 3 }]}
                 titleFontColor={!this.state.selectedButton ? '#6A6A6A' : 'black'}
               />
 
@@ -312,7 +313,6 @@ const mapDispatchToProps = dispatch => ({
   getAllDocument: state => dispatch(Actions.getAllDocument(state)),
   getSahspaceCount: state => dispatch(Actions.getSahspaceCount(state)),
   getDocmentList: state => dispatch(Actions.getDocmentList(state)),
-
 });
 
 export default connect(

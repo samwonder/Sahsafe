@@ -58,7 +58,7 @@ class DocumentTypeScreen extends Component {
          // numColumns={3}
           ListEmptyComponent={<EmptyScreen />}
           renderItem={({ item, index }) =>
-            <View style={{ width: '30%', height: 110, margin: '1%' }}>
+            <View style={{ width: '30%', height: 120, margin: '1%' }}>
               {console.log("items-----------------",item)}
             <TouchableOpacity
               onPress={() => this.navigationToDocumentList(index)}

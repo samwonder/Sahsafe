@@ -14,7 +14,7 @@ import {
   TextInput,
   Alert,
   BackHandler,
-  Platform
+  Keyboard
 } from 'react-native';
 import * as Animatable from "react-native-animatable";
 import { images } from '../../assets/images';
@@ -25,14 +25,38 @@ import * as Actions from "@redux/actions";
 import * as Services from "@services";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import * as Common from "@common";
+
 import * as AppConstant from "@constants";
 
+
+//  let showImage = true,
 class GetMobileNumber extends Component {
   constructor(props) {
     super(props);
     this.state = {
       mobileNumber: null,
+      showImage: true,
     };
+
+  }
+  componentWillMount () {
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+  }
+    
+  componentWillUnmount () {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+    
+  _keyboardDidShow =() => {
+    this.setState({
+      showImage: false,
+    });
+  }
+    
+  _keyboardDidHide  =() => {
+    this.setState({showImage: true,});
 
   }
 
@@ -74,8 +98,8 @@ class GetMobileNumber extends Component {
           enableOnAndroid={true}
         >
           <View style={{ flex: 8.5, justifyContent: 'center', alignItems: 'center' }}>
-            <Animatable.View
-              animation="flipInY"
+            {this.state.showImage && <Animatable.View
+              animation={this.state.showImage ? "fadeInDown" :"fadeOutUp"}
               duration={1000}
               delay={200}
               style={{ height: 300, width: '100%' }}
@@ -86,22 +110,33 @@ class GetMobileNumber extends Component {
                 resizeMethod={'resize'}
               />
               <Text style={{ fontSize: 30, textAlign: 'center', color: 'black', fontFamily: AppConstant.Fonts.roboto_regular }}>Share Documents, Securely !!</Text>
-            </Animatable.View>
+            </Animatable.View>}
           </View>
           <View style={{ flex: 0.5 }}>
             <Text style={{ marginLeft: '4%', fontSize: 18, fontFamily: AppConstant.Fonts.roboto_bold }}>{'Get Started'}</Text>
             <View style={{ flexDirection: 'row', width: '90%', justifyContent: 'center', alignItems: 'center', height: 60, margin: 15, borderWidth: 1, borderColor: '#A5A5A5' }}>
-              <View style={{flexDirection: 'row', justifyContent: 'center' }}>
+              <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                 <Image
-                  style={{ height: 25, width: 30 }}
+                  style={{ height: 25, width: 30, marginTop: 12 }}
                   source={images.indianFlag}
                   resizeMode='contain'
                 />
-                <Text style={{ height: 25, fontFamily: AppConstant.Fonts.roboto_regular, color: 'black', fontSize: 17, marginTop: Platform.OS === 'ios' ? 4 : 1  }}>
-                  {" +91"}</Text>
+                <TextInput
+                  style={{ width: 40, fontFamily: AppConstant.Fonts.roboto_regular,  height: 50, color: 'black', textAlign: 'center' }}
+                  keyboardType='numeric'
+                  onChangeText={(text) => this.onTextChanged(text)}
+                  placeholder='Mobile number'
+                  value={'+91'}
+                  maxLength={10}
+                  fontSize={17}
+                  editable={false}
+                  // onSubmitEditing={this.setState({showImage: true})}
+                />
+                {/* <Text style={{ height: 25, fontFamily: AppConstant.Fonts.roboto_regular, color: 'black', fontSize: 17, marginTop: Platform.OS === 'ios' ? 4 : 1  }}>
+                  {" +91"}</Text> */}
               </View>
               <TextInput
-                style={{ width: '75%',  fontFamily: AppConstant.Fonts.roboto_regular,  height: 50, top: 1 }}
+                style={{ width: '75%', fontFamily: AppConstant.Fonts.roboto_regular, height: 50, color: 'black'}}
                 keyboardType='numeric'
                 onChangeText={(text) => this.onTextChanged(text)}
                 placeholder='Mobile number'
@@ -117,7 +152,7 @@ class GetMobileNumber extends Component {
               buttonTitle={'Login'}
               titleFontColor={'white'}
               onPressButton={() => this.navigateToOTPScreen(this.state.mobileNumber)}
-              buttonStyle={{ height: 50, width: '80%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 5 }}
+              buttonStyle={{ height: 50, width: '90%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 5 }}
             />
           </View>
         </KeyboardAwareScrollView>

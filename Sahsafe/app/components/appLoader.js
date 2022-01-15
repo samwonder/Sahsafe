@@ -11,7 +11,7 @@ export class AppLoader extends Component {
     render() {
         let isVisible = this.props.isLoading
         return (
-            <View>
+            <View style={{backgroundColor: 'transparent', justifyContent: 'center', alignItems: 'center',}}>
                 {isVisible && <View style={styles.container} >
                     <Loader style={styles.loaderStyle} isAnimating={this.props.isLoading} />
                 </View>}
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
         zIndex: 10,
         width: '100%',
         height: '100%',
-        backgroundColor: AppConstant.Colors.black,
+        backgroundColor: 'transparent',
         opacity: 0.5,
         top: 0,
         right: 0,
