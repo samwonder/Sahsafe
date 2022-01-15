@@ -25,6 +25,7 @@ import CustomButton from '../../components/CustomButton';
 import EmptyScreen from '../../components/EmptyScreen'
 import NavigationBar from '../../components/NavigationBar';
 import CustomText from '../../components/CustomText';
+import * as Common from "@common";
 
 class SahspaceManager extends Component {
   constructor(props) {
@@ -37,6 +38,9 @@ class SahspaceManager extends Component {
   async componentDidMount() {
     await this.props.getSahspaceList();
     // console.log('==============', this.props.sahspaceList);
+    Common.BackPress(() => {
+      this.popBack()
+    });
   }
   navigateBack() {
     const { goBack } = this.props.navigation;

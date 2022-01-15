@@ -24,6 +24,7 @@ import * as AppConstant from "@constants";
 import CustomButton from '../../components/CustomButton';
 import EmptyScreen from '../../components/EmptyScreen'
 import NavigationBar from '../../components/NavigationBar';
+import * as Common from "@common";
 
 class SuccessScreen extends Component {
   constructor(props) {
@@ -36,6 +37,9 @@ class SuccessScreen extends Component {
   async componentDidMount() {
     await this.props.getSahspaceList();
     // console.log('==============', this.props.sahspaceList);
+    Common.BackPress(() => {
+      this.popBack()
+    });
   }
   navigateBack() {
     const { goBack } = this.props.navigation;

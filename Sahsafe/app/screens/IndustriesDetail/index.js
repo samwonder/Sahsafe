@@ -24,6 +24,8 @@ import TeamScreen from './components/teamScreen';
 import { connect } from "react-redux";
 import * as Actions from "@redux/actions";
 import * as Services from "@services";
+import * as Common from "@common";
+
 const tabbar = ['Info', 'Team', 'Documents']
 
 class IndustriesDetail extends Component {
@@ -41,7 +43,9 @@ class IndustriesDetail extends Component {
     await this.props.getSahspacedetail(this.state.sahspaceUser.sahspace_unique_id);
     await this.props.getSahspaceallUsers(this.state.sahspaceUser.sahspace_unique_id);
     // await this.props.getSahspaceDocumentTypeList(this.state.sahspaceUser.sahspace_unique_id, );
-
+    Common.BackPress(() => {
+      this.popBack()
+    });
   }
   // sahspaceAllUsers
   popBack() {

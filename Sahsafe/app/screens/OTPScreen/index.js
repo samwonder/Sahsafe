@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import * as Actions from "@redux/actions";
 import * as Services from "@services";
 import * as AppConstant from "@constants";
+import * as Common from "@common";
 
 class OTPScreen extends React.Component {
   constructor(props) {
@@ -23,6 +24,9 @@ class OTPScreen extends React.Component {
   componentDidMount() {
     console.log("🚀 ~ file: index.js ~ line 23 =======t", this.props)
     this.startTimer()
+    Common.BackPress(() => {
+      this.popBack()
+    });
   }
   startTimer() {
     let timer = setInterval(this.tick, 1000);
