@@ -26,8 +26,10 @@ const getSahspaceCountApi = async () => {
 }
 // 
 const getDocmentListApi = async (data) => {
+console.log("🚀 ~ file:  ~ data", data, data.length)
   try {
-    if (data && data.length === 0) {
+    if (data && data.length > 0) {
+      console.log('===============ppppsssss')
       let response = await Config.axios.post(AppConstant.Api.Document.GET_DOCUMENT_LIST, { 'sent': '1' });
       if (response.status) {
         return response;

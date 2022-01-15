@@ -197,7 +197,7 @@ class Home extends Component {
                 imageName={images.featureFolder}
               />
             </View>
-            <View style={{ flexDirection: 'row', }}>
+            <View style={{ flexDirection: 'row', marginLeft: 10 }}>
               <CustomButton
                 buttonTitle={'Recent Received'}
                 onPressButton={() => this.selectedButton('recieved')}

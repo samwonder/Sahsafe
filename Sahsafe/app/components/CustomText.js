@@ -5,7 +5,7 @@ import { View, Text } from 'react-native';
 const CustomText = (props) => {
     return (
         <View>
-            <Text style={props.textStyle}>{props.text}</Text>
+            <Text numberOfLines={2} style={props.textStyle}>{props.text}</Text>
         </View>
     );
 }
