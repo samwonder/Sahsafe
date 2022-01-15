@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   AppRegistry, FlatList,
-  StyleSheet, Image, View, Alert, TouchableOpacity
+  StyleSheet, Image, View, Alert, TouchableOpacity,Text
 } from 'react-native';
 import NavigationBar from '../../components/NavigationBar';
 import { images } from '../../assets/images/index';
@@ -24,13 +24,13 @@ class DocumentTypeScreen extends Component {
       let data = {
         "sahspace_unique_id": this.state.sahspaceUser.sahspace_unique_id,
         "document_type_id": 1,
-        "year": this.props.getSahspaceYear.year,
-        "month": this.props.selectedMonth,
+        "year": this.props.getSahspaceYear[0].year,
+        "month": this.state.selectedMonth.month,
         "send" : 1
 }
-      console.log("🚀 ~ file: ----====== ~ data", data)
-    // await this.props.getSpaceUploadedDocList(this.state.sahspaceUser.sahspace_unique_id);
-    console.log("🚀 ~ file: ----====-----====--------", this.props.getSahspaceYear)
+      console.log("🚀 ~ file: ----===DocumentTypeScreen=== ~ data", data , this.state.sahspaceUser.sahspace_unique_id)
+     await this.props.getSpaceUploadedDocList(data);
+    console.log("🚀 ~ file: ----====-----====--------", this.props.getSpaceUploadedDocList.length)
 
   }
   navigationToDocumentList(index) {
@@ -54,11 +54,12 @@ class DocumentTypeScreen extends Component {
         />
         <FlatList
         showsHorizontalScrollIndicator={false}
-          data={[]}
-          numColumns={3}
+          data={this.props.getSpaceUploadedDocList}
+         // numColumns={3}
           ListEmptyComponent={<EmptyScreen />}
           renderItem={({ item, index }) =>
-          <View style={{ width: '30%', height: 110, margin: '1%', }}>
+            <View style={{ width: '30%', height: 110, margin: '1%' }}>
+              {console.log("items-----------------",item)}
             <TouchableOpacity
               onPress={() => this.navigationToDocumentList(index)}
               style={{ height: 80, backgroundColor: '#F4F8FF', margin: '1%', borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
@@ -69,7 +70,7 @@ class DocumentTypeScreen extends Component {
             </TouchableOpacity>
             <CustomText
               textStyle={{ fontSize: 14, color: 'black', fontFamily:AppConstant.Fonts.roboto_medium, textAlign: 'center' }}
-              text={item.year} />
+              text={"Year"} />
           </View>
         }
         />
@@ -97,6 +98,7 @@ const mapStateToProps = state => ({
   mobileNumber: state.common.mobileNumber,
   userDetail: state.common.submitOTPResponse,
   getSahspaceYear: state.landing.getSahspaceYear,
+  getSpaceUploadedDocList: state.landing.getSpaceUploadedDocList
 });
 const mapDispatchToProps = dispatch => ({
   toggleLoader: state => dispatch(Actions.toggleLoader(state)),

@@ -185,7 +185,7 @@ const getSpaceUploadedDocListApi = async (data) => {
   console.log("🚀 ~ file:========121212132====---==--==--== ~ data", data)
 
   try {
-    const response = await Config.axios.post(AppConstant.Api.Document.GET_SAHSPACE_ALL_USERS, data);
+    const response = await Config.axios.post(AppConstant.Api.Document.GET_SPACE_UPLOADED_DOC_LIST, data);
     console.log("🚀 ~ file:============= ~ response", response.data)
     if (response.status) {
       return response;

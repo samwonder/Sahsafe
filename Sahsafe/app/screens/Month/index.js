@@ -26,6 +26,8 @@ class DocumentTypeScreen extends Component {
   }
   navigationToDocumentList(index) {
   // this.state.sahspaceUser
+  console.log("🚀 ~ this.props.getSahspaceMonth[index]: ----====-----====--------", this.props.getSahspaceMonth[index])
+
   this.props.navigation.navigate('DocumentList', {
     sahspaceUser: this.state.sahspaceUser, 
     selectedYear: this.state.selectedYear,
