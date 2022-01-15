@@ -19,6 +19,9 @@ const dotsIcon = require('./dots.png');
 const rightArrow = require('./rightArrow.png');
 const folderIcon = require('./folder_icon.png');
 const downArrow = require('./down_arrow.png');
+const docIcon = require('./doc_icon.png');
+const imageIcon = require('./image_icon.png');
+const xlIcon = require('./xl_icon.png');
 
 export const images = {
   indianFlag,
@@ -40,5 +43,8 @@ export const images = {
   dotsIcon,
   rightArrow,
   folderIcon,
-  downArrow
+  downArrow,
+  docIcon,
+  xlIcon,
+  imageIcon
 };

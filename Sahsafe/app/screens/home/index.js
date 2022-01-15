@@ -154,6 +154,23 @@ class Home extends Component {
       this.increaseHeight(1))
      // console.log("date00000000000000000000000000"))
   }
+handleIcons(extension) {
+  let image= "";
+  if(extension ==='xlsx') {
+    return images.xlIcon;
+  } else if(extension === 'csv'){
+    return images.docIcon;
+  } else if(extension === 'pdf'){
+    return images.pdfIcon;
+  } else if (extension === 'jpg' || extension === 'png') {
+    return images.imageIcon;
+  }
+  // docIcon,
+  // xlIcon,
+  // imageIcon
+  
+}
+
   render() {
     // const { count } = this.props.sahspaceCount
     return (
@@ -220,28 +237,30 @@ class Home extends Component {
           <FlatList
             showsHorizontalScrollIndicator={Boolean(false)}
             data={this.props.documentList}
-            renderItem={({ item }) => <View style={{ height: 110, margin: 5, borderColor: '#DEDEDE', borderWidth: 1, borderRadius: 5 }}>
-              <View style={{ flexDirection: 'row', height: 110 }}>
+            renderItem={({ item }) => 
+            <View style={{ margin: 5, borderColor: '#DEDEDE', borderWidth: 1, borderRadius: 5 }}>
+              {console.log("🚀 ~ file: index.js ~ line 223 ~ Home ~ render ~ item", item)}
+              <View style={{ flexDirection: 'row', }}>
                 <View style={{ width: '25%' }} >
                   <View style={{ flex: 1, backgroundColor: '#FFE6E2', justifyContent: 'center', alignItems: 'center', margin: 10, borderRadius: 5 }}>
                     <Image
-                      style={{ height: 40, width: 50 }}
-                      source={images.pdfIcon}
+                      style={{ height: '100%', width: '100%' }}
+                      source={this.handleIcons(item.extension)}
                     />
                   </View>
                 </View>
-                <View style={{ width: '75%', }} >
+                <View style={{ width: '75%', justifyContent: 'center' }} >
                   <Text style={styles.item}>{item.doc_name}</Text>
                   <Text style={{ color: '#3072F3', fontSize: 16 , fontFamily:AppConstant.Fonts.roboto_medium }}>{item.name}
                     <Text style={{ color: '#000000', fontSize: 15 ,fontFamily:AppConstant.Fonts.roboto_medium}}>{' > ' + item.document_name + ' > ' + item.year + ' > ' + item.month}</Text>
                   </Text>
-                  <View style={{ height: 1, backgroundColor: '#DEDEDE', marginVertical: 3 }}></View>
-                  <View style={{ flexDirection: 'row',justifyContent:'center' }}>
-                    <Text style={{fontFamily:AppConstant.Fonts.roboto_bold}}>{item.user_name}</Text>
+                  <View style={{ height: 1, backgroundColor: '#DEDEDE', marginVertical: 5,  }}></View>
+                  <View style={{ flexDirection: 'row', width: '99%' }}>
+                  <Text style={{fontSize:12,fontFamily:AppConstant.Fonts.roboto_bold}}>{item.user_name}</Text>
                     <View style={{ height: 15, width: 1, backgroundColor: '#DEDEDE', marginHorizontal: 5 }}></View>
-                    <Text style={{fontFamily:AppConstant.Fonts.roboto_regular}}>{moment(item.created_at).format('DD MMM YYYY')}</Text>
+                    <Text style={{fontSize:12, fontFamily:AppConstant.Fonts.roboto_regular}}>{moment(item.created_at).format('DD MMM YYYY')}</Text>
                     <View style={{ height: 15, width: 1, backgroundColor: '#DEDEDE', marginHorizontal: 5 }}></View>
-                    <Text style={{fontFamily:AppConstant.Fonts.roboto_regular}}>{moment(item.created_at).format('HH.mm A')}</Text>
+                    <Text style={{fontSize:12,fontFamily:AppConstant.Fonts.roboto_regular}}>{moment(item.created_at).format('HH.mm A')}</Text>
                   </View>
                 </View>
               </View>
@@ -291,7 +310,7 @@ const styles = StyleSheet.create({
     paddingTop: 22
   },
   item: {
-    marginTop: 10,
+    marginVertical: 5,
     fontSize: 18,
     fontFamily:AppConstant.Fonts.roboto_bold
     // height: 44,
