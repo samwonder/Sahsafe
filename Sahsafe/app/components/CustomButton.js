@@ -22,9 +22,9 @@ const IconWithText = ({
   titleFontColor
 }) => (
   <Animatable.View
-    animation="fadeInUp"
-    duration={1000}
-    delay={200}
+    // animation="fadeInUp"
+    // duration={1000}
+    // delay={200}
     style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }}>
     <TouchableOpacity
       activeOpacity={0.9}
