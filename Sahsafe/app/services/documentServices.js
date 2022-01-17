@@ -51,7 +51,7 @@ const uploadDocuementApi = async (data) => {
     formData.append("file", data);
     const response = await Config.axios.post(AppConstant.Api.Document.UPLOAD_DOCUMENT,formData);
     if (response.status) {
-      return response;
+      return response.data;
     }
   } catch (error) {
     return null;

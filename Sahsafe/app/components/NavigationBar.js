@@ -98,7 +98,7 @@ const NavBar = ({
             style={{ height: 30, width: 40, marginLeft: 10 }}
             source={images.backIcon}
           />
-          <Text style={{ fontSize: 18, textAlign: 'center',  fontFamily: AppConstant.Fonts.roboto_regular}}>{'  ShaSafe'}</Text>
+          <Text style={{ fontSize: 18, textAlign: 'center',  fontFamily: AppConstant.Fonts.roboto_regular}}>{'  Sahsafe'}</Text>
           </View>
         </TouchableOpacity>
        

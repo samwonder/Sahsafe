@@ -37,9 +37,9 @@ class SuccessScreen extends Component {
   async componentDidMount() {
     await this.props.getSahspaceList();
     // console.log('==============', this.props.sahspaceList);
-    Common.BackPress(() => {
-      this.popBack()
-    });
+    // Common.BackPress(() => {
+    //   this.popBack()
+    // });
   }
   navigateBack() {
     const { goBack } = this.props.navigation;

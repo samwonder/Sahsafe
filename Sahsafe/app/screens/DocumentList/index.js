@@ -34,9 +34,9 @@ class DocumentTypeScreen extends Component {
     console.log("🚀 ~ file: ----===DocumentTypeScreen=== ~ data", data, this.state.sahspaceUser.sahspace_unique_id)
     await this.props.getSpaceUploadedDocList(data);
     console.log("🚀 ~ file: ----====-----====--------", this.props.spaceUploadedDocList.length)
-    Common.BackPress(() => {
-      this.popBack()
-    });
+    // Common.BackPress(() => {
+    //   this.popBack()
+    // });
   }
   navigationToDocumentList(index) {
   // this.state.sahspaceUser

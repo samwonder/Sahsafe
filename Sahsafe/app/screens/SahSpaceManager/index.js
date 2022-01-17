@@ -38,14 +38,19 @@ class SahspaceManager extends Component {
   async componentDidMount() {
     await this.props.getSahspaceList();
     // console.log('==============', this.props.sahspaceList);
-    Common.BackPress(() => {
-      this.popBack()
-    });
+    // Common.BackPress(() => {
+    //   console.log("FOLDER Back press")
+    //   this.popBack()
+    // });
+    //Common.BackPress(this.backpress)
   }
-  navigateBack() {
-    const { goBack } = this.props.navigation;
-    goBack(null);
-  }
+
+  backpress() {
+    console.log("FOLDER Back press")
+    this.popBack()
+}
+
+
   setSearchText(text) {
     this.setState({
       searchText: text

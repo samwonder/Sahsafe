@@ -61,9 +61,10 @@ class GetMobileNumber extends Component {
   }
 
   componentDidMount() {
-    Common.BackPress(() => {
-      BackHandler.exitApp()
-    });
+    // Common.BackPress(() => {
+    //   console.log("MOBILE Back press")
+    //   BackHandler.exitApp()
+    // });
   }
 
   async navigateToOTPScreen(phone) {

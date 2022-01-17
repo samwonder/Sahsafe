@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -44,11 +38,26 @@ class Home extends Component {
 
    componentDidMount() {
     this.generateArrayOfYears()
-    Common.BackPress(() => {
-      BackHandler.exitApp()
-    });
-     this.selectedButton('recieved');
+    //  Common.BackPress(() => {
+    //   console.log("HOME Back press")
+    //   BackHandler.exitApp();
+    //  });
+   //  Common.BackPress(this.backpress)
+    // this.selectedButton('recieved');
+
+     const didFocusSubscription = this.props.navigation.addListener(
+      'focus',
+      payload => {
+        //console.log('didFocus', payload);
+        this.selectedButton('recieved');
+      }
+    );
   }
+  backpress() {
+    console.log("HOME Back press")
+   // BackHandler.exitApp();
+}
+
   generateArrayOfYears() {
     var max = new Date().getFullYear()
     var min = max - 9
@@ -239,7 +248,7 @@ handleIcons(extension) {
             data={this.props.documentList}
             renderItem={({ item }) => 
             <View style={{ margin: 5, borderColor: '#DEDEDE', borderWidth: 1, borderRadius: 5 }}>
-              {console.log("🚀 ~ file: index.js ~ line 223 ~ Home ~ render ~ item", item)}
+              {/* {console.log("🚀 ~ file: index.js ~ line 223 ~ Home ~ render ~ item", item)} */}
               <View style={{ flexDirection: 'row', }}>
                 <View style={{ width: '25%' }} >
                   <View style={{ flex: 1, backgroundColor: '#FFE6E2', justifyContent: 'center', alignItems: 'center', margin: 10, borderRadius: 5 }}>

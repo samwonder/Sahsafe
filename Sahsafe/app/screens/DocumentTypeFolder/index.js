@@ -29,9 +29,9 @@ class DocumentTypeScreen extends Component {
   async componentDidMount() {
     await this.props.getSahspacedetail(this.state.sahspaceUser.sahspace_unique_id);
     console.log("🚀 ~ file: ----====-----====--------", this.props.sahspaceDetail)
-    Common.BackPress(() => {
-      this.popBack()
-    });
+    // Common.BackPress(() => {
+    //   this.popBack()
+    // });
   }
   navigationToDocumentList(item) {
     console.log("🚀 ~ file: index.js ===========----- ~ data", item)

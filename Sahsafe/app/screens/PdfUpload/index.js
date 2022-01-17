@@ -48,6 +48,7 @@ class PDFUpload extends Component {
       sahspaceSelectedList: [],
       selectedSahspace: '',
       selectedSahspaceDoc: '',
+      selectedSahspaceDocId: '',
       sahspace_unique_id: '',
       isFileView: true 
     }
@@ -122,8 +123,27 @@ class PDFUpload extends Component {
     }
     this.setState({
       sahspaceSelectedList: originArray,
-      selectedSahspaceDoc: originArray[0]
+      selectedSahspaceDoc: originArray[0],
+      selectedSahspaceDocId : this.props.sahspaceDocumentTypeList[0].document_type_id
     })
+  }
+
+  handleIcons(extension) {
+    let image = "";
+    let type = extension.split("/").pop()
+    if(type ==='xlsx') {
+      return images.xlIcon;
+    } else if(type === 'csv'){
+      return images.docIcon;
+    } else if(type === 'pdf'){
+      return images.pdfIcon;
+    } else if (type === 'jpg' || type === 'png' || type === 'jpeg') {
+      return images.imageIcon;
+    }
+    // docIcon,
+    // xlIcon,
+    // imageIcon
+    
   }
 
   onDeleteFile() {
@@ -148,7 +168,7 @@ class PDFUpload extends Component {
     );
   }
 
-  uploadFile() {
+ async uploadFile() {
     // if (this.state.documentName.length === 0) {
     //   Alert.alert('Please enter a document name.')
     // } else if (this.state.selectedSahspace.length === 0) {
@@ -165,16 +185,18 @@ class PDFUpload extends Component {
     if (!this.state.isFileView) {
       Alert.alert('Please select a document to upload.')
     } else {
+      let result = await Services.DocumentServices.uploadDocuementApi(this.props.fileDetail);
+    //  console.log("API result", result.data.file_id)
       let data = {
         "sahspace_unique_id": this.state.sahspace_unique_id,
-        "document_type_id": 1,
-        "document_name": "Test",//this.state.documentName,
+        "document_type_id": this.state.selectedSahspaceDocId.length == 0 ? 1 : this.state.selectedSahspaceDocId,
+        "document_name": this.state.documentName.length == 0 ? "Test" : this.state.documentName,
         "year": this.state.selectedYear,
         "month": this.state.selectedMonth.toLowerCase(),
-        "description": "Test Description",//this.state.description,
-        "file_id": 3
+        "description": this.state.documentName.length == 0 ? "Test Description" : this.state.description,
+        "file_id": result && result.data ? result.data.file_id : "1"
       }
-      //console.log("🚀 ~ file: index.js ~================>>>>>>>>>>>>>>", data)
+      //console.log("🚀 ~ file: index.js ~================>>>>>>>>>>>>>>", data, this.state.selectedSahspaceDoc)
       this.props.uploadFileAction(data)
     }
   }
@@ -203,10 +225,11 @@ class PDFUpload extends Component {
                   <View style={{ flex: 1, backgroundColor: '#FFE6E2', justifyContent: 'center', alignItems: 'center', margin: 10, borderRadius: 5 }}>
                     <Image
                       style={{ height: 40, width: 50 }}
-                      source={images.pdfIcon}
+                      source={this.handleIcons(this.props.fileDetail.type)}
                     />
                   </View>
                 </View>
+                {console.log("this.props.fileDetail" , this.props.fileDetail)}
                 <View style={{ width: '60%', justifyContent: "center" }} >
                   <Text style={styles.txtFileDesc} numberOfLines={1}>{this.props.fileDetail.name}</Text>
                   <View style={{ flexDirection: 'row', }}>
@@ -271,7 +294,8 @@ class PDFUpload extends Component {
 
                   onSelect={(selectedItem, index) => {
                     this.setState({
-                      selectedSahspaceDoc: selectedItem
+                      selectedSahspaceDoc: selectedItem,
+                      selectedSahspaceDocId : this.props.sahspaceDocumentTypeList[index].document_type_id
                     })
                     console.log(selectedItem, index);
                   }}

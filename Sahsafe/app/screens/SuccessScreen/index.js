@@ -26,9 +26,9 @@ class SuccessScreen extends Component {
   }
 
   componentDidMount() {
-    Common.BackPress(() => {
-      this.popBack()
-    });
+    // Common.BackPress(() => {
+    //   this.popBack()
+    // });
   }
   navigateBack() {
     const { goBack } = this.props.navigation;
