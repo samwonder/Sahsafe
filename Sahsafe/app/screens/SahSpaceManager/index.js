@@ -26,6 +26,7 @@ import EmptyScreen from '../../components/EmptyScreen'
 import NavigationBar from '../../components/NavigationBar';
 import CustomText from '../../components/CustomText';
 import * as Common from "@common";
+import {AndroidBackHandler } from '../../components/HandleBack'
 
 class SahspaceManager extends Component {
   constructor(props) {
@@ -37,19 +38,16 @@ class SahspaceManager extends Component {
 
   async componentDidMount() {
     await this.props.getSahspaceList();
-    // console.log('==============', this.props.sahspaceList);
-    // Common.BackPress(() => {
-    //   console.log("FOLDER Back press")
-    //   this.popBack()
-    // });
-    //Common.BackPress(this.backpress)
   }
 
-  backpress() {
+  backpress = () => {
     console.log("FOLDER Back press")
-    this.popBack()
-}
-
+    if (this.props.navigation && this.props.navigation.isFocused()) {
+      this.popBack()
+      return true;
+    }
+    return false;
+  }
 
   setSearchText(text) {
     this.setState({
@@ -78,6 +76,7 @@ class SahspaceManager extends Component {
   }
   render() {
     return (
+      <AndroidBackHandler onBackPress={this.backpress}>
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <NavigationBar
           showBackButton={Boolean(true)}
@@ -110,7 +109,8 @@ class SahspaceManager extends Component {
             )}
           />
         </View>
-      </View>
+        </View>
+      </AndroidBackHandler>
     );
   }
 }

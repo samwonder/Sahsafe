@@ -24,10 +24,8 @@ import { connect } from "react-redux";
 import * as Actions from "@redux/actions";
 import * as Services from "@services";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import * as Common from "@common";
-
 import * as AppConstant from "@constants";
-
+import { AndroidBackHandler } from '../../components/HandleBack'
 
 //  let showImage = true,
 class GetMobileNumber extends Component {
@@ -60,11 +58,10 @@ class GetMobileNumber extends Component {
 
   }
 
-  componentDidMount() {
-    // Common.BackPress(() => {
-    //   console.log("MOBILE Back press")
-    //   BackHandler.exitApp()
-    // });
+  backpress = () => {
+    console.log("MOBILE Back press")
+    BackHandler.exitApp();
+    return true;
   }
 
   async navigateToOTPScreen(phone) {
@@ -93,6 +90,7 @@ class GetMobileNumber extends Component {
   render() {
     // console.log("🚀 ~ file: index.js ", this.props)
     return (
+      <AndroidBackHandler onBackPress={this.backpress}>
       <View style={{ flex: 1 }}>
         <KeyboardAwareScrollView
           contentContainerStyle={{ flexGrow: 1 }}
@@ -158,7 +156,7 @@ class GetMobileNumber extends Component {
           </View>
         </KeyboardAwareScrollView>
       </View>
-
+      </AndroidBackHandler>
     );
   }
 }

@@ -21,9 +21,9 @@ import { connect } from "react-redux";
 import * as Actions from "@redux/actions";
 import * as Services from "@services";
 import DocumentPickerScreen from '../../components/DocumentPicker';
-import * as Common from "@common";
 import * as AppConstant from "@constants";
 import moment from 'moment'
+import { AndroidBackHandler } from '../../components/HandleBack'
 
 class Home extends Component {
   constructor(props) {
@@ -36,27 +36,25 @@ class Home extends Component {
     }
   }
 
-   componentDidMount() {
+  componentDidMount() {
     this.generateArrayOfYears()
-    //  Common.BackPress(() => {
-    //   console.log("HOME Back press")
-    //   BackHandler.exitApp();
-    //  });
-   //  Common.BackPress(this.backpress)
-    // this.selectedButton('recieved');
-
-     const didFocusSubscription = this.props.navigation.addListener(
+    this.didFocusSubscription = this.props.navigation.addListener(
       'focus',
       payload => {
-        //console.log('didFocus', payload);
         this.selectedButton('recieved');
       }
     );
   }
-  backpress() {
+
+  componentWillUnmount() {
+    this.didFocusSubscription && this.didFocusSubscription()
+  }
+
+  backpress = () => {
     console.log("HOME Back press")
-   // BackHandler.exitApp();
-}
+    BackHandler.exitApp();
+    return true;
+  }
 
   generateArrayOfYears() {
     var max = new Date().getFullYear()
@@ -113,7 +111,7 @@ class Home extends Component {
         selectedButton: true,
       }, () => {
         this.callAPi(value)
-      })     
+      })
     } else {
       this.setState({
         selectedButton: false,
@@ -156,159 +154,161 @@ class Home extends Component {
     }
   }
   uploadSuccessData(data) {
-    console.log("date00000000000000000000000000",data)
+    console.log("date00000000000000000000000000", data)
     this.setState({
       pickerResult: data,
     }, () =>
       this.increaseHeight(1))
-     // console.log("date00000000000000000000000000"))
+    // console.log("date00000000000000000000000000"))
   }
-handleIcons(extension) {
-  let image= "";
-  if(extension ==='xlsx') {
-    return images.xlIcon;
-  } else if(extension === 'csv'){
-    return images.docIcon;
-  } else if(extension === 'pdf'){
-    return images.pdfIcon;
-  } else if (extension === 'jpg' || extension === 'png') {
-    return images.imageIcon;
+  handleIcons(extension) {
+    let image = "";
+    if (extension === 'xlsx') {
+      return images.xlIcon;
+    } else if (extension === 'csv') {
+      return images.docIcon;
+    } else if (extension === 'pdf') {
+      return images.pdfIcon;
+    } else if (extension === 'jpg' || extension === 'png') {
+      return images.imageIcon;
+    }
+    // docIcon,
+    // xlIcon,
+    // imageIcon
+
   }
-  // docIcon,
-  // xlIcon,
-  // imageIcon
-  
-}
 
   render() {
     // const { count } = this.props.sahspaceCount
     return (
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
-        <View style={{ height: 220 }}>
-          <View style={{ flex: 1 }} >
-            <View style={{ flex: 1 }} />
-            <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', margin: 5 }}>
-              <Text style={{ fontSize: 19, alignSelf: 'center', marginHorizontal: 5, fontFamily:AppConstant.Fonts.roboto_medium}}>
-                {`Hello, ${this.props.userDetail.name}`}
-              </Text>
-              <TouchableOpacity
-                // onPress={() => this.props.navigation.navigate('SearchScreen')}
-                style={{ height: 30, width: 70, alignItems: 'flex-end', marginRight: 5 }}
-              >
-                <Image
-                  style={{ height: 25, width: 25 }}
-                  source={images.featureSearch}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={{ flex: 2, }} >
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <ButtonWithIconAndText
-                buttonTitle={this.props.sahspaceCount && this.props.sahspaceCount.count ? this.props.sahspaceCount.count : 0}
-                headerText={'Sahspace'}
-                onPressButton={() => this.props.navigation.navigate('SearchScreen')}
-                buttonStyle={{ height: '80%', width: '47%', margin: '2%', borderRadius: 5, backgroundColor: '#E1EFFE', justifyContent: 'center', alignItems: 'center', }}
-                titleFontColor={'#002956'}
-                imageStyle={{ height: 25, width: 25 }}
-                imageName={images.shareIcon}
-
-              />
-              <ButtonWithIconAndText
-                buttonTitle={this.props.sahspaceCount && this.props.sahspaceCount.count ? this.props.sahspaceCount.count : 0}
-                headerText={'Safe Manager'}
-                onPressButton={() => this.props.navigation.navigate('SahspaceManager')}
-                buttonStyle={{ height: '80%', width: '45%', margin: '2%', borderRadius: 5, backgroundColor: '#FFF3EC', justifyContent: 'center', alignItems: 'center', }}
-                titleFontColor={'#8E4C00'}
-                imageStyle={{ height: 25, width: 25 }}
-                imageName={images.featureFolder}
-              />
-            </View>
-            <View style={{ flexDirection: 'row', marginLeft: 10 }}>
-              <CustomButton
-                buttonTitle={'Recent Received'}
-                onPressButton={() => this.selectedButton('recieved')}
-                buttonStyle={[{ color: 'white', height: 45, width: 150, justifyContent: 'center' }, !this.state.selectedButton && { borderBottomColor: 'grey', borderBottomWidth: 3 }]}
-                titleFontColor={this.state.selectedButton ? '#6A6A6A' : 'black'}
-              />
-              <CustomButton
-                buttonTitle={'Recent Sent'}
-                onPressButton={() => this.selectedButton('sent')}
-                buttonStyle={[{ color: 'white', height: 45, width: 120, justifyContent: 'center', }, 
-                this.state.selectedButton && { borderBottomColor: 'grey', borderBottomWidth: 3 }]}
-                titleFontColor={!this.state.selectedButton ? '#6A6A6A' : 'black'}
-              />
-
-            </View>
-          </View>
-        </View>
-        <View style={{ flex: 7.5, backgroundColor: '#FFFFFF' }} >
-          <FlatList
-            showsHorizontalScrollIndicator={Boolean(false)}
-            data={this.props.documentList}
-            renderItem={({ item }) => 
-            <View style={{ margin: 5, borderColor: '#DEDEDE', borderWidth: 1, borderRadius: 5 }}>
-              {/* {console.log("🚀 ~ file: index.js ~ line 223 ~ Home ~ render ~ item", item)} */}
-              <View style={{ flexDirection: 'row', }}>
-                <View style={{ width: '25%' }} >
-                  <View style={{ flex: 1, backgroundColor: '#FFE6E2', justifyContent: 'center', alignItems: 'center', margin: 10, borderRadius: 5 }}>
-                    <Image
-                      style={{ height: '100%', width: '100%' }}
-                      source={this.handleIcons(item.extension)}
-                    />
-                  </View>
-                </View>
-                <View style={{ width: '75%', justifyContent: 'center' }} >
-                  <Text style={styles.item}>{item.doc_name}</Text>
-                  <Text style={{ color: '#3072F3', fontSize: 16 , fontFamily:AppConstant.Fonts.roboto_medium }}>{item.name}
-                    <Text style={{ color: '#000000', fontSize: 15 ,fontFamily:AppConstant.Fonts.roboto_medium}}>{' > ' + item.document_name + ' > ' + item.year + ' > ' + item.month}</Text>
-                  </Text>
-                  <View style={{ height: 1, backgroundColor: '#DEDEDE', marginVertical: 5,  }}></View>
-                  <View style={{ flexDirection: 'row', width: '99%' }}>
-                  <Text style={{fontSize:12,fontFamily:AppConstant.Fonts.roboto_bold}}>{item.user_name}</Text>
-                    <View style={{ height: 15, width: 1, backgroundColor: '#DEDEDE', marginHorizontal: 5 }}></View>
-                    <Text style={{fontSize:12, fontFamily:AppConstant.Fonts.roboto_regular}}>{moment(item.created_at).format('DD MMM YYYY')}</Text>
-                    <View style={{ height: 15, width: 1, backgroundColor: '#DEDEDE', marginHorizontal: 5 }}></View>
-                    <Text style={{fontSize:12,fontFamily:AppConstant.Fonts.roboto_regular}}>{moment(item.created_at).format('HH.mm A')}</Text>
-                  </View>
-                </View>
-              </View>
-            </View>}
-          />
-        </View>
-
-        <View style={{ height: this.state.topView ? '100%' : 70, width: '100%', backgroundColor: this.state.topView ? '#000000C2' : 'transparent', position: 'absolute', left: 0, right: 0, bottom: 0, }}>
-          {this.state.topView
-            ? <View style={{ height: '80%', width: '100%', marginTop: '25%', borderRadius: 50 }}>
-              <Animatable.View
-                animation="fadeInUp"
-                duration={1000}
-                delay={200}
-                style={{ height: '100%', width: '100%', borderRadius: 50 }}>
-                <PDFScreen
-                  fileDetail={this.state.pickerResult}
-                  onPressButton={(value) => this.increaseHeight(value)}
-                  uploadFileAction={(data) => this.uploadFileAction(data)}
-                />
-              </Animatable.View>
-            </View>
-            :
-            // <CustomButton
-            //   buttonTitle={'+ Share File'}
-            //   onPressButton={() => this.increaseHeight(1)}
-            //   buttonStyle={{ color: 'white', height: 45, width: '40%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}
-            //   titleFontColor={'white'}
-            // />
-            <View style={{ height: 50, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-              <View style={{ color: 'white', height: 45, width: '40%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}>
-                <DocumentPickerScreen
-                  handleSuccessUpload={(data) => this.uploadSuccessData(data)} handleError={() => this.handleError()} />
+      <AndroidBackHandler onBackPress={this.backpress}>
+        <View style={{ flex: 1, backgroundColor: 'white' }}>
+          <View style={{ height: 220 }}>
+            <View style={{ flex: 1 }} >
+              <View style={{ flex: 1 }} />
+              <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', margin: 5 }}>
+                <Text style={{ fontSize: 19, alignSelf: 'center', marginHorizontal: 5, fontFamily: AppConstant.Fonts.roboto_medium }}>
+                  {`Hello, ${this.props.userDetail.name}`}
+                </Text>
+                <TouchableOpacity
+                  // onPress={() => this.props.navigation.navigate('SearchScreen')}
+                  style={{ height: 30, width: 70, alignItems: 'flex-end', marginRight: 5 }}
+                >
+                  <Image
+                    style={{ height: 25, width: 25 }}
+                    source={images.featureSearch}
+                  />
+                </TouchableOpacity>
               </View>
             </View>
-          }
-        </View>
+            <View style={{ flex: 2, }} >
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <ButtonWithIconAndText
+                  buttonTitle={this.props.sahspaceCount && this.props.sahspaceCount.count ? this.props.sahspaceCount.count : 0}
+                  headerText={'Sahspace'}
+                  onPressButton={() => this.props.navigation.navigate('SearchScreen')}
+                  buttonStyle={{ height: '80%', width: '47%', margin: '2%', borderRadius: 5, backgroundColor: '#E1EFFE', justifyContent: 'center', alignItems: 'center', }}
+                  titleFontColor={'#002956'}
+                  imageStyle={{ height: 25, width: 25 }}
+                  imageName={images.shareIcon}
 
-      </View>
+                />
+                <ButtonWithIconAndText
+                  buttonTitle={this.props.sahspaceCount && this.props.sahspaceCount.count ? this.props.sahspaceCount.count : 0}
+                  headerText={'Safe Manager'}
+                  onPressButton={() => this.props.navigation.navigate('SahspaceManager')}
+                  buttonStyle={{ height: '80%', width: '45%', margin: '2%', borderRadius: 5, backgroundColor: '#FFF3EC', justifyContent: 'center', alignItems: 'center', }}
+                  titleFontColor={'#8E4C00'}
+                  imageStyle={{ height: 25, width: 25 }}
+                  imageName={images.featureFolder}
+                />
+              </View>
+              <View style={{ flexDirection: 'row', marginLeft: 10 }}>
+                <CustomButton
+                  buttonTitle={'Recent Received'}
+                  onPressButton={() => this.selectedButton('recieved')}
+                  buttonStyle={[{ color: 'white', height: 45, width: 150, justifyContent: 'center' }, !this.state.selectedButton && { borderBottomColor: 'grey', borderBottomWidth: 3 }]}
+                  titleFontColor={this.state.selectedButton ? '#6A6A6A' : 'black'}
+                />
+                <CustomButton
+                  buttonTitle={'Recent Sent'}
+                  onPressButton={() => this.selectedButton('sent')}
+                  buttonStyle={[{ color: 'white', height: 45, width: 120, justifyContent: 'center', },
+                  this.state.selectedButton && { borderBottomColor: 'grey', borderBottomWidth: 3 }]}
+                  titleFontColor={!this.state.selectedButton ? '#6A6A6A' : 'black'}
+                />
+
+              </View>
+            </View>
+          </View>
+          <View style={{ flex: 7.5, backgroundColor: '#FFFFFF' }} >
+            <FlatList
+              showsHorizontalScrollIndicator={Boolean(false)}
+              data={this.props.documentList}
+              renderItem={({ item }) =>
+                <View style={{ margin: 5, borderColor: '#DEDEDE', borderWidth: 1, borderRadius: 5 }}>
+                  {/* {console.log("🚀 ~ file: index.js ~ line 223 ~ Home ~ render ~ item", item)} */}
+                  <View style={{ flexDirection: 'row', }}>
+                    <View style={{ width: '25%' }} >
+                      <View style={{ flex: 1, backgroundColor: '#FFE6E2', justifyContent: 'center', alignItems: 'center', margin: 10, borderRadius: 5 }}>
+                        <Image
+                          style={{ height: '100%', width: '100%' }}
+                          source={this.handleIcons(item.extension)}
+                        />
+                      </View>
+                    </View>
+                    <View style={{ width: '75%', justifyContent: 'center' }} >
+                      <Text style={styles.item}>{item.doc_name}</Text>
+                      <Text style={{ color: '#3072F3', fontSize: 16, fontFamily: AppConstant.Fonts.roboto_medium }}>{item.name}
+                        <Text style={{ color: '#000000', fontSize: 15, fontFamily: AppConstant.Fonts.roboto_medium }}>{' > ' + item.document_name + ' > ' + item.year + ' > ' + item.month}</Text>
+                      </Text>
+                      <View style={{ height: 1, backgroundColor: '#DEDEDE', marginVertical: 5, }}></View>
+                      <View style={{ flexDirection: 'row', width: '99%' }}>
+                        <Text style={{ fontSize: 12, fontFamily: AppConstant.Fonts.roboto_bold }}>{item.user_name}</Text>
+                        <View style={{ height: 15, width: 1, backgroundColor: '#DEDEDE', marginHorizontal: 5 }}></View>
+                        <Text style={{ fontSize: 12, fontFamily: AppConstant.Fonts.roboto_regular }}>{moment(item.created_at).format('DD MMM YYYY')}</Text>
+                        <View style={{ height: 15, width: 1, backgroundColor: '#DEDEDE', marginHorizontal: 5 }}></View>
+                        <Text style={{ fontSize: 12, fontFamily: AppConstant.Fonts.roboto_regular }}>{moment(item.created_at).format('HH.mm A')}</Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>}
+            />
+          </View>
+
+          <View style={{ height: this.state.topView ? '100%' : 70, width: '100%', backgroundColor: this.state.topView ? '#000000C2' : 'transparent', position: 'absolute', left: 0, right: 0, bottom: 0, }}>
+            {this.state.topView
+              ? <View style={{ height: '80%', width: '100%', marginTop: '25%', borderRadius: 50 }}>
+                <Animatable.View
+                  animation="fadeInUp"
+                  duration={1000}
+                  delay={200}
+                  style={{ height: '100%', width: '100%', borderRadius: 50 }}>
+                  <PDFScreen
+                    fileDetail={this.state.pickerResult}
+                    onPressButton={(value) => this.increaseHeight(value)}
+                    uploadFileAction={(data) => this.uploadFileAction(data)}
+                  />
+                </Animatable.View>
+              </View>
+              :
+              // <CustomButton
+              //   buttonTitle={'+ Share File'}
+              //   onPressButton={() => this.increaseHeight(1)}
+              //   buttonStyle={{ color: 'white', height: 45, width: '40%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}
+              //   titleFontColor={'white'}
+              // />
+              <View style={{ height: 50, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                <View style={{ color: 'white', height: 45, width: '40%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}>
+                  <DocumentPickerScreen
+                    handleSuccessUpload={(data) => this.uploadSuccessData(data)} handleError={() => this.handleError()} />
+                </View>
+              </View>
+            }
+          </View>
+
+        </View>
+      </AndroidBackHandler>
     );
   }
 }
@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
   item: {
     marginVertical: 5,
     fontSize: 18,
-    fontFamily:AppConstant.Fonts.roboto_bold
+    fontFamily: AppConstant.Fonts.roboto_bold
     // height: 44,
   },
 });

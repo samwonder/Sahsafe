@@ -11,7 +11,6 @@ import * as Actions from "@redux/actions";
 import * as Services from "@services";
 import EmptyScreen from '../../components/EmptyScreen';
 import * as AppConstant from "@constants"
-import * as Common from "@common";
 
 class DocumentTypeScreen extends Component {
   constructor(props) {
@@ -24,9 +23,6 @@ class DocumentTypeScreen extends Component {
   async componentDidMount() {
     await this.props.getSpaceMonth(this.state.sahspaceUser.sahspace_unique_id, this.state.selectedYear);
     console.log("🚀 ~ file: ----====-----====--------", this.props.getSahspaceMonth)
-    // Common.BackPress(() => {
-    //   this.popBack()
-    // });
   }
   navigationToDocumentList(index) {
   // this.state.sahspaceUser

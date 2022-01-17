@@ -12,7 +12,6 @@ import * as Services from "@services";
 import EmptyScreen from '../../components/EmptyScreen'
 import * as AppConstant from "@constants"
 import moment from 'moment'
-import * as Common from "@common";
 
 class DocumentTypeScreen extends Component {
   constructor(props) {
@@ -34,9 +33,6 @@ class DocumentTypeScreen extends Component {
     console.log("🚀 ~ file: ----===DocumentTypeScreen=== ~ data", data, this.state.sahspaceUser.sahspace_unique_id)
     await this.props.getSpaceUploadedDocList(data);
     console.log("🚀 ~ file: ----====-----====--------", this.props.spaceUploadedDocList.length)
-    // Common.BackPress(() => {
-    //   this.popBack()
-    // });
   }
   navigationToDocumentList(index) {
   // this.state.sahspaceUser

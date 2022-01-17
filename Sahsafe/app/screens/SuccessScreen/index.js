@@ -18,7 +18,6 @@ import { images } from '../../assets/images/index'
 import * as Animatable from "react-native-animatable";
 import * as AppConstant from "@constants";
 import CustomButton from '../../components/CustomButton';
-import * as Common from "@common";
 
 class SuccessScreen extends Component {
   constructor(props) {
@@ -26,9 +25,7 @@ class SuccessScreen extends Component {
   }
 
   componentDidMount() {
-    // Common.BackPress(() => {
-    //   this.popBack()
-    // });
+   
   }
   navigateBack() {
     const { goBack } = this.props.navigation;

@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import * as Actions from "@redux/actions";
 import * as Services from "@services";
 import * as AppConstant from "@constants";
-import * as Common from "@common";
+import { AndroidBackHandler } from '../../components/HandleBack'
 
 class OTPScreen extends React.Component {
   constructor(props) {
@@ -24,10 +24,6 @@ class OTPScreen extends React.Component {
   componentDidMount() {
     console.log("🚀 ~ file: index.js ~ line 23 =======t", this.props)
     this.startTimer()
-    // Common.BackPress(() => {
-    //   console.log("OTP Back press")
-    //   this.popBack()
-    // });
   }
   startTimer() {
     let timer = setInterval(this.tick, 1000);
@@ -95,6 +91,15 @@ class OTPScreen extends React.Component {
     goBack(null);
   }
 
+  backpress = () => {
+    console.log("OTP Back press")
+    if (this.props.navigation && this.props.navigation.isFocused()) {
+      this.popBack()
+      return true;
+    }
+    return false;
+  }
+
   async navigateToOTPScreen(phone) {
     if (phone === null) {
       Alert.alert('Somthing went wrong, Please check your mobile number')
@@ -118,6 +123,7 @@ class OTPScreen extends React.Component {
 
   render() {
     return (
+      <AndroidBackHandler onBackPress={this.backpress}>
       <View>
         <View style={styles.container}>
           <Text style={styles.text}>Enter <Text style={{color: '#3434D6', fontFamily: AppConstant.Fonts.roboto_bold}}>OTP</Text> to Verify Mobile Number</Text>
@@ -149,7 +155,8 @@ class OTPScreen extends React.Component {
             titleFontColor={'#707070'}
           />
         </View>
-      </View>
+        </View>
+        </AndroidBackHandler>
     );
   }
 }
