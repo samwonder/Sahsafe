@@ -2,41 +2,76 @@ import React, { useState } from 'react';
 import { Text, StyleSheet, View, FlatList, StatusBar, Image } from 'react-native';
 import { images } from '../../../assets/images/index'
 import * as AppConstant from "@constants";
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    position: 'Owner',
-    title: 'First Item',
-    status: 'Active'
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    position: 'Client',
-    title: 'Second Item',
-    status: 'Active'
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    position: 'Member',
-    title: 'Third Item',
-    status: 'Pending'
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    position: 'Staff',
-    title: 'Fourth Item',
-    status: 'Pending'
-  },
-];
+
 const makeRandomColor = (myStr) => {
   // var myStr = "John P White";
   var matches = myStr.match(/\b(\w)/g);
   console.log(matches.join(''));
   return matches.join('');
 }
+const makeRandomColorBG = (text) => {
+  var matches = text.match(/\b(\w)/g);
+  switch (matches[0].toUpperCase()) {
+    case 'A':
+      return '#FF8400';
+    case 'B':
+      return '#FC575D';
+    case 'C':
+      return '#CE4F8B';
+    case 'D':
+      return '#875899';
+    case 'E':
+      return '#465682';
+    case 'F':
+      return '#2F4858';
+    case 'G':
+      return '#956846';
+    case 'H':
+      return '#005247';
+    case 'I':
+      return '#005247';
+    case 'J':
+      return '#534439';
+    case 'K':
+      return '#008A23';
+    case 'L':
+      return '#650000';
+    case 'M':
+      return '#006E5F';
+    case 'N':
+      return '#C35257';
+    case 'O':
+      return '#534439';
+    case 'P':
+      return '#008E73';
+    case 'Q':
+      return '#402E32';
+    case 'R':
+      return '#653D1E';
+    case 'S':
+      return '#892100';
+    case 'T':
+      return '#FF890C';
+    case 'U':
+      return '#AC4100';
+    case 'V':
+      return '#567EA2';
+    case 'W':
+      return '#3B4856';
+    case 'X':
+      return '#0085A1';
+    case 'Y':
+      return '#334B48';
+    case 'Z':
+      return '#456E91';
+    default:
+      return '#1E4888';
+      break;
+  }
+}
 const Item = (item) => (
   <View style={styles.item}>
-    <View style={{ height: 35, width: 35, justifyContent: 'center', alignItems: 'center', marginTop: 6, borderRadius: 18, backgroundColor: `hsla(${Math.random() * 360}, 100%, 50%, 1)` }}>
+    <View style={{ height: 35, width: 35, justifyContent: 'center', alignItems: 'center', marginTop: 6, borderRadius: 18, backgroundColor: makeRandomColorBG(item.name) }}>
       <Text style={{ fontSize: 16, color: 'white' ,fontFamily:AppConstant.Fonts.roboto_medium}}>
         {makeRandomColor(item.item.name).slice(0, 2)}
         </Text>
