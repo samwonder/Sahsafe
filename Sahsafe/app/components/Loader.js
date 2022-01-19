@@ -10,9 +10,9 @@ export default (props) => {
     <Spinner
       style={props.style}
       isVisible={props.isVisible}
-      size={props.size || wp('10%')}
-      type={'Wave'}
-      color={props.color || '#3072F3'}
+      size={props.size || wp('20%')}
+      type={'Circle'}
+      color={'#3072F3'}
     />
   )
 }

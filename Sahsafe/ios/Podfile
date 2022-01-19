@@ -16,6 +16,8 @@ target 'Sahsafe' do
 
   pod 'react-native-spinkit', :path => '../node_modules/react-native-spinkit'
 
+  pod 'RNReactNativeDocViewer', :path => '../node_modules/react-native-doc-viewer'
+
   target 'SahsafeTests' do
     inherit! :complete
     # Pods for testing

@@ -6,16 +6,15 @@ import * as AppConstant from '@constants';
 
 export default (props) => {
     const deviceWidth = Dimensions.get("window").width;
-    const deviceHeight = Dimensions.get("window").height
-    // Platform.OS === "ios"
-    //     ? Dimensions.get("window").height
-    //     : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
+    const deviceHeight = Platform.OS === "ios"
+        ? Dimensions.get("window").height
+        : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
 
     return (
         <Modal
             {...props}
             style={{ margin: 0 }}
-            // backdropColor={props.backgroundColor ? props.backgroundColor : AppConstant.Colors.black}
+            backdropColor={'transparent'}
             // backdropOpacity={props.opacity ? props.opacity : 0.7}
             animationIn='fadeIn'
             animationOut='fadeOut'

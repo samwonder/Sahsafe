@@ -31,9 +31,10 @@ const ButtonWithIconAndText = ({
     onPress={() => onPressButton()}
     style={buttonStyle}
   >
-    <View style={{ flexDirection: 'row', width: '100%' }}>
+    <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center' }}>
       <View style={{
-        backgroundColor: 'white', height: 40, width: 40, borderRadius: 5, justifyContent: 'center', alignItems: 'center',
+        backgroundColor: 'white', 
+        height: 40, width: 40, borderRadius: 5, justifyContent: 'center', alignItems: 'center',
         shadowColor: '#000000',
         shadowOffset: {
           width: 0,
@@ -41,6 +42,7 @@ const ButtonWithIconAndText = ({
         },
         shadowRadius: 5,
         shadowOpacity: 0.5,
+        elevation: 10,
         marginLeft: 10
       }}>
         <Image
@@ -50,8 +52,8 @@ const ButtonWithIconAndText = ({
         />
       </View>
       <View>
-        <Text style={{ alignSelf: 'center', fontSize: 17, marginLeft: 10, fontFamily: AppConstant.Fonts.roboto_regular }}>{headerText}</Text>
-        <Text style={{ alignSelf: 'center', fontSize: 22, color: titleFontColor, fontFamily: AppConstant.Fonts.roboto_medium }}>{buttonTitle}</Text>
+        <Text style={{ alignSelf: 'flex-start', fontSize: 17, marginLeft: 10, fontFamily: AppConstant.Fonts.roboto_regular }}>{headerText}</Text>
+        <Text style={{ alignSelf: 'flex-start', fontSize: 22,marginLeft: 10, color: titleFontColor, fontFamily: AppConstant.Fonts.roboto_medium }}>{buttonTitle}</Text>
       </View>
     </View>
   </TouchableOpacity>
