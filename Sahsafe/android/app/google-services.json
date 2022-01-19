@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "133874006385",
+    "project_id": "sahsafe-f8139",
+    "storage_bucket": "sahsafe-f8139.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:133874006385:android:3bc12503915a906a0f1ed0",
+        "android_client_info": {
+          "package_name": "com.sahsafe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "133874006385-u2k36is9n4thi38fb5b5dhsc7buui1b5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIYdFbbOenCpcBTLJ9o8FlQRilxAGDaj4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "133874006385-u2k36is9n4thi38fb5b5dhsc7buui1b5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

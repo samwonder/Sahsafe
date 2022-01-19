@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as AppConstant from '@constants';
 
 import CustomModal from '@components/customModal';
-import Loader from '@components/loader';
+import Loader from '@components/Loader';
 
 
 export class AppLoader extends Component {

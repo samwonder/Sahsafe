@@ -33,6 +33,7 @@
     "react-native-material-textfield-plus": "^0.17.0",
     "react-native-modal": "^13.0.0",
     "react-native-otp": "^1.0.0",
+    "react-native-push-notification": "^8.1.1",
     "react-native-responsive-screen": "^1.4.2",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-select-dropdown": "^1.5.0",
