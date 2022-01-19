@@ -4,7 +4,6 @@ import {
   Text,
   View,
   StyleSheet,
-  Dimensions,
   TouchableOpacity,
   FlatList,
   Image,
@@ -24,7 +23,7 @@ import DocumentPickerScreen from '../../components/DocumentPicker';
 import * as AppConstant from "@constants";
 import moment from 'moment'
 import { AndroidBackHandler } from '../../components/HandleBack'
-
+import { WebView } from 'react-native-webview';
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -33,6 +32,8 @@ class Home extends Component {
       selectedButton: false,
       months: {},
       pickerResult: null,
+      isPreview: false,
+      url: ''
     }
   }
 
@@ -52,7 +53,19 @@ class Home extends Component {
 
   backpress = () => {
     console.log("HOME Back press")
-    BackHandler.exitApp();
+    Alert.alert(
+      "Alert Title",
+      "Are you sure you want to close the app.?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => BackHandler.exitApp() }
+      ]
+    );
+
     return true;
   }
 
@@ -177,136 +190,187 @@ class Home extends Component {
     // imageIcon
 
   }
+  showPreview(item, index) {
+    this.setState({
+      isPreview: true,
+      url: item.full_path
+    }, console.log('==========', this.state.url))
+  }
 
+  hidePreview() {
+    this.setState({
+      isPreview: false,
+      url: ''
+    })
+  }
+
+  loaderFunction(state) {
+    { this.props.toggleLoader(state) }
+  }
+  checkLoadRequest() {
+    return false
+  }
   render() {
     // const { count } = this.props.sahspaceCount
     return (
       <AndroidBackHandler onBackPress={this.backpress}>
-        <View style={{ flex: 1, backgroundColor: 'white' }}>
-          <View style={{ height: 220 }}>
-            <View style={{ flex: 1 }} >
-              <View style={{ flex: 1 }} />
-              <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', margin: 5 }}>
-                <Text style={{ fontSize: 19, alignSelf: 'center', marginHorizontal: 5, fontFamily: AppConstant.Fonts.roboto_medium }}>
-                  {`Hello, ${this.props.userDetail.name}`}
-                </Text>
-                <TouchableOpacity
-                  // onPress={() => this.props.navigation.navigate('SearchScreen')}
-                  style={{ height: 30, width: 70, alignItems: 'flex-end', marginRight: 5 }}
-                >
-                  <Image
-                    style={{ height: 25, width: 25 }}
-                    source={images.featureSearch}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={{ flex: 2, }} >
-              <View style={{ flex: 1, flexDirection: 'row' }}>
-                <ButtonWithIconAndText
-                  buttonTitle={this.props.sahspaceCount && this.props.sahspaceCount.count ? this.props.sahspaceCount.count : 0}
-                  headerText={'Sahspace'}
-                  onPressButton={() => this.props.navigation.navigate('SearchScreen')}
-                  buttonStyle={{ height: '80%', width: '47%', margin: '2%', borderRadius: 5, backgroundColor: '#E1EFFE', justifyContent: 'center', alignItems: 'center', }}
-                  titleFontColor={'#002956'}
-                  imageStyle={{ height: 25, width: 25 }}
-                  imageName={images.shareIcon}
-
-                />
-                <ButtonWithIconAndText
-                  buttonTitle={this.props.sahspaceCount && this.props.sahspaceCount.count ? this.props.sahspaceCount.count : 0}
-                  headerText={'Safe Manager'}
-                  onPressButton={() => this.props.navigation.navigate('SahspaceManager')}
-                  buttonStyle={{ height: '80%', width: '45%', margin: '2%', borderRadius: 5, backgroundColor: '#FFF3EC', justifyContent: 'center', alignItems: 'center', }}
-                  titleFontColor={'#8E4C00'}
-                  imageStyle={{ height: 25, width: 25 }}
-                  imageName={images.featureFolder}
-                />
-              </View>
-              <View style={{ flexDirection: 'row', marginLeft: 10 }}>
-                <CustomButton
-                  buttonTitle={'Recent Received'}
-                  onPressButton={() => this.selectedButton('recieved')}
-                  buttonStyle={[{ color: 'white', height: 45, width: 150, justifyContent: 'center' }, !this.state.selectedButton && { borderBottomColor: 'grey', borderBottomWidth: 3 }]}
-                  titleFontColor={this.state.selectedButton ? '#6A6A6A' : 'black'}
-                />
-                <CustomButton
-                  buttonTitle={'Recent Sent'}
-                  onPressButton={() => this.selectedButton('sent')}
-                  buttonStyle={[{ color: 'white', height: 45, width: 120, justifyContent: 'center', },
-                  this.state.selectedButton && { borderBottomColor: 'grey', borderBottomWidth: 3 }]}
-                  titleFontColor={!this.state.selectedButton ? '#6A6A6A' : 'black'}
-                />
-
-              </View>
-            </View>
-          </View>
-          <View style={{ flex: 7.5, backgroundColor: '#FFFFFF' }} >
-            <FlatList
-              showsHorizontalScrollIndicator={Boolean(false)}
-              data={this.props.documentList}
-              renderItem={({ item }) =>
-                <View style={{ margin: 5, borderColor: '#DEDEDE', borderWidth: 1, borderRadius: 5 }}>
-                  {/* {console.log("🚀 ~ file: index.js ~ line 223 ~ Home ~ render ~ item", item)} */}
-                  <View style={{ flexDirection: 'row', }}>
-                    <View style={{ width: '25%' }} >
-                      <View style={{ flex: 1, backgroundColor: '#FFE6E2', justifyContent: 'center', alignItems: 'center', margin: 10, borderRadius: 5 }}>
-                        <Image
-                          style={{ height: '100%', width: '100%' }}
-                          source={this.handleIcons(item.extension)}
-                        />
-                      </View>
-                    </View>
-                    <View style={{ width: '75%', justifyContent: 'center' }} >
-                      <Text style={styles.item}>{item.doc_name}</Text>
-                      <Text style={{ color: '#3072F3', fontSize: 16, fontFamily: AppConstant.Fonts.roboto_medium }}>{item.name}
-                        <Text style={{ color: '#000000', fontSize: 15, fontFamily: AppConstant.Fonts.roboto_medium }}>{' > ' + item.document_name + ' > ' + item.year + ' > ' + item.month}</Text>
-                      </Text>
-                      <View style={{ height: 1, backgroundColor: '#DEDEDE', marginVertical: 5, }}></View>
-                      <View style={{ flexDirection: 'row', width: '99%' }}>
-                        <Text style={{ fontSize: 12, fontFamily: AppConstant.Fonts.roboto_bold }}>{item.user_name}</Text>
-                        <View style={{ height: 15, width: 1, backgroundColor: '#DEDEDE', marginHorizontal: 5 }}></View>
-                        <Text style={{ fontSize: 12, fontFamily: AppConstant.Fonts.roboto_regular }}>{moment(item.created_at).format('DD MMM YYYY')}</Text>
-                        <View style={{ height: 15, width: 1, backgroundColor: '#DEDEDE', marginHorizontal: 5 }}></View>
-                        <Text style={{ fontSize: 12, fontFamily: AppConstant.Fonts.roboto_regular }}>{moment(item.created_at).format('HH.mm A')}</Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>}
-            />
-          </View>
-
-          <View style={{ height: this.state.topView ? '100%' : 70, width: '100%', backgroundColor: this.state.topView ? '#000000C2' : 'transparent', position: 'absolute', left: 0, right: 0, bottom: 0, }}>
-            {this.state.topView
-              ? <View style={{ height: '80%', width: '100%', marginTop: '25%', borderRadius: 50 }}>
-                <Animatable.View
-                  animation="fadeInUp"
-                  duration={1000}
-                  delay={200}
-                  style={{ height: '100%', width: '100%', borderRadius: 50 }}>
-                  <PDFScreen
-                    fileDetail={this.state.pickerResult}
-                    onPressButton={(value) => this.increaseHeight(value)}
-                    uploadFileAction={(data) => this.uploadFileAction(data)}
-                  />
-                </Animatable.View>
-              </View>
-              :
-              // <CustomButton
-              //   buttonTitle={'+ Share File'}
-              //   onPressButton={() => this.increaseHeight(1)}
-              //   buttonStyle={{ color: 'white', height: 45, width: '40%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}
-              //   titleFontColor={'white'}
-              // />
-              <View style={{ height: 50, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                <View style={{ color: 'white', height: 45, width: '40%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}>
-                  <DocumentPickerScreen
-                    handleSuccessUpload={(data) => this.uploadSuccessData(data)} handleError={() => this.handleError()} />
+        <View style={{ flex: 1, backgroundColor: 'white', }}>
+          <View style={{ flex: 1, backgroundColor: 'white', marginHorizontal: 10, }}>
+            <View style={{ height: 220 }}>
+              <View style={{ flex: 1 }} >
+                <View style={{ flex: 1 }} />
+                <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', margin: 0 }}>
+                  <Text style={{ fontSize: 19, alignSelf: 'center', fontFamily: AppConstant.Fonts.roboto_medium }}>
+                    {`Hello, ${this.props.userDetail.name}`}
+                  </Text>
+                  <TouchableOpacity
+                    // onPress={() => this.props.navigation.navigate('SearchScreen')}
+                    style={{ height: 30, width: 70, alignItems: 'flex-end', marginRight: 0 }}
+                  >
+                    <Image
+                      style={{ height: 25, width: 25 }}
+                      source={images.featureSearch}
+                    />
+                  </TouchableOpacity>
                 </View>
               </View>
-            }
-          </View>
+              <View style={{ flex: 2, }} >
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginTop: '3%' }}>
+                  <ButtonWithIconAndText
+                    buttonTitle={this.props.sahspaceCount && this.props.sahspaceCount.count ? this.props.sahspaceCount.count : 0}
+                    headerText={'Sahspace'}
+                    onPressButton={() => this.props.navigation.navigate('SearchScreen')}
+                    buttonStyle={{ height: '80%', width: '47%', borderRadius: 5, backgroundColor: '#E1EFFE', justifyContent: 'center', alignItems: 'center', }}
+                    titleFontColor={'#002956'}
+                    imageStyle={{ height: 25, width: 25 }}
+                    imageName={images.shareIcon}
 
+                  />
+                  <ButtonWithIconAndText
+                    buttonTitle={this.props.sahspaceCount && this.props.sahspaceCount.count ? this.props.sahspaceCount.count : 0}
+                    headerText={'Safe Manager'}
+                    onPressButton={() => this.props.navigation.navigate('SahspaceManager')}
+                    buttonStyle={{ height: '80%', width: '47%', borderRadius: 5, backgroundColor: '#FFF3EC', justifyContent: 'center', alignItems: 'center', }}
+                    titleFontColor={'#8E4C00'}
+                    imageStyle={{ height: 25, width: 25 }}
+                    imageName={images.featureFolder}
+                  />
+                </View>
+                <View style={{ flexDirection: 'row', }}>
+                  <CustomButton
+                    buttonTitle={'Recent Received'}
+                    onPressButton={() => this.selectedButton('recieved')}
+                    buttonStyle={[{ color: 'white', height: 45, width: 145, justifyContent: 'center', alignItems: 'flex-start', marginRight: 10 }, !this.state.selectedButton && { borderBottomColor: 'grey', borderBottomWidth: 3 }]}
+                    titleFontColor={this.state.selectedButton ? '#6A6A6A' : 'black'}
+                  />
+                  <CustomButton
+                    buttonTitle={'Recent Sent'}
+                    onPressButton={() => this.selectedButton('sent')}
+                    buttonStyle={[{ color: 'white', height: 45, width: 110, justifyContent: 'center', },
+                    this.state.selectedButton && { borderBottomColor: 'grey', borderBottomWidth: 3 }]}
+                    titleFontColor={!this.state.selectedButton ? '#6A6A6A' : 'black'}
+                  />
+
+                </View>
+              </View>
+            </View>
+            <View style={{ flex: 7.5, backgroundColor: '#FFFFFF' }} >
+              <FlatList
+                showsHorizontalScrollIndicator={Boolean(false)}
+                data={this.props.documentList}
+                renderItem={({ item, index }) =>
+                  <TouchableOpacity style={{ width: '100%' }} onPress={() => this.showPreview(item, index)}>
+                    <View
+                      style={{ height: 110, margin: 5, borderColor: '#DEDEDE', borderWidth: 1, borderRadius: 5, justifyContent: 'center' }}>
+                      <View style={{ flexDirection: 'row', }}>
+                        <View style={{ width: '25%' }} >
+                          <View style={{ flex: 1, backgroundColor: '#FFE6E2', justifyContent: 'center', alignItems: 'center', margin: 10, borderRadius: 5 }}>
+                            <Image
+                              style={{ height: '100%', width: '100%' }}
+                              source={this.handleIcons(item.extension)}
+                            />
+                          </View>
+                        </View>
+                        <View style={{ width: '75%', justifyContent: 'center' }} >
+                          <Text style={styles.item}>{item.doc_name}</Text>
+                          <Text style={{ color: '#3072F3', fontSize: 15, fontFamily: AppConstant.Fonts.roboto_medium }}>{item.name}
+                            <Text style={{ color: '#000000', fontSize: 15, fontFamily: AppConstant.Fonts.roboto_medium }}>{' > ' + item.document_name + ' > ' + item.year + ' > ' + item.month}</Text>
+                          </Text>
+                          <View style={{ height: 1, backgroundColor: '#DEDEDE', marginVertical: 5, }}></View>
+                          <View style={{ flexDirection: 'row', width: '98%' }}>
+                            <Text style={{ fontSize: 11, fontFamily: AppConstant.Fonts.roboto_bold }}>{item.user_name}</Text>
+                            <View style={{ height: 15, width: 1, backgroundColor: '#DEDEDE', marginHorizontal: 2 }}></View>
+                            <Text style={{ fontSize: 11, fontFamily: AppConstant.Fonts.roboto_regular }}>{moment(item.created_at).format('DD MMM YYYY')}</Text>
+                            <View style={{ height: 15, width: 1, backgroundColor: '#DEDEDE', marginHorizontal: 2 }}></View>
+                            <Text style={{ fontSize: 11, fontFamily: AppConstant.Fonts.roboto_regular }}>{moment(item.created_at).format(' HH.mm A')}</Text>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                }
+              />
+            </View>
+
+            <View style={{ height: this.state.topView ? '100%' : 70, width: '100%', backgroundColor: this.state.topView ? '#000000C2' : 'transparent', position: 'absolute', left: 0, right: 0, bottom: 0, }}>
+              {this.state.topView
+                ? <View style={{ height: '80%', width: '100%', marginTop: '25%', borderRadius: 50 }}>
+                  <Animatable.View
+                    animation="fadeInUp"
+                    duration={1000}
+                    delay={200}
+                    style={{ height: '100%', width: '100%', borderRadius: 50 }}>
+                    <PDFScreen
+                      fileDetail={this.state.pickerResult}
+                      onPressButton={(value) => this.increaseHeight(value)}
+                      uploadFileAction={(data) => this.uploadFileAction(data)}
+                    />
+                  </Animatable.View>
+                </View>
+                :
+                <View style={{ height: 50, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                  <View style={{ color: 'white', height: 45, width: '40%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}>
+                    <DocumentPickerScreen
+                      handleSuccessUpload={(data) => this.uploadSuccessData(data)} handleError={() => this.handleError()} />
+                  </View>
+                </View>
+              }
+            </View>
+
+            {this.state.isPreview && <View style={{ height: '92.5%', width: '100%', borderColor: '#DEDEDE', borderWidth: 1, backgroundColor: 'white', position: 'absolute', left: 0, right: 0, bottom: 40, top: 40 }}>
+              <View style={{ height: 40, backgroundColor: 'white', borderColor: '#DEDEDE', borderWidth: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Text style={{ color: '#000000', fontSize: 15, fontFamily: AppConstant.Fonts.roboto_medium, alignSelf: 'center', marginLeft: 10 }}>{'Document'}</Text>
+                <CustomButton
+                  buttonTitle={'X'}
+                  onPressButton={() => this.hidePreview()}
+                  buttonStyle={{ color: 'white', height: 45, width: 45, justifyContent: 'center', }}
+                />
+              </View>
+              <WebView
+                source={{
+                  uri: this.state.url
+                }}
+                style={{ margin: 5, borderColor: '#DEDEDE', borderWidth: 1,  }}
+                onLoadStart={() => this.loaderFunction(true)}
+                onLoadEnd={() => this.loaderFunction(false)}
+                bounces={true}
+                useWebKit={true}
+                scrollEnabled={true}
+                onShouldStartLoadWithRequest={this.checkLoadRequest}
+                injectedJavaScript={`document.getElementsByTagName("pdf")[0].controlsList="nodownload";`}
+
+              />
+              {/* <View style={{ height: 60, backgroundColor: 'white', borderColor: '#DEDEDE', borderWidth: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Text style={{ color: '#000000', fontSize: 15, fontFamily: AppConstant.Fonts.roboto_medium, alignSelf: 'center', marginLeft: 10 }}>{'Document'}</Text>
+                <CustomButton
+                  buttonTitle={'X'}
+                  onPressButton={() => this.selectedButton('sent')}
+                  buttonStyle={{ color: 'white', height: 45, width: 45, justifyContent: 'center', }}
+                // titleFontColor={!this.state.selectedButton ? '#6A6A6A' : 'black'}
+                />
+              </View> */}
+            </View>}
+          </View>
         </View>
       </AndroidBackHandler>
     );
