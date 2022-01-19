@@ -28,9 +28,8 @@ import {
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
 
-import OpenFile from 'react-native-doc-viewer';
-var RNFS = require('react-native-fs');
-var SavePath = Platform.OS === 'ios' ? RNFS.MainBundlePath : RNFS.DocumentDirectoryPath;
+//var RNFS = require('react-native-fs');
+//var SavePath = Platform.OS === 'ios' ? RNFS.MainBundlePath : RNFS.DocumentDirectoryPath;
 class Home extends Component {
   constructor(props) {
     super(props);
