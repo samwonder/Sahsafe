@@ -1,49 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import * as AppConstant from '@constants';
+import Spinner from 'react-native-spinkit';
 import {
-  View,
-  ActivityIndicator,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 
-const { width, height } = Dimensions.get('window');
-
-const styles = StyleSheet.create({
-  container: {
-    width,
-    height,
-    backgroundColor: '#00000060',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 20,
-    position: 'absolute',
-  },
-  activityContainer: {
-  },
-});
-
-const LoaderSize = 'large';
-
-const Loader = props => (
-  <View style={styles.container}>
-    <ActivityIndicator
-      animating={props.isAnimating}
-      style={styles.activityContainer}
-      size={LoaderSize}
-      color={props.color}
+export default (props) => {
+  return (
+    <Spinner
+      style={props.style}
+      isVisible={props.isVisible}
+      size={props.size || wp('10%')}
+      type={'Wave'}
+      color={props.color || '#3072F3'}
     />
-  </View>
-);
-
-Loader.propTypes = {
-  isAnimating: PropTypes.bool,
-  color: PropTypes.string,
-};
-
-Loader.defaultProps = {
-  isAnimating: false,
-  color: 'white',
-};
-
-export default Loader;
+  )
+}
