@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
     zIndex: 1,
     width: '100%',
     height: '100%',
-    backgroundColor: AppConstant.Colors.white,
-    opacity: 0.3,
+    // backgroundColor: AppConstant.Colors.white,
+    // opacity: 0.3,
   },
   loaderStyle: {
     zIndex: 1

@@ -24,6 +24,13 @@ import * as AppConstant from "@constants";
 import moment from 'moment'
 import { AndroidBackHandler } from '../../components/HandleBack'
 import { WebView } from 'react-native-webview';
+import {
+  widthPercentageToDP as wp,
+} from "react-native-responsive-screen";
+
+import OpenFile from 'react-native-doc-viewer';
+var RNFS = require('react-native-fs');
+var SavePath = Platform.OS === 'ios' ? RNFS.MainBundlePath : RNFS.DocumentDirectoryPath;
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -293,16 +300,16 @@ class Home extends Component {
                         </View>
                         <View style={{ width: '75%', justifyContent: 'center' }} >
                           <Text style={styles.item}>{item.doc_name}</Text>
-                          <Text style={{ color: '#3072F3', fontSize: 15, fontFamily: AppConstant.Fonts.roboto_medium }}>{item.name}
-                            <Text style={{ color: '#000000', fontSize: 15, fontFamily: AppConstant.Fonts.roboto_medium }}>{' > ' + item.document_name + ' > ' + item.year + ' > ' + item.month}</Text>
+                          <Text style={{ color: '#3072F3', fontSize: wp('3.6%'), fontFamily: AppConstant.Fonts.roboto_medium }}>{item.name}
+                            <Text style={{ color: '#000000', fontSize: wp('3.6%'), fontFamily: AppConstant.Fonts.roboto_medium }}>{' > ' + item.document_name + ' > ' + item.year + ' > ' + item.month}</Text>
                           </Text>
                           <View style={{ height: 1, backgroundColor: '#DEDEDE', marginVertical: 5, }}></View>
                           <View style={{ flexDirection: 'row', width: '98%' }}>
-                            <Text style={{ fontSize: 11, fontFamily: AppConstant.Fonts.roboto_bold }}>{item.user_name}</Text>
+                            <Text style={{ fontSize: wp('3.15%'), fontFamily: AppConstant.Fonts.roboto_bold }}>{item.user_name}</Text>
                             <View style={{ height: 15, width: 1, backgroundColor: '#DEDEDE', marginHorizontal: 2 }}></View>
-                            <Text style={{ fontSize: 11, fontFamily: AppConstant.Fonts.roboto_regular }}>{moment(item.created_at).format('DD MMM YYYY')}</Text>
+                            <Text style={{ fontSize: wp('3.15%'), fontFamily: AppConstant.Fonts.roboto_regular }}>{moment(item.created_at).format('DD MMM YYYY')}</Text>
                             <View style={{ height: 15, width: 1, backgroundColor: '#DEDEDE', marginHorizontal: 2 }}></View>
-                            <Text style={{ fontSize: 11, fontFamily: AppConstant.Fonts.roboto_regular }}>{moment(item.created_at).format(' HH.mm A')}</Text>
+                            <Text style={{ fontSize: wp('3.15%'), fontFamily: AppConstant.Fonts.roboto_regular }}>{moment(item.created_at).format(' HH.mm A')}</Text>
                           </View>
                         </View>
                       </View>
