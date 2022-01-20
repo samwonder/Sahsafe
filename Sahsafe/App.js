@@ -10,7 +10,7 @@
  import * as Config from "@configs";
  import AppLoader from "@components/appLoader";
  import { LogBox } from 'react-native';
- import NotifService from './app/notification/NotifService';
+ import {Notifications} from 'react-native-notifications';
  const Store = Config.reduxInit();
  export default class App extends Component {
    constructor() {
@@ -19,21 +19,23 @@
      //  runRootSaga();
      // for hide warning messages
      LogBox.ignoreAllLogs();
-     this.notif = new NotifService(
-      this.onRegister.bind(this),
-      this.onNotif.bind(this),
-    );
-   }
-   
-   onRegister(token) {
-    console.log("token------------------",token.token)
-  }
+     Notifications.registerRemoteNotifications();
+     Notifications.events().registerRemoteNotificationsRegistered((event) => {
+      console.log(event.deviceToken);
+    });
 
-  onNotif(notif) {
-    //Alert.alert(notif.title, notif.message);
-    console.log("notif.title, notif.message------------------", notif.title, notif.message)
-    this.notif.localPushNotif(notif);
-  }
+     Notifications.events().registerNotificationReceivedForeground((notification, completion) => {
+      console.log(JSON.stringify(notification.payload));
+
+     // console.log(`Notification received in foreground: ${notification.title} : ${notification.body}`);
+     // completion({alert: false, sound: false, badge: false});
+    });
+
+    Notifications.events().registerNotificationOpened((notification, completion) => {
+      console.log(`Notification opened: ${notification.payload}`);
+     // completion();
+    });
+   }
     
     render() {
     //  console.log("🚀 ~ file: App.js ~ line 13 ~ Store", Store)
