@@ -8,7 +8,8 @@ import {
   FlatList,
   Image,
   Alert,
-  BackHandler
+  BackHandler,
+  Share
 } from 'react-native';
 import { images } from '../../assets/images/index'
 import CustomButton from '../../components/CustomButton';
@@ -27,8 +28,8 @@ import { WebView } from 'react-native-webview';
 import {
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
-
-//var RNFS = require('react-native-fs');
+import Pdf from 'react-native-pdf';
+var RNFS = require('react-native-fs');
 //var SavePath = Platform.OS === 'ios' ? RNFS.MainBundlePath : RNFS.DocumentDirectoryPath;
 class Home extends Component {
   constructor(props) {
@@ -39,7 +40,8 @@ class Home extends Component {
       months: {},
       pickerResult: null,
       isPreview: false,
-      url: ''
+      url: '',
+      extension:""
     }
   }
 
@@ -197,16 +199,22 @@ class Home extends Component {
 
   }
   showPreview(item, index) {
+    let source = item.full_path
+    if (item.extension === "pdf") {
+      source = { uri: item.full_path, cache: false };
+    } 
     this.setState({
       isPreview: true,
-      url: item.full_path
-    }, console.log('==========', this.state.url))
+      url: source,
+      extension: item.extension
+    }, console.log('==========', this.state.url, item.extension))
   }
 
   hidePreview() {
     this.setState({
       isPreview: false,
-      url: ''
+      url: '',
+      extension:""
     })
   }
 
@@ -216,6 +224,132 @@ class Home extends Component {
   checkLoadRequest() {
     return false
   }
+
+  fileDownload() {
+    // if (jobId !== -1) {
+    //   this.setState({ output: 'A download is already in progress' });
+    // }
+
+    const progress = data => {
+      const percentage = ((100 * data.bytesWritten) / data.contentLength) | 0;
+      const text = `Progress ${percentage}%`;
+      //this.setState({ output: text });
+      console.log("File download------------------ ",text)
+    };
+
+    const begin = res => {
+      //this.setState({ output: 'Download has begun' });
+      console.log("File download------------------ Download has begun")
+    };
+
+    const progressDivider = 1;
+    let shareUrl = this.state.url;
+    if (this.state.extension === "pdf") {
+      shareUrl = this.state.url.uri;
+    }
+   // this.setState({ imagePath: { uri: '' } });
+
+    // Random file name needed to force refresh...
+    const downloadDest = `${RNFS.DownloadDirectoryPath}/${((Math.random() * 1000) | 0)}.` + this.state.extension;
+
+    const ret = RNFS.downloadFile({ fromUrl: shareUrl, toFile: downloadDest, begin, progress, background : false, progressDivider });
+
+  //  jobId = ret.jobId;
+
+    ret.promise.then(res => {
+     // this.setState({ output: JSON.stringify(res) });
+      //this.setState({ imagePath: { uri: 'file://' + downloadDest } });
+      console.log("output -----------", JSON.stringify(res), downloadDest)
+      Alert.alert(
+        "Message",
+        "File download successfully on location " + downloadDest,
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          {
+            text: "OK", onPress: () => console.log("Ok Pressed")
+          }
+        ]
+      );
+    //  jobId = -1;
+    }).catch(err => {
+      this.showError(err)
+
+    //  jobId = -1;
+    });
+  }
+
+  async fileShare() {
+    try {
+      let shareUrl = this.state.url;
+      if (this.state.extension === "pdf") {
+        shareUrl = this.state.url.uri;
+      }
+      const result = await Share.share({
+        title : "Share",
+        message: "Please check this Url " + shareUrl,
+        url: shareUrl
+      });
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  previewDocumentByType(extension) {
+    if (extension === "pdf") {
+      return <Pdf
+        source={this.state.url}
+        onLoadComplete={(numberOfPages, filePath) => {
+          console.log(`Number of pages: ${numberOfPages}`);
+        }}
+        onPageChanged={(page, numberOfPages) => {
+          console.log(`Current page: ${page}`);
+        }}
+        onError={(error) => {
+          console.log(error);
+        }}
+        onPressLink={(uri) => {
+          console.log(`Link pressed: ${uri}`);
+        }}
+        style={styles.pdf} />
+    } else if (extension === 'jpg' || extension === 'png') {
+      return <WebView
+        source={{
+          uri: this.state.url
+        }}
+        style={{ margin: 5, borderColor: '#DEDEDE', borderWidth: 1, }}
+        onLoadStart={() => this.loaderFunction(true)}
+        onLoadEnd={() => this.loaderFunction(false)}
+        bounces={true}
+        useWebKit={true}
+        scrollEnabled={true}
+        onShouldStartLoadWithRequest={this.checkLoadRequest}
+        injectedJavaScript={`document.getElementsByTagName("pdf")[0].controlsList="nodownload";`}
+
+      />
+    } else if (extension === 'xlsx' || extension === 'csv') {
+      return <View style={{ flex: 1, backgroundColor: '#FFFFFF', justifyContent: 'center', alignItems: 'center', margin: 10, borderRadius: 5 }}>
+        <Image
+          style={{ height: '25%', width: '25%' }}
+          source={this.handleIcons(extension)}
+        />
+      </View>
+    }
+  }
+
   render() {
     // const { count } = this.props.sahspaceCount
     return (
@@ -352,29 +486,23 @@ class Home extends Component {
                   buttonStyle={{ color: 'white', height: 45, width: 45, justifyContent: 'center', }}
                 />
               </View>
-              <WebView
-                source={{
-                  uri: this.state.url
-                }}
-                style={{ margin: 5, borderColor: '#DEDEDE', borderWidth: 1,  }}
-                onLoadStart={() => this.loaderFunction(true)}
-                onLoadEnd={() => this.loaderFunction(false)}
-                bounces={true}
-                useWebKit={true}
-                scrollEnabled={true}
-                onShouldStartLoadWithRequest={this.checkLoadRequest}
-                injectedJavaScript={`document.getElementsByTagName("pdf")[0].controlsList="nodownload";`}
-
-              />
-              {/* <View style={{ height: 60, backgroundColor: 'white', borderColor: '#DEDEDE', borderWidth: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Text style={{ color: '#000000', fontSize: 15, fontFamily: AppConstant.Fonts.roboto_medium, alignSelf: 'center', marginLeft: 10 }}>{'Document'}</Text>
+              <View style={styles.containerDoc}>
+                {this.previewDocumentByType(this.state.extension)}
+              </View>
+              <View style={{ height: 60,width:"100%", backgroundColor: 'white', borderColor: '#DEDEDE', borderWidth: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                 <CustomButton
-                  buttonTitle={'X'}
-                  onPressButton={() => this.selectedButton('sent')}
-                  buttonStyle={{ color: 'white', height: 45, width: 45, justifyContent: 'center', }}
+                  buttonTitle={'Download'}
+                  onPressButton={() => this.fileDownload()}
+                  buttonStyle={{ backgroundColor: 'red', height: 45, width: "50%", justifyContent: 'center', }}
                 // titleFontColor={!this.state.selectedButton ? '#6A6A6A' : 'black'}
                 />
-              </View> */}
+                 <CustomButton
+                  buttonTitle={'Share'}
+                  onPressButton={() => this.fileShare()}
+                  buttonStyle={{ backgroundColor: 'blue', height: 45, width: "50%", justifyContent: 'center', }}
+                // titleFontColor={!this.state.selectedButton ? '#6A6A6A' : 'black'}
+                />
+              </View>
             </View>}
           </View>
         </View>
@@ -394,6 +522,18 @@ const styles = StyleSheet.create({
     fontFamily: AppConstant.Fonts.roboto_bold
     // height: 44,
   },
+  pdf: {
+    flex:1,
+    width: "100%",
+    height:"100%",
+  },
+  containerDoc: {
+    flex: 1,
+    margin:20
+   // justifyContent: 'flex-start',
+  //  alignItems: 'center',
+   // marginTop: 25,
+},
 });
 
 Home.propTypes = {
