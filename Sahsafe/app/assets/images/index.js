@@ -22,7 +22,8 @@ const downArrow = require('./down_arrow.png');
 const docIcon = require('./doc_icon.png');
 const imageIcon = require('./image_icon.png');
 const xlIcon = require('./xl_icon.png');
-
+const whatsapp = require('./whatsapp.png');
+const download = require('./download.png');
 export const images = {
   indianFlag,
   splashIcon,
@@ -46,5 +47,7 @@ export const images = {
   downArrow,
   docIcon,
   xlIcon,
-  imageIcon
+  imageIcon,
+  whatsapp,
+  download
 };

@@ -10,6 +10,7 @@ export default (() => {
     featureSearch: require('../assets/images/feather_search.png'),
     pdfIcon: require('../assets/images/pdf_icon.png'),
     shareIcon: require('../assets/images/share_icon.png'),
-   
+    whatsapp: require('../assets/images/whatsapp.png'),
+    download: require('../assets/images/download.png'),
   };
 })();

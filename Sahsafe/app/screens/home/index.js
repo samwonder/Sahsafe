@@ -30,6 +30,7 @@ import {
 } from "react-native-responsive-screen";
 import Pdf from 'react-native-pdf';
 var RNFS = require('react-native-fs');
+import CurveButtonIconandText from './components/curveButtonIconandText';
 //var SavePath = Platform.OS === 'ios' ? RNFS.MainBundlePath : RNFS.DocumentDirectoryPath;
 class Home extends Component {
   constructor(props) {
@@ -489,18 +490,22 @@ class Home extends Component {
               <View style={styles.containerDoc}>
                 {this.previewDocumentByType(this.state.extension)}
               </View>
-              <View style={{ height: 60,width:"100%", backgroundColor: 'white', borderColor: '#DEDEDE', borderWidth: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-                <CustomButton
-                  buttonTitle={'Download'}
+              <View style={{ height: 60,width:"100%", backgroundColor: 'white', borderColor: '#DEDEDE', borderWidth: 1, flexDirection: 'row',alignItems: 'center', justifyContent: "space-evenly" }}>
+                <CurveButtonIconandText
+                  headerText={'Download'}
                   onPressButton={() => this.fileDownload()}
-                  buttonStyle={{ backgroundColor: 'red', height: 45, width: "50%", justifyContent: 'center', }}
-                // titleFontColor={!this.state.selectedButton ? '#6A6A6A' : 'black'}
+                  buttonStyle={{ height: 45, width: '47%', borderRadius: 5, backgroundColor: 'rgb(241,111,8)', justifyContent: 'center', alignItems: 'center', }}
+                  titleFontColor={'white'}
+                  imageStyle={{ height: 25, width: 25 }}
+                  imageName={images.download}
                 />
-                 <CustomButton
-                  buttonTitle={'Share'}
+                <CurveButtonIconandText
+                  headerText={'Share File'}
                   onPressButton={() => this.fileShare()}
-                  buttonStyle={{ backgroundColor: 'blue', height: 45, width: "50%", justifyContent: 'center', }}
-                // titleFontColor={!this.state.selectedButton ? '#6A6A6A' : 'black'}
+                  buttonStyle={{ height: 45, width: '47%', borderRadius: 5, backgroundColor: 'rgb(52,48,106)', justifyContent: 'center', alignItems: 'center', }}
+                  titleFontColor={'white'}
+                  imageStyle={{ height: 25, width: 25 }}
+                  imageName={images.whatsapp}
                 />
               </View>
             </View>}
