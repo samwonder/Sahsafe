@@ -24,6 +24,8 @@ const imageIcon = require('./image_icon.png');
 const xlIcon = require('./xl_icon.png');
 const whatsapp = require('./whatsapp.png');
 const download = require('./download.png');
+const attachment = require('./attachment.png');
+const camera = require('./camera.png');
 export const images = {
   indianFlag,
   splashIcon,
@@ -49,5 +51,7 @@ export const images = {
   xlIcon,
   imageIcon,
   whatsapp,
-  download
+  download,
+  attachment,
+  camera
 };

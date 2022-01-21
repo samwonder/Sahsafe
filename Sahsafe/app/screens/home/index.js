@@ -31,6 +31,7 @@ import {
 import Pdf from 'react-native-pdf';
 var RNFS = require('react-native-fs');
 import CurveButtonIconandText from './components/curveButtonIconandText';
+import ImageCaptureScreen from '../../components/ImageCapture';
 //var SavePath = Platform.OS === 'ios' ? RNFS.MainBundlePath : RNFS.DocumentDirectoryPath;
 class Home extends Component {
   constructor(props) {
@@ -42,7 +43,8 @@ class Home extends Component {
       pickerResult: null,
       isPreview: false,
       url: '',
-      extension:""
+      extension: "",
+      selectOption:false
     }
   }
 
@@ -179,6 +181,7 @@ class Home extends Component {
     console.log("date00000000000000000000000000", data)
     this.setState({
       pickerResult: data,
+      selectOption: false      
     }, () =>
       this.increaseHeight(1))
     // console.log("date00000000000000000000000000"))
@@ -470,14 +473,19 @@ class Home extends Component {
                 </View>
                 :
                 <View style={{ height: 50, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                  <View style={{ color: 'white', height: 45, width: '40%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}>
+                  <CustomButton
+                    buttonTitle={'+ Share File'}
+                    onPressButton={() => this.setState({selectOption : true})}
+                    buttonStyle={{ color: 'white', height: 45, width: '40%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}
+                    titleFontColor={'white'}
+                  />
+                  {/* <View style={{ color: 'white', height: 45, width: '40%', backgroundColor: '#FF8400', justifyContent: 'center', borderRadius: 25 }}>
                     <DocumentPickerScreen
                       handleSuccessUpload={(data) => this.uploadSuccessData(data)} handleError={() => this.handleError()} />
-                  </View>
+                  </View> */}
                 </View>
               }
             </View>
-
             {this.state.isPreview && <View style={{ height: '92.5%', width: '100%', borderColor: '#DEDEDE', borderWidth: 1, backgroundColor: 'white', position: 'absolute', left: 0, right: 0, bottom: 40, top: 40 }}>
               <View style={{ height: 40, backgroundColor: 'white', borderColor: '#DEDEDE', borderWidth: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={{ color: '#000000', fontSize: 15, fontFamily: AppConstant.Fonts.roboto_medium, alignSelf: 'center', marginLeft: 10 }}>{'Document'}</Text>
@@ -510,6 +518,37 @@ class Home extends Component {
               </View>
             </View>}
           </View>
+          {this.state.selectOption && (
+            <View style={{ height: "100%", width: '100%', backgroundColor: "rgba(0,0,0,0.8)", justifyContent: 'flex-end' }}>
+              <Animatable.View
+                animation="fadeInUp"
+                duration={1000}
+                delay={200}
+                style={{ height: 160, width: '100%', borderRadius: 50 }}>
+                <View
+                  style={{ height: 160, width: "100%", flexDirection: 'column', backgroundColor: "white", borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
+                  <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                    <Text style={{ fontSize: 18, color: 'black', padding: 10, marginLeft: 10, fontFamily: AppConstant.Fonts.roboto_medium }}>Share File</Text>
+                    <CustomButton
+                      buttonTitle={'X'}
+                      onPressButton={() => this.setState({ selectOption: false })}
+                      buttonStyle={{ color: 'white', height: 45, width: 45, justifyContent: 'center', }}
+                    />
+                  </View>
+                  <View style={{ height: 1, backgroundColor: '#DEDEDE', marginVertical: 2, }} />
+                  <View style={{ height: 50, width: '100%', }}>
+                    <ImageCaptureScreen
+                      handleSuccessUpload={(data) => this.uploadSuccessData(data)} handleError={() => this.handleError()} />
+                  </View>
+                  <View style={{ height: 1, backgroundColor: '#DEDEDE', marginVertical: 2, }} />
+                  <View style={{ height: 50, width: '100%' }}>
+                    <DocumentPickerScreen
+                      handleSuccessUpload={(data) => this.uploadSuccessData(data)} handleError={() => this.handleError()} />
+                  </View>
+                </View>
+              </Animatable.View>
+            </View>
+          )}
         </View>
       </AndroidBackHandler>
     );
