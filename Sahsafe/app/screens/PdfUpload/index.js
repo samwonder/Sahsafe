@@ -168,6 +168,10 @@ class PDFUpload extends Component {
     );
   }
 
+loaderFunction(state) {
+    this.props.toggleLoader(state)
+}
+
  async uploadFile() {
     // if (this.state.documentName.length === 0) {
     //   Alert.alert('Please enter a document name.')
@@ -185,6 +189,7 @@ class PDFUpload extends Component {
     if (!this.state.isFileView) {
       Alert.alert('Please select a document to upload.')
     } else {
+      this.loaderFunction(true)
       let result = await Services.DocumentServices.uploadDocuementApi(this.props.fileDetail);
     //  console.log("API result", result.data.file_id)
       let data = {
@@ -197,6 +202,7 @@ class PDFUpload extends Component {
         "file_id": result && result.data ? result.data.file_id : "1"
       }
       //console.log("🚀 ~ file: index.js ~================>>>>>>>>>>>>>>", data, this.state.selectedSahspaceDoc)
+      this.loaderFunction(false)
       this.props.uploadFileAction(data)
     }
   }

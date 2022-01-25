@@ -53,8 +53,8 @@ class SuccessScreen extends Component {
     return matches.join('');
   }
   makeRandomColorBG(text) {
-    var matches = text.match(/\b(\w)/g);
-    switch (matches[0].toUpperCase()) {
+    var matches = text && text.match(/\b(\w)/g);
+    switch (matches && matches[0].toUpperCase()) {
       case 'A':
         return '#FF8400';
       case 'B':

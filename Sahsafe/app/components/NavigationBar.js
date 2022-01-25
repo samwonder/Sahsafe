@@ -91,17 +91,16 @@ const NavBar = ({
       
         <TouchableOpacity
           onPress={() => backButtonAction()}
-          style={{ height: isIOS ? (isIphoneX ? 84 : 64) : 64, width: 150, alignItems: 'center', flexDirection: 'row' }}
+          style={{ height: isIOS ? (isIphoneX ? 84 : 64) : 64, width: 60, alignItems: 'center', flexDirection: 'row' }}
         >
           <View style={{flexDirection: 'row', marginTop: 15, alignItems: 'center',}}>
           <Image
             style={{ height: 30, width: 40, marginLeft: 10 }}
             source={images.backIcon}
           />
-          <Text style={{ fontSize: 18, textAlign: 'center',  fontFamily: AppConstant.Fonts.roboto_regular}}>{'  Sahsafe'}</Text>
           </View>
         </TouchableOpacity>
-       
+        <Text style={{ fontSize: 18,marginTop: 15, textAlign: 'center',  fontFamily: AppConstant.Fonts.roboto_regular}}>{'Sahsafe'}</Text>
   </View>
 );
 

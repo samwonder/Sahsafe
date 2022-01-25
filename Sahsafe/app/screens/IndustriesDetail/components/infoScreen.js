@@ -47,6 +47,7 @@ const InfoScreen = (props) => {
         renderItem={({ item }) =>
           <View style={{ backgroundColor: 'white', height: 50, width: '94%', marginHorizontal: '3%', }}>
             <View style={{ flex: 1, borderColor: '#E2E2E2', borderWidth: 1, borderRadius: 5, justifyContent: 'space-between', flexDirection: 'row', }}>
+            {console.log("items------------",item)}
               <CustomText
                 textStyle={{ fontSize: 16, margin: 15, color: '#000000', fontFamily:AppConstant.Fonts.roboto_medium }}
                 text={'GST'} />
@@ -56,7 +57,7 @@ const InfoScreen = (props) => {
               />
             </View>
           </View>}
-        ItemSeparatorComponent={this.renderSeparator}
+        //ItemSeparatorComponent={this.renderSeparator}
       />
 
 

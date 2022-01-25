@@ -114,7 +114,7 @@ console.log("🚀 ~ ==------------~ data", data)
   }
   try {
     const response = await Config.axios.post(AppConstant.Api.Document.GET_SAHSPACE_YEAR, clientId);
-    console.log("🚀 ~ file:============= ~ response", response)
+    //console.log("🚀 ~ file:============= ~ response", response)
     if (response.status) {
       return response;
     }
@@ -131,7 +131,7 @@ console.log("🚀 ~ file: documentServices.js ~ line 121 ~ getSpaceMonthApi ~ da
   }
   try {
     const response = await Config.axios.post(AppConstant.Api.Document.GET_SAHSAPCE_MONTH, clientId);
-    console.log("🚀 ~ file:============= ~ response", response)
+    //console.log("🚀 ~ file:============= ~ response", response)
     if (response.status) {
       return response;
     }
@@ -158,7 +158,7 @@ const getSahspacedetailApi = async (data) => {
 const editSahspacedetailApi = async (data) => {
   try {
     const response = await Config.axios.post(AppConstant.Api.Document.EDIT_SAHSPACE_DETAIL);
-    console.log("🚀 ~ file:============= ~ response", response)
+    //console.log("🚀 ~ file:============= ~ response", response)
     if (response.status) {
       return response;
     }
@@ -184,11 +184,11 @@ const getSahspaceallUsersApi = async (data) => {
   }
 }
 const getSpaceUploadedDocListApi = async (data) => {
-  console.log("🚀 ~ file:========121212132====---==--==--== ~ data", data)
+ // console.log("🚀 ~ file:========121212132====---==--==--== ~ data", data)
 
   try {
     const response = await Config.axios.post(AppConstant.Api.Document.GET_SPACE_UPLOADED_DOC_LIST, data);
-    console.log("🚀 ~ file:============= ~ response", response.data)
+    //console.log("🚀 ~ file:============= ~ response", response.data)
     if (response.status) {
       return response;
     }

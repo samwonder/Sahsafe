@@ -12,6 +12,7 @@ import * as Services from "@services";
 import EmptyScreen from '../../components/EmptyScreen'
 import * as AppConstant from "@constants"
 import moment from 'moment'
+import FilePreview from '../FilePreview';
 
 class DocumentTypeScreen extends Component {
   constructor(props) {
@@ -20,6 +21,9 @@ class DocumentTypeScreen extends Component {
       sahspaceUser: props.route.params && props.route.params.sahspaceUser,
       selectedYear: props.route.params && props.route.params.selectedYear,
       selectedMonth: props.route.params && props.route.params.selectedMonth,
+      isPreview: false,
+      url: '',
+      extension: "",
     }
   }
   async componentDidMount() {
@@ -40,6 +44,26 @@ class DocumentTypeScreen extends Component {
 
 
   }
+
+  showPreview(item, index) {
+    let source = item.full_path
+    if (item.extension === "pdf") {
+      source = { uri: item.full_path, cache: false };
+    } 
+    this.setState({
+      isPreview: true,
+      url: source,
+      extension: item.extension
+    }, console.log('==========', this.state.url, item.extension))
+  }
+
+  hidePreview() {
+    this.setState({
+      isPreview: false,
+      url: '',
+      extension:""
+    })
+  }
   
   popBack() {
     const { goBack } = this.props.navigation;
@@ -59,20 +83,7 @@ class DocumentTypeScreen extends Component {
          // numColumns={3}
           ListEmptyComponent={<EmptyScreen />}
           renderItem={({ item, index }) =>
-          //   <View style={{ width: '30%', height: 120, margin: '1%' }}>
-          //     {console.log("items-----------------",item)}
-          //   <TouchableOpacity
-          //     onPress={() => this.navigationToDocumentList(index)}
-          //     style={{ height: 80, backgroundColor: '#F4F8FF', margin: '1%', borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-          //     <Image
-          //       style={{ height: 70, width: 70 }}
-          //       source={images.folderIcon}
-          //     />
-          //   </TouchableOpacity>
-          //   <CustomText
-          //     textStyle={{ fontSize: 14, color: 'black', fontFamily:AppConstant.Fonts.roboto_medium, textAlign: 'center' }}
-          //     text={"Year"} />
-          // </View>
+          <TouchableOpacity onPress={() => this.showPreview(item, index)}>
           <View style={{ height: 110, margin: 5, borderColor: '#DEDEDE', borderWidth: 1, borderRadius: 5 }}>
               <View style={{ flexDirection: 'row', height: 110 }}>
                 <View style={{ width: '25%' }} >
@@ -84,9 +95,9 @@ class DocumentTypeScreen extends Component {
                   </View>
                 </View>
                 <View style={{ width: '65%', justifyContent: 'center' }}>
-                  <Text style={styles.item}>{item.doc_name}</Text>
-                  <View style={{ flexDirection: 'row',width: '45%', }}>
-                    <Text style={{ fontSize: 12, fontFamily: AppConstant.Fonts.roboto_bold }}>{item.user_name}</Text>
+                  <Text numberOfLines={2} style={styles.item}>{item.doc_name}</Text>
+                  <View style={{ flexDirection: 'row',width: '45%',marginTop:10 }}>
+                    <Text numberOfLines={2} style={{ fontSize: 12, fontFamily: AppConstant.Fonts.roboto_bold }}>{item.user_name}</Text>
                     <View style={{ height: 15, width: 1, backgroundColor: '#DEDEDE', marginHorizontal: 5 }}/>
                     <Text style={{ fontSize: 12, fontFamily: AppConstant.Fonts.roboto_regular }}>{moment(item.created_at).format('DD MMM YYYY')}</Text>
                     <View style={{ height: 15, width: 1, backgroundColor: '#DEDEDE', marginHorizontal: 5 }}/>
@@ -94,7 +105,7 @@ class DocumentTypeScreen extends Component {
                   </View>
                 </View>
                 <View style={{ width: '10%' }} >
-                  <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }} onPress={() => this.onDeleteFile()}>
+                  <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }} onPress={() => console.log("Dots are clicked")}>
                     <Image
                       style={{ height: 25, width: 25 }}
                       source={images.dotsIcon}
@@ -102,9 +113,13 @@ class DocumentTypeScreen extends Component {
                   </TouchableOpacity>
                 </View>
               </View>
-            </View>
+              </View>
+              </TouchableOpacity>
         }
         />
+        {this.state.isPreview &&
+          <FilePreview extension={this.state.extension} url={this.state.url} hidePreview={() => this.hidePreview()} />
+        }
       </View>
     );
   }

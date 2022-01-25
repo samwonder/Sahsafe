@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import * as Animatable from "react-native-animatable";
-import { images } from '../../../assets/images';
+import { images } from '../assets/images';
 import * as AppConstant from "@constants";
 const styles = StyleSheet.create({
 
